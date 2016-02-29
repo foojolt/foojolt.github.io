@@ -1,0 +1,51 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> OAuth详细解读 · foojolt</title><meta name="description" content="OAuth详细解读 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">OAuth详细解读</h1><div class="post-time">Feb 29, 2016</div><div class="post-content"><h3 id="OAuth-解读"><a href="#OAuth-解读" class="headerlink" title="OAuth 解读"></a>OAuth 解读</h3><p>本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, nonce, timestamp等）</p>
+<p>来自维基百科:<a href="https://zh.wikipedia.org/wiki/OAuth" target="_blank" rel="external">OAuth</a></p>
+<blockquote>
+<p>OAuth（开放授权）是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用</p>
+</blockquote>
+<p><img src="/images/oauth-flow.png" alt="oauth-flow"></p>
+<p>OAuth协议的参与方：</p>
+<blockquote>
+<p>Google Resource Server是RS(Resource Server)，保存了client希望获得的资源（这里是用户在Google的消息流）</p>
+<p>Google Authorization Server是AS（Authorization Server），即授权服务器。Client访问RS，需要得到AS的授权凭证（即access token）</p>
+<p>Facebook是Client，希望得到Alice的同意，来访问其在Google的资源（即Alice的消息流）</p>
+<p>Alice 是Resource Owner(资源所有者)。</p>
+</blockquote>
+<p>步骤解读：<br>(1)Facebook在自己的网页上放置一个链接，地址是 accounts.google.com/o/oauth2/oauth….用户单击后，跳转到Google AS页面（也可能是弹窗），注意带上了以下参数：</p>
+<blockquote>
+<p>redirect_uri:用户授权后，返回的Facebook页面</p>
+<p>client_id: Facebook在Google侧注册的client_id，Facebook还保存有对应的client_secret。后面会用到。</p>
+<p>state: Client的会话Id，不同的用户在Facebook点击上文的链接，产生不同的state字符串。防止恶意用户伪造一个URL，诱导其他用户去点击。即CSRF（cross site request forgery跨站请求伪造）攻击。详见:<a href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0" target="_blank" rel="external">跨站请求伪造</a></p>
+<p>response_type: 一般是code，表示 Authorization_code，即授权码</p>
+<p>scope: 资源类型，这里指用户的消息流</p>
+</blockquote>
+<p>（2）（3）用户在Google的页面，同意了Facebook获取消息流的请求。当然如果用户没有在Google登录，则需要先登录。之后，Google通过302返回码，引导Alice的浏览器，访问 www.facebook.com/?code=xx&amp;state=xx，参数说明：</p>
+<blockquote>
+<p>code: 即 Authorization_code用户的授权码，表示facebook已经得到用户的授权。</p>
+<p>state: 即步骤1中，facebook生成的state， google AS原样返回</p>
+</blockquote>
+<p>（4）(5)步骤2的请求到了Facebook后台，Facebook后台向google AS发起了一个获取 access_token的请求，包含过期时间等信息。注意这次不是通过Alice的浏览器了。参数说明：</p>
+<blockquote>
+<p>code: 即步骤2得到的用户授权码。</p>
+<p>redirect_uri: 即步骤1的跳转url。这个仅作校验之用。</p>
+<p>client_id &amp; client_secret: Facebook在Google AS注册得到的凭证</p>
+<p>grant_type：授权类型。往往由AS设置的固定值。</p>
+</blockquote>
+<p>(6) 经过了以上步骤，终于，Facebook可以问google的RS请求用户Alice的消息流了。回顾一下，首先，通过 Authorization_code的方式，Facebook首先得到了Alice的许可。然后通过 access_token的方式，Facebook又得到了Google AS的许可（提供了 Authorization_code以及 client_id, client_secret）。</p>
+<p>在更复杂的实现中，为了防止请求重放攻击，在有些请求的参数中，又加入了nonce和timestamp：</p>
+<blockquote>
+<p>nonce: 即 number [used only] once，就是只能用一次的随机数。可以有效防止重复攻击。但服务器端要记住所有已经用过的nonce，这对服务器来说，是个不小的负担。</p>
+<p>timestamp: 时间戳，一般只从1970年开始的毫秒数。和 nonce一起用，用于减轻服务器保存nonce的负担。服务器端会保留一个较旧的 timestamp_start，如果请求中的 timestamp 比 timestamp_start 还小，服务器直接拒绝请求，因为更早的nonce列表被服务器删除了，无法校验是否重复。</p>
+</blockquote>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://blog.csdn.net/seccloud/article/details/8192707" target="_blank" rel="external">帮你深入理解OAuth2.0协议</a><br><a href="http://oauth.net/core/1.0/#nonce" target="_blank" rel="external">oauth core 1.0 - nonce</a></p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/02/29/second-relation-algorithm/" class="next">NEXT</a></div><div data-thread-key="2016/02/29/oauth/" data-title="OAuth详细解读" data-url="http://foojolt.github.io/2016/02/29/oauth/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>
