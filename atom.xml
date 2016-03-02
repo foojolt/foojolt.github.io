@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://foojolt.github.io/"/>
-  <updated>2016-03-01T08:20:28.000Z</updated>
+  <updated>2016-03-02T08:50:03.000Z</updated>
   <id>http://foojolt.github.io/</id>
   
   <author>
@@ -14,6 +14,179 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HDFS 理解</title>
+    <link href="http://foojolt.github.io/2016/03/02/hdfs-flow/"/>
+    <id>http://foojolt.github.io/2016/03/02/hdfs-flow/</id>
+    <published>2016-03-02T02:30:14.000Z</published>
+    <updated>2016-03-02T08:50:03.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;主要特点&quot;&gt;&lt;a href=&quot;#主要特点&quot; class=&quot;headerlink&quot; title=&quot;主要特点&quot;&gt;&lt;/a&gt;主要特点&lt;/h3&gt;&lt;p&gt;廉价机器组成集群，系统具备容错能力&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;HDFS 集群中数据节点可能随时宕机，主节点能通过心跳及时发现故障，并启动文件块恢复。主节点对内存要求高，因为元数据信息要保存在内存中。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;适合批量分块、一次写多次读&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不像POSIX文件系统，常常流式从头读到尾，随机修改内容等，HDFS文件只支持追加到末尾。单次读取延时高，但批量任务可以通过多个block分块并发读取提高吞吐量。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;将运算移到数据的附近，而不是相反&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;HDFS数据节点往往承担计算任务，调度器会就近分配计算任务。比如MapReduce任务，每个Map任务最好在分片本地进行。但Reduce还是免不了要移动中间数据到计算节点。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;HDFS-架构图&quot;&gt;&lt;a href=&quot;#HDFS-架构图&quot; class=&quot;headerlink&quot; title=&quot;HDFS 架构图&quot;&gt;&lt;/a&gt;HDFS 架构图&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfsarchitecture.png&quot; alt=&quot;Hdfs architecture&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Namenode&quot;&gt;&lt;a href=&quot;#Namenode&quot; class=&quot;headerlink&quot; title=&quot;Namenode&quot;&gt;&lt;/a&gt;Namenode&lt;/h3&gt;&lt;p&gt;Namenode保存元数据信息，具体回答两个问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;filename-&amp;gt;block sequence (namespace) 文件由哪些block组成&lt;/li&gt;
+&lt;li&gt;block-&amp;gt;machinelist (“inodes”) 这些block保存在哪些机器上&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;namespace信息就是一颗文件树，所有数据放到内存中，接受各种增删改查的请求； inodes 信息可能由于故障恢复、Balance等操作发生变化&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&quot;Namenode的启动过程&quot;&gt;&lt;a href=&quot;#Namenode的启动过程&quot; class=&quot;headerlink&quot; title=&quot;Namenode的启动过程&quot;&gt;&lt;/a&gt;Namenode的启动过程&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;读取fsimage并构造内存版本的元数据信息&lt;/li&gt;
+&lt;li&gt;读取editlog，并应用可能的元数据修改&lt;/li&gt;
+&lt;li&gt;写新的 checkpoint (fsimage’ + editlog)&lt;/li&gt;
+&lt;li&gt;维持在安全模式下（可读，拒绝增删改），直到收到足够多的、来自Datanode的block报告&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;启动过程可能存在的问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;editlog太多，导致合并花费时间很长；于是社区开发了 secondary-namenode 来定期合并editlog，生成新的fsimage。社区有另外一种叫法： checkpoint-namenode。这不是一个高可用（HA）方案。&lt;br&gt;&lt;img src=&quot;../images/secondary-namenode.png&quot; alt=&quot;secondary-namenode&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;fsimage太大，内存装不下。hdfs federation分卷可以解决这个问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;Namenode-高可用方案&quot;&gt;&lt;a href=&quot;#Namenode-高可用方案&quot; class=&quot;headerlink&quot; title=&quot;Namenode 高可用方案&quot;&gt;&lt;/a&gt;Namenode 高可用方案&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-ha.png&quot; alt=&quot;hdfs-ha&quot;&gt;&lt;br&gt;这个方案的核心：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;依赖共享存储来同步写操作。一般认为高端存储的可靠性要高于服务器。但这个也是单点。&lt;/li&gt;
+&lt;li&gt;DN同时向Active和Standby NN汇报块状态&lt;/li&gt;
+&lt;li&gt;依赖Zeekeeper来实现主备切换。FailoverController是单独的进程，监控NN状态&lt;/li&gt;
+&lt;li&gt;防&lt;a href=&quot;http://en.wikipedia.org/wiki/Split-brain_`(computing`&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;脑裂&lt;/a&gt;)措施：共享存储只支持来自一个NN的更新操作；DN只执行来自一个NN的更新命令；Client只同时跟一个NN通信&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;Hdfs-federation&quot;&gt;&lt;a href=&quot;#Hdfs-federation&quot; class=&quot;headerlink&quot; title=&quot;Hdfs federation&quot;&gt;&lt;/a&gt;Hdfs federation&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-federation.jpg&quot; alt=&quot;Hdfs federation&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个方案的核心：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;就像Linux文件系统一样，多个NN可以挂在不同的子目录下，各自负责该子目录下的元数据管理；彼此独立。&lt;/li&gt;
+&lt;li&gt;多个NN共享DN的块存储。DN可向多个NN汇报块状态&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;HDFS文件读过程&quot;&gt;&lt;a href=&quot;#HDFS文件读过程&quot; class=&quot;headerlink&quot; title=&quot;HDFS文件读过程&quot;&gt;&lt;/a&gt;HDFS文件读过程&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-read.png&quot; alt=&quot;Hdfs read&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;HDFS文件写过程&quot;&gt;&lt;a href=&quot;#HDFS文件写过程&quot; class=&quot;headerlink&quot; title=&quot;HDFS文件写过程&quot;&gt;&lt;/a&gt;HDFS文件写过程&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-write.png&quot; alt=&quot;Hdfs write&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://github.com/apache/hadoop&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hadoop源代码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://zh.hortonworks.com/blog/understanding-namenode-startup-operations-in-hdfs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;understanding-namenode-startup-operations-in-hdfs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.infoq.com/cn/articles/hadoop-2-0-namenode-ha-federation-practice-zh&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;namenode ha &amp;amp; federation&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;主要特点&quot;&gt;&lt;a href=&quot;#主要特点&quot; class=&quot;headerlink&quot; title=&quot;主要特点&quot;&gt;&lt;/a&gt;主要特点&lt;/h3&gt;&lt;p&gt;廉价机器组成集群，系统具备容错能力&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;HDFS 集群中数据节点可能随时宕机，主节点能通
+    
+    </summary>
+    
+    
+      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
+    
+      <category term="hdfs" scheme="http://foojolt.github.io/tags/hdfs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hadoop 端口解读</title>
+    <link href="http://foojolt.github.io/2016/03/01/hadoop-ports/"/>
+    <id>http://foojolt.github.io/2016/03/01/hadoop-ports/</id>
+    <published>2016-03-01T09:12:14.000Z</published>
+    <updated>2016-03-02T03:27:00.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;NameNode&quot;&gt;&lt;a href=&quot;#NameNode&quot; class=&quot;headerlink&quot; title=&quot;NameNode&quot;&gt;&lt;/a&gt;NameNode&lt;/h3&gt;&lt;p&gt;8020或9000&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;NameNode RPC端口，为client提供元数据服务等。&lt;br&gt;涉及：NamenodeProtocols将很多接口合在一起，包括 ClientProtocol,DatanodeProtocol（和datanode交互）等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;50070&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;NameNode对外暴露的http端口&lt;/li&gt;
+&lt;li&gt;通过浏览器查看NameNode状态，datanode列表，浏览hdfs文件系统等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;Datanode&quot;&gt;&lt;a href=&quot;#Datanode&quot; class=&quot;headerlink&quot; title=&quot;Datanode&quot;&gt;&lt;/a&gt;Datanode&lt;/h3&gt;&lt;p&gt;50010&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Datanode RPC数据库传输接口，dn的数据块通过这个端口进出。涉及：hdfs.protocol.ClientProtocol&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;50020&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Datanode元数据操作端口，比如namenode可以强制datanode立即汇报block信息，以及升级时发shutdown消息给datanode。涉及：ClientDatanodeProtocol&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;ResourceManager&quot;&gt;&lt;a href=&quot;#ResourceManager&quot; class=&quot;headerlink&quot; title=&quot;ResourceManager&quot;&gt;&lt;/a&gt;ResourceManager&lt;/h3&gt;&lt;p&gt;8030&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;调度器端口，ApplicationMaster通过该地址向RM申请资源、释放资源等。涉及：ApplicationMasterProtocol&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;8031&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ResourceManager 对NodeManager暴露的地址。NodeManager通过该地址向RM汇报心跳，领取任务等。&lt;br&gt;涉及：ResourceTracker&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;8032&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ResourceManager 对yarn客户端暴露的地址。客户端通过该地址向RM提交应用程序，获取应用状态以及杀死应用程序等。涉及：ApplicationClientProtocol&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;8033&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;RM管理端口 ResourceManager 对管理员暴露的访问地址。管理员通过该地址向RM发送管理命令等。涉及：ResourceManagerAdministrationProtocol&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;8088&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;webui ResourceManager对外http端口。用户可在浏览器中查看yarn任务的状态、队列、任务节点信息等。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;NodeManager&quot;&gt;&lt;a href=&quot;#NodeManager&quot; class=&quot;headerlink&quot; title=&quot;NodeManager&quot;&gt;&lt;/a&gt;NodeManager&lt;/h3&gt;&lt;p&gt;8040  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;RPC端口，用于实现资源本地化。比如mapreduce任务节点必须下载jar包到本地执行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;0(随机可用端口）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NodeManager的容器管理端口，主要用于 ApplicationMaster和NodeManager交互，启动、停止分配到的容器。涉及： ContainerManagementProtocol&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;8042&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NodeManager 对外暴露的http端口。&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;NameNode&quot;&gt;&lt;a href=&quot;#NameNode&quot; class=&quot;headerlink&quot; title=&quot;NameNode&quot;&gt;&lt;/a&gt;NameNode&lt;/h3&gt;&lt;p&gt;8020或9000&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;NameNode R
+    
+    </summary>
+    
+    
+      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hadoop 常用命令</title>
+    <link href="http://foojolt.github.io/2016/03/01/hadoop-cmds/"/>
+    <id>http://foojolt.github.io/2016/03/01/hadoop-cmds/</id>
+    <published>2016-03-01T09:12:14.000Z</published>
+    <updated>2016-03-01T09:38:31.000Z</updated>
+    
+    <content type="html">&lt;p&gt;参考：&lt;br&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/r2.6.1/hadoop-project-dist/hadoop-common/CommandsManual.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hadoop 2.6.1 命令&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;参考：&lt;br&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/r2.6.1/hadoop-project-dist/hadoop-common/CommandsManual.html&quot; target=&quot;_blank&quot; rel=&quot;externa
+    
+    </summary>
+    
+    
+      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
+    
+  </entry>
   
   <entry>
     <title>5步搭建个人免费博客</title>
@@ -163,9 +336,9 @@
     <link href="http://foojolt.github.io/2016/02/29/oauth/"/>
     <id>http://foojolt.github.io/2016/02/29/oauth/</id>
     <published>2016-02-29T08:07:14.000Z</published>
-    <updated>2016-03-01T07:08:04.000Z</updated>
+    <updated>2016-03-02T08:50:12.000Z</updated>
     
-    <content type="html">&lt;h3 id=&quot;OAuth-解读&quot;&gt;&lt;a href=&quot;#OAuth-解读&quot; class=&quot;headerlink&quot; title=&quot;OAuth 解读&quot;&gt;&lt;/a&gt;OAuth 解读&lt;/h3&gt;&lt;p&gt;本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, nonce, timestamp等）&lt;/p&gt;
+    <content type="html">&lt;p&gt;本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, nonce, timestamp等）&lt;/p&gt;
 &lt;p&gt;来自维基百科:&lt;a href=&quot;https://zh.wikipedia.org/wiki/OAuth&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OAuth&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;OAuth（开放授权）是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用&lt;/p&gt;
@@ -209,7 +382,8 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;OAuth-解读&quot;&gt;&lt;a href=&quot;#OAuth-解读&quot; class=&quot;headerlink&quot; title=&quot;OAuth 解读&quot;&gt;&lt;/a&gt;OAuth 解读&lt;/h3&gt;&lt;p&gt;本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, no
+      &lt;p&gt;本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, nonce, timestamp等）&lt;/p&gt;
+&lt;p&gt;来自维基百科:&lt;a href=&quot;https://zh.wikipedia.org/wiki/OAuth&quot; target=&quot;_blank
     
     </summary>
     
