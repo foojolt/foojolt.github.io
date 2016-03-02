@@ -10,7 +10,7 @@
 <blockquote>
 <p>HDFS数据节点往往承担计算任务，调度器会就近分配计算任务。比如MapReduce任务，每个Map任务最好在分片本地进行。但Reduce还是免不了要移动中间数据到计算节点。</p>
 </blockquote>
-<h3 id="HDFS-架构图"><a href="#HDFS-架构图" class="headerlink" title="HDFS 架构图"></a>HDFS 架构图</h3><p><img src="../images/hdfsarchitecture.png" alt="Hdfs architecture"></p>
+<h3 id="HDFS-架构图"><a href="#HDFS-架构图" class="headerlink" title="HDFS 架构图"></a>HDFS 架构图</h3><p><img src="/images/hdfsarchitecture.png" alt="Hdfs architecture"></p>
 <h3 id="Namenode"><a href="#Namenode" class="headerlink" title="Namenode"></a>Namenode</h3><p>Namenode保存元数据信息，具体回答两个问题：</p>
 <blockquote>
 <ul>
@@ -27,26 +27,26 @@
 </ol>
 <p>启动过程可能存在的问题：</p>
 <ol>
-<li><p>editlog太多，导致合并花费时间很长；于是社区开发了 secondary-namenode 来定期合并editlog，生成新的fsimage。社区有另外一种叫法： checkpoint-namenode。这不是一个高可用（HA）方案。<br><img src="../images/secondary-namenode.png" alt="secondary-namenode"></p>
+<li><p>editlog太多，导致合并花费时间很长；于是社区开发了 secondary-namenode 来定期合并editlog，生成新的fsimage。社区有另外一种叫法： checkpoint-namenode。这不是一个高可用（HA）方案。<br><img src="/images/secondary-namenode.png" alt="secondary-namenode"></p>
 </li>
 <li><p>fsimage太大，内存装不下。hdfs federation分卷可以解决这个问题。</p>
 </li>
 </ol>
-<h4 id="Namenode-高可用方案"><a href="#Namenode-高可用方案" class="headerlink" title="Namenode 高可用方案"></a>Namenode 高可用方案</h4><p><img src="../images/hdfs-ha.png" alt="hdfs-ha"><br>这个方案的核心：</p>
+<h4 id="Namenode-高可用方案"><a href="#Namenode-高可用方案" class="headerlink" title="Namenode 高可用方案"></a>Namenode 高可用方案</h4><p><img src="/images/hdfs-ha.png" alt="hdfs-ha"><br>这个方案的核心：</p>
 <ol>
 <li>依赖共享存储来同步写操作。一般认为高端存储的可靠性要高于服务器。但这个也是单点。</li>
 <li>DN同时向Active和Standby NN汇报块状态</li>
 <li>依赖Zeekeeper来实现主备切换。FailoverController是单独的进程，监控NN状态</li>
 <li>防<a href="http://en.wikipedia.org/wiki/Split-brain_`(computing`" target="_blank" rel="external">脑裂</a>)措施：共享存储只支持来自一个NN的更新操作；DN只执行来自一个NN的更新命令；Client只同时跟一个NN通信</li>
 </ol>
-<h4 id="Hdfs-federation"><a href="#Hdfs-federation" class="headerlink" title="Hdfs federation"></a>Hdfs federation</h4><p><img src="../images/hdfs-federation.jpg" alt="Hdfs federation"></p>
+<h4 id="Hdfs-federation"><a href="#Hdfs-federation" class="headerlink" title="Hdfs federation"></a>Hdfs federation</h4><p><img src="/images/hdfs-federation.jpg" alt="Hdfs federation"></p>
 <p>这个方案的核心：</p>
 <ol>
 <li>就像Linux文件系统一样，多个NN可以挂在不同的子目录下，各自负责该子目录下的元数据管理；彼此独立。</li>
 <li>多个NN共享DN的块存储。DN可向多个NN汇报块状态</li>
 </ol>
-<h3 id="HDFS文件读过程"><a href="#HDFS文件读过程" class="headerlink" title="HDFS文件读过程"></a>HDFS文件读过程</h3><p><img src="../images/hdfs-read.png" alt="Hdfs read"></p>
-<h3 id="HDFS文件写过程"><a href="#HDFS文件写过程" class="headerlink" title="HDFS文件写过程"></a>HDFS文件写过程</h3><p><img src="../images/hdfs-write.png" alt="Hdfs write"></p>
+<h3 id="HDFS文件读过程"><a href="#HDFS文件读过程" class="headerlink" title="HDFS文件读过程"></a>HDFS文件读过程</h3><p><img src="/images/hdfs-read.png" alt="Hdfs read"></p>
+<h3 id="HDFS文件写过程"><a href="#HDFS文件写过程" class="headerlink" title="HDFS文件写过程"></a>HDFS文件写过程</h3><p><img src="/images/hdfs-write.png" alt="Hdfs write"></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://github.com/apache/hadoop" target="_blank" rel="external">Hadoop源代码</a></p>
 <p><a href="http://zh.hortonworks.com/blog/understanding-namenode-startup-operations-in-hdfs/" target="_blank" rel="external">understanding-namenode-startup-operations-in-hdfs</a></p>
 <p><a href="http://www.infoq.com/cn/articles/hadoop-2-0-namenode-ha-federation-practice-zh" target="_blank" rel="external">namenode ha &amp; federation</a></p>
