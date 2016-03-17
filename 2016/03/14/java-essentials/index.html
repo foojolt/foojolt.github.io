@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Java有趣知识 · foojolt</title><meta name="description" content="Java有趣知识 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Java有趣知识</h1><div class="post-time">Mar 14, 2016</div><div class="post-content"><h3 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h3><h3 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h3><p>内存模型确定了一些规则：线程对内存的访问如何排序，以及如何确保内存对线程可见<br>包括： 重排序，内存可见性，happens-before</p>
+<p>重排序包括： 编译器重排序 CPU重排序 缓存导致的写入主内存重排序</p>
+<p>可见性： 内存屏障实现</p>
+<p>happens-before法则：<br>－ 程序次序法则：线程中的每个动作A都happens-before于该线程中的每一个动作B，其中，在程序中，所有的动作B都能出现在A之后。<br>－ 监视器锁法则：对一个监视器锁的解锁 happens-before于每一个后续对同一监视器锁的加锁。<br>－ volatile变量法则：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作。<br>－ 传递性：如果A happens-before于B，且B happens-before于C，则A happens-before于C<br>－ 对final语义的扩展保证一个对象的构建方法结束前，所有final成员变量都必须完成初始化（的前提是没有this引用溢出）。<br>－ 线程启动法则：在一个线程里，对Thread.start的调用会happens-before于每个启动线程的动作。<br>－ 线程终结法则：线程中的任何动作都happens-before于其他线程检测到这个线程已经终结、或者从Thread.join调用中成功返回，或Thread.isAlive返回false。<br>－ 中断法则：一个线程调用另一个线程的interrupt happens-before于被中断的线程发现中断。<br>－ 终结法则：一个对象的构造函数的结束happens-before于这个对象finalizer的开始。</p>
+<p>一个volatile happens-before原则的应用：<br>class VolatileExample {<br>    int x = 0;<br>    volatile boolean v = false;<br>    public void writer() {<br>        x = 42;<br>        v = true;<br>    }<br>    public void reader() {<br>        if (v == true) {<br>            //uses x - guaranteed to see 42.<br>        }<br>    }<br>}</p>
+<h3 id="BlockingQueue"><a href="#BlockingQueue" class="headerlink" title="BlockingQueue"></a>BlockingQueue</h3><p>offer和poll提供超时参数</p>
+<h3 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h3><p>每次修改，都创建一个新的底层Array: 读的线程，拿到的可能是失效的快照</p>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>Map is list of Segment<br>    Segment is list of HashEntry</p>
+<p>用分离锁实现多个线程间的并发写操作<br>用 HashEntery 对象的不变性来降低读操作对加锁的需求<br>用 Volatile 变量协调读写线程间的内存可见性（value是volatile的，保证写入之后可以被其他线程看见；修改之后，改变volatile的modCount）</p>
+<p>HashEntry 是一个为无锁读优化的链表：<br>value 是volatile，表示如果读的时候正在改写能立即体现<br>next 是final，表示只能往前插入节点： 拿到一个hashEntry，它的链表元素是固定的（value除外）</p>
+<p> static final class HashEntry<k,v> {<br>        final K key;                       // 声明 key 为 final 型<br>        final int hash;                   // 声明 hash 值为 final 型<br>        volatile V value;                 // 声明 value 为 volatile 型<br>        final HashEntry<k,v> next;      // 声明 next 为 final 型 </k,v></k,v></p>
+<pre><code>HashEntry(K key, int hash, HashEntry&lt;K,V&gt; next, V value) { 
+    this.key = key; 
+    this.hash = hash; 
+    this.next = next; 
+    this.value = value; 
+} 
+</code></pre><p> }</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/14/jvm/" class="prev">PRVE</a><a href="/2016/03/08/python-tips/" class="next">NEXT</a></div><div data-thread-key="2016/03/14/java-essentials/" data-title="Java有趣知识" data-url="http://foojolt.github.io/2016/03/14/java-essentials/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

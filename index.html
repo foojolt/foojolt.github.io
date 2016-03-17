@@ -1,56 +1,39 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> foojolt</title><meta name="description" content="A Blog Powered By Hexo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link active">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><ul class="home post-list"><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/02/hdfs-flow/" class="post-title-link">HDFS 理解</a></h2><div class="post-time">Mar 2, 2016 （最新）</div><div class="post-content"><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><p>廉价机器组成集群，系统具备容错能力</p>
-<blockquote>
-<p>HDFS 集群中数据节点可能随时宕机，主节点能通过心跳及时发现故障，并启动文件块恢复。主节点对内存要求高，因为元数据信息要保存在内存中。</p>
-</blockquote>
-<p>适合批量分块、一次写多次读</p>
-<blockquote>
-<p>不像POSIX文件系统，常常流式从头读到尾，随机修改内容等，HDFS文件只支持追加到末尾。单次读取延时高，但批量任务可以通过多个block分块并发读取提高吞吐量。</p>
-</blockquote>
-<p>将运算移到数据的附近，而不是相反</p>
-<blockquote>
-<p>HDFS数据节点往往承担计算任务，调度器会就近分配计算任务。比如MapReduce任务，每个Map任务最好在分片本地进行。但Reduce还是免不了要移动中间数据到计算节点。</p>
-</blockquote>
-<h3 id="HDFS-架构图"><a href="#HDFS-架构图" class="headerlink" title="HDFS 架构图"></a>HDFS 架构图</h3><p><img src="/images/hdfsarchitecture.png" alt="Hdfs architecture"></p>
-<h3 id="Namenode"><a href="#Namenode" class="headerlink" title="Namenode"></a>Namenode</h3><p>Namenode保存元数据信息，具体回答两个问题：</p>
-<blockquote>
-<ul>
-<li>filename-&gt;block sequence (namespace) 文件由哪些block组成</li>
-<li>block-&gt;machinelist (“inodes”) 这些block保存在哪些机器上</li>
-</ul>
-<p>namespace信息就是一颗文件树，所有数据放到内存中，接受各种增删改查的请求； inodes 信息可能由于故障恢复、Balance等操作发生变化</p>
-</blockquote>
-<h4 id="Namenode的启动过程"><a href="#Namenode的启动过程" class="headerlink" title="Namenode的启动过程"></a>Namenode的启动过程</h4><ol>
-<li>读取fsimage并构造内存版本的元数据信息</li>
-<li>读取editlog，并应用可能的元数据修改</li>
-<li>写新的 checkpoint (fsimage’ + editlog)</li>
-<li>维持在安全模式下（可读，拒绝增删改），直到收到足够多的、来自Datanode的block报告</li>
-</ol>
-<p>启动过程可能存在的问题：</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> foojolt</title><meta name="description" content="A Blog Powered By Hexo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link active">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><ul class="home post-list"><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/17/redis/" class="post-title-link">Redis 及缓存</a></h2><div class="post-time">Mar 17, 2016 （最新）</div><div class="post-content"><h3 id="缓存系统"><a href="#缓存系统" class="headerlink" title="缓存系统"></a>缓存系统</h3><p>redis特点：</p>
 <ol>
-<li><p>editlog太多，导致合并花费时间很长；于是社区开发了 secondary-namenode 来定期合并editlog，生成新的fsimage。社区有另外一种叫法： checkpoint-namenode。这不是一个高可用（HA）方案。<br><img src="/images/secondary-namenode.png" alt="secondary-namenode"></p>
-</li>
-<li><p>fsimage太大，内存装不下。hdfs federation分卷可以解决这个问题。</p>
-</li>
+<li>binlog， 故障恢复</li>
+<li>持久化</li>
+<li>内存放不下，可以LRU写到文件中</li>
 </ol>
-<h4 id="Namenode-高可用方案"><a href="#Namenode-高可用方案" class="headerlink" title="Namenode 高可用方案"></a>Namenode 高可用方案</h4><p><img src="/images/hdfs-ha.png" alt="hdfs-ha"><br>这个方案的核心：</p>
+<h3 id="Redis单线程"><a href="#Redis单线程" class="headerlink" title="Redis单线程"></a>Redis单线程</h3><p>Redis is single-threaded with epoll/kqueue and scales indefinitely in terms of I/O concurrency</p>
+<p>CPU 不是瓶颈， IO和内存才是</p>
+<h3 id="Partition"><a href="#Partition" class="headerlink" title="Partition"></a>Partition</h3><p>缺点：</p>
 <ol>
-<li>依赖共享存储来同步写操作。一般认为高端存储的可靠性要高于服务器。但这个也是单点。</li>
-<li>DN同时向Active和Standby NN汇报块状态</li>
-<li>依赖Zeekeeper来实现主备切换。FailoverController是单独的进程，监控NN状态</li>
-<li>防<a href="http://en.wikipedia.org/wiki/Split-brain_`(computing`" target="_blank" rel="external">脑裂</a>)措施：共享存储只支持来自一个NN的更新操作；DN只执行来自一个NN的更新命令；Client只同时跟一个NN通信</li>
+<li>批量key操作不可行</li>
+<li>批量key事务不可行</li>
+<li>基于key而不是value来做的，value很大也不能</li>
 </ol>
-<h4 id="Hdfs-federation"><a href="#Hdfs-federation" class="headerlink" title="Hdfs federation"></a>Hdfs federation</h4><p><img src="/images/hdfs-federation.jpg" alt="Hdfs federation"></p>
-<p>这个方案的核心：</p>
+<p>分片方式：<br>client-side： 客户端手工配置<br>proxy： 代理分片<br>clustering： 没有中心点，类似cassendra， 每个节点都纪录其他接点的信息；出了问题不好定位；</p>
+<p>twemproxy: </p>
+<p>codis: </p>
 <ol>
-<li>就像Linux文件系统一样，多个NN可以挂在不同的子目录下，各自负责该子目录下的元数据管理；彼此独立。</li>
-<li>多个NN共享DN的块存储。DN可向多个NN汇报块状态</li>
+<li>codis group概念（ 包含至少一个master/slave)</li>
+<li>pre-sharding: 1024个分片，分片信息保存在zookeeper中<br>redis-client -&gt; codis proxy…-&gt; [ codis-grp1 (redis-master, redis-slave1, redis-slave2,…) , codis-grp2,… ]</li>
 </ol>
-<h3 id="HDFS文件读过程"><a href="#HDFS文件读过程" class="headerlink" title="HDFS文件读过程"></a>HDFS文件读过程</h3><p><img src="/images/hdfs-read.png" alt="Hdfs read"></p>
-<h3 id="HDFS文件写过程"><a href="#HDFS文件写过程" class="headerlink" title="HDFS文件写过程"></a>HDFS文件写过程</h3><p><img src="/images/hdfs-write.png" alt="Hdfs write"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://github.com/apache/hadoop" target="_blank" rel="external">Hadoop源代码</a></p>
-<p><a href="http://zh.hortonworks.com/blog/understanding-namenode-startup-operations-in-hdfs/" target="_blank" rel="external">understanding-namenode-startup-operations-in-hdfs</a></p>
-<p><a href="http://www.infoq.com/cn/articles/hadoop-2-0-namenode-ha-federation-practice-zh" target="_blank" rel="external">namenode ha &amp; federation</a></p>
-</div></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/hadoop-ports/" class="post-title-link">hadoop 端口解读</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/hadoop-ports/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/hadoop-cmds/" class="post-title-link">hadoop 常用命令</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/hadoop-cmds/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/blog-start/" class="post-title-link">5步搭建个人免费博客</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/blog-start/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/bash-tricks/" class="post-title-link">Bash技巧</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/bash-tricks/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/java-manifest/" class="post-title-link">Java的Manifest文件</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/java-manifest/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/02/29/leap-year/" class="post-title-link">写程序判断闰年</a></h2><div class="post-time">Feb 29, 2016</div><div class="post-content"></div><a href="/2016/02/29/leap-year/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/02/29/oauth/" class="post-title-link">OAuth详细解读</a></h2><div class="post-time">Feb 29, 2016</div><div class="post-content"></div><a href="/2016/02/29/oauth/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/02/29/second-relation-algorithm/" class="post-title-link">二度人脉算法</a></h2><div class="post-time">Feb 29, 2016</div><div class="post-content"></div><a href="/2016/02/29/second-relation-algorithm/" class="read-more">...阅读全文</a></article></li></ul></section><footer><div class="paginator"></div><div data-thread-key="index.html" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+<h3 id="Redis-cluster"><a href="#Redis-cluster" class="headerlink" title="Redis cluster"></a>Redis cluster</h3><p>分为 16384 个槽，每个shard领取一部分；  16 * 1024 = 16384<br>用bitmap存储 node 和 shard的对应信息 （2K的bitmap）</p>
+<h3 id="Redis-Sentinel"><a href="#Redis-Sentinel" class="headerlink" title="Redis-Sentinel"></a>Redis-Sentinel</h3><p>redis官方HA机制： 实现了一个类似 zookeeper 的主备选举机制<br>数据要写到master，读可以从slave读； 延时 ＋ 分裂时的数据丢失</p>
+<p>Sentinel 和 redis 节点分开部署，至少3个</p>
+<p>asynchronous replication 异步复制</p>
+<p>Sentinel or Clustering:</p>
+<p>看情况，如果要求HA（即里面的数据很重要，在一段时间内不能丢失），用sentinel<br>所有节点存储的是相同的key-value</p>
+<p>如果只是做缓存，故障之后可以重建； 用 partition 的方案。</p>
+<h3 id="一致性哈希与缓存"><a href="#一致性哈希与缓存" class="headerlink" title="一致性哈希与缓存"></a>一致性哈希与缓存</h3><p>分布式哈希的实现： 环状＋就近存储<br>根据 hash(node_ip) 分布缓存的node<br>hash(key)并顺时针找到最近的node</p>
+<ol>
+<li>平衡性： 均匀分布</li>
+<li>单调性： 缓存node增加和删除，只有部分key需要迁移</li>
+<li>平衡性： 虚拟node，hash(node_ip#1),hash(node_ip#2) …</li>
+</ol>
+<p><a href="http://blog.csdn.net/cywosp/article/details/23397179" target="_blank" rel="external">http://blog.csdn.net/cywosp/article/details/23397179</a></p>
+</div></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/14/jvm/" class="post-title-link">Jvm 性能分析</a></h2><div class="post-time">Mar 14, 2016</div><div class="post-content"></div><a href="/2016/03/14/jvm/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/14/java-essentials/" class="post-title-link">Java有趣知识</a></h2><div class="post-time">Mar 14, 2016</div><div class="post-content"></div><a href="/2016/03/14/java-essentials/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/08/python-tips/" class="post-title-link">python相关</a></h2><div class="post-time">Mar 8, 2016</div><div class="post-content"></div><a href="/2016/03/08/python-tips/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/07/vim-tips/" class="post-title-link">vim tips</a></h2><div class="post-time">Mar 7, 2016</div><div class="post-content"></div><a href="/2016/03/07/vim-tips/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/07/solr-basics/" class="post-title-link">Solr基础</a></h2><div class="post-time">Mar 7, 2016</div><div class="post-content"></div><a href="/2016/03/07/solr-basics/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/07/solr-cache/" class="post-title-link">Solr Cache</a></h2><div class="post-time">Mar 7, 2016</div><div class="post-content"></div><a href="/2016/03/07/solr-cache/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/07/solr-facet/" class="post-title-link">Solr Facet</a></h2><div class="post-time">Mar 7, 2016</div><div class="post-content"></div><a href="/2016/03/07/solr-facet/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/05/connection-pool/" class="post-title-link">Druid、BasicDataSource连接池配置参考</a></h2><div class="post-time">Mar 5, 2016</div><div class="post-content"></div><a href="/2016/03/05/connection-pool/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/02/yarn-essentials/" class="post-title-link">Yarn 理解</a></h2><div class="post-time">Mar 2, 2016</div><div class="post-content"></div><a href="/2016/03/02/yarn-essentials/" class="read-more">...more</a></article></li></ul></section><footer><div class="paginator"><a href="/page/2/" class="next">NEXT</a></div><div data-thread-key="index.html" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;

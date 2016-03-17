@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Solr基础 · foojolt</title><meta name="description" content="Solr基础 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Solr基础</h1><div class="post-time">Mar 7, 2016</div><div class="post-content"><h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>基本概念：</p>
+<pre><code>Document：代表一篇文档，相当于数据表的一行记录
+Field：文档的属性，相当于数据表的列。一个Document包含一个或多个列。
+Index：索引，这里指倒排索引，一个 Index包含一个或多个 Document
+</code></pre><p>Schema：在索引Document之前，需要给出一个schema.xml文件，用于描述：</p>
+<pre><code>Document有哪些Fields，类型是什么
+哪个Fields是主键
+哪些Fields是必须的
+如何索引和查询Fields
+</code></pre><p>Field的类型：支持自定义类型</p>
+<pre><code>float,double,long,date,text
+</code></pre><p>定义一个Field：</p>
+<pre><code>name：名称
+type：类型
+indexed：是否加入倒排索引
+store：是否保存原文
+multiValued：是否包含多值
+</code></pre><p>Analysis过程：</p>
+<pre><code>indexed：true 的Fields，都要经过一系列的分词、过滤等过程。也只有index过的field，才能参与搜索
+</code></pre><p>是否保存：</p>
+<pre><code>保存Fields的原始内容（而不是Analysis之后的值）,会增加索引文件的大小，从而降低查询速度。
+一个 indexed:false 的字段，也可以 stored: true
+</code></pre><p>与 lucene的关系：</p>
+<pre><code>lucene是solr的内核引擎
+</code></pre><p>core:</p>
+<pre><code>solr core 代表一堆的配置文件（solrconfig.xml schema.xml）、 事务处理的log、 以及索引文件。 多个core可以加载到同一个solr实例中。 
+</code></pre><h3 id="Solr的查询语法"><a href="#Solr的查询语法" class="headerlink" title="Solr的查询语法"></a>Solr的查询语法</h3><p>基本的匹配：一个、多个关键词，多个Field匹配，多个条件组合</p>
+<pre><code>title:foo
+title: &quot;foo bar&quot;
+title: &quot;foo bar&quot; AND body: &quot;fox&quot;
+( title: foo ADN body: fox ) OR title:fox
+title:foo and -title:fox
+</code></pre><p>模糊匹配：* 表示0个或多个任意字符</p>
+<pre><code>title:foo*
+title:foo*bar
+</code></pre><p>距离匹配：两个单词的距离差4个单词以内，需要Solr DisMax 或 eDisMax 查询分析器</p>
+<pre><code>title:&quot;foo bar&quot;~4
+</code></pre><p>范围匹配：</p>
+<pre><code>mod_date:[ 201301 TO 201407 ]
+</code></pre><p>Boosts: 可以人为设定哪个关键词更重要，影响结果文档的排序</p>
+<pre><code>(title:foo OR title:bar)^1.5 (body:foo OR body:bar)
+</code></pre><p>其他与lucene之外的功能：</p>
+<pre><code>field:[* TO 100]
+field:[100 TO *]
+field:[* TO *]
+-inStock:false 只包含一个非条件
+-field:[* TO *] 某个field没有值
+_val_:&quot;recip(rord(myfield),1,2,3)&quot; 指定查询函数
+_query_:&quot;{!dismax qf=myfield}how now brown cow&quot; 指定query parser
+</code></pre><h3 id="实例研究"><a href="#实例研究" class="headerlink" title="实例研究"></a>实例研究</h3><p>启动一个样例：</p>
+<pre><code>bin/solr -e techproducts
+这个命令启动了solr:8983，并将一些文档加入索引
+</code></pre><p>配置文件地址： example/techproducts/solr/techproducts/conf/managed-schema</p>
+<pre><code>bin/solr status 查看状态
+
+cd example/exampledocs
+java -Dc=techproducts -jar post.jar sd500.xml 本地索引文件
+</code></pre><p>两种方式添加索引：</p>
+<pre><code>HTTP
+Native client
+</code></pre><p>查询：可以指定获取那些字段</p>
+<pre><code>http://localhost:8983/solr/techproducts/select?q=sd500&amp;wt=json
+http://localhost:8983/solr/techproducts/select?q=inStock:false&amp;wt=json&amp;fl=id,name
+</code></pre><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><pre><code>solrconfig.xml 配置dataDir requestHandler cache等（包括DefaultSearchField的配置）
+managed-schema 定义schema，支持动态字段，支持copy-field
+</code></pre><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li>点击solr admin界面上的 optimize， 做了什么事情？</li>
+<li>那几个缓存是什么意思？ <a href="http://www.solrtutorial.com/solrconfig-xml.html#cache" target="_blank" rel="external">solrconfig</a></li>
+<li>facet 查询的概念, 以及其他的查询方式？</li>
+<li><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3></li>
+</ol>
+<p><a href="http://solr-vs-elasticsearch.com" target="_blank" rel="external">Solr ElasticSearch对比</a></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.solrtutorial.com/solr-query-syntax.html" target="_blank" rel="external"> Toturial</a></p>
+<p>end</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/07/vim-tips/" class="prev">PRVE</a><a href="/2016/03/07/solr-cache/" class="next">NEXT</a></div><div data-thread-key="2016/03/07/solr-basics/" data-title="Solr基础" data-url="http://foojolt.github.io/2016/03/07/solr-basics/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

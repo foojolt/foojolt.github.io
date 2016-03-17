@@ -1,0 +1,63 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> foojolt</title><meta name="description" content="A Blog Powered By Hexo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link active">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><ul class="home post-list"><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/02/hdfs-flow/" class="post-title-link">HDFS 理解</a></h2><div class="post-time">Mar 2, 2016 （最新）</div><div class="post-content"><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><p>廉价机器组成集群，系统具备容错能力</p>
+<blockquote>
+<p>HDFS 集群中数据节点可能随时宕机，主节点能通过心跳及时发现故障，并启动文件块恢复。主节点对内存要求高，因为元数据信息要保存在内存中。</p>
+</blockquote>
+<p>适合批量分块、一次写多次读</p>
+<blockquote>
+<p>不像POSIX文件系统，常常流式从头读到尾，随机修改内容等，HDFS文件只支持追加到末尾。单次读取延时高，但批量任务可以通过多个block分块并发读取提高吞吐量。</p>
+</blockquote>
+<p>将运算移到数据的附近，而不是相反</p>
+<blockquote>
+<p>HDFS数据节点往往承担计算任务，调度器会就近分配计算任务。比如MapReduce任务，每个Map任务最好在分片本地进行。但Reduce还是免不了要移动中间数据到计算节点。</p>
+</blockquote>
+<h3 id="HDFS-架构图"><a href="#HDFS-架构图" class="headerlink" title="HDFS 架构图"></a>HDFS 架构图</h3><p><img src="/images/hdfsarchitecture.png" alt="Hdfs architecture"></p>
+<h3 id="Namenode"><a href="#Namenode" class="headerlink" title="Namenode"></a>Namenode</h3><p>Namenode保存元数据信息，具体回答两个问题：</p>
+<blockquote>
+<ul>
+<li>filename-&gt;block sequence (namespace) 文件由哪些block组成</li>
+<li>block-&gt;machinelist (“inodes”) 这些block保存在哪些机器上</li>
+</ul>
+<p>namespace信息就是一颗文件树，所有数据放到内存中，接受各种增删改查的请求； inodes 信息可能由于故障恢复、Balance等操作发生变化</p>
+</blockquote>
+<h4 id="Namenode的启动过程"><a href="#Namenode的启动过程" class="headerlink" title="Namenode的启动过程"></a>Namenode的启动过程</h4><ol>
+<li>读取fsimage并构造内存版本的元数据信息</li>
+<li>读取editlog，并应用可能的元数据修改</li>
+<li>写新的 checkpoint (fsimage’ + editlog)</li>
+<li>维持在安全模式下（可读，拒绝增删改），直到收到足够多的、来自Datanode的block报告</li>
+</ol>
+<p>启动过程可能存在的问题：</p>
+<ol>
+<li><p>editlog太多，导致合并花费时间很长；于是社区开发了 secondary-namenode 来定期合并editlog，生成新的fsimage。社区有另外一种叫法： checkpoint-namenode。这不是一个高可用（HA）方案。<br><img src="/images/secondary-namenode.png" alt="secondary-namenode"></p>
+</li>
+<li><p>fsimage太大，内存装不下。hdfs federation分卷可以解决这个问题。</p>
+</li>
+</ol>
+<h4 id="Namenode-高可用方案"><a href="#Namenode-高可用方案" class="headerlink" title="Namenode 高可用方案"></a>Namenode 高可用方案</h4><p><img src="/images/hdfs-ha.png" alt="hdfs-ha"><br>这个方案的核心：</p>
+<ol>
+<li>依赖共享存储来同步写操作。一般认为高端存储的可靠性要高于服务器。但这个也是单点。</li>
+<li>DN同时向Active和Standby NN汇报块状态</li>
+<li>依赖Zeekeeper来实现主备切换。FailoverController是单独的进程，监控NN状态</li>
+<li>防<a href="http://en.wikipedia.org/wiki/Split-brain_`(computing`" target="_blank" rel="external">脑裂</a>)措施：共享存储只支持来自一个NN的更新操作；DN只执行来自一个NN的更新命令；Client只同时跟一个NN通信</li>
+</ol>
+<h4 id="Hdfs-federation"><a href="#Hdfs-federation" class="headerlink" title="Hdfs federation"></a>Hdfs federation</h4><p><img src="/images/hdfs-federation.jpg" alt="Hdfs federation"></p>
+<p>这个方案的核心：</p>
+<ol>
+<li>就像Linux文件系统一样，多个NN可以挂在不同的子目录下，各自负责该子目录下的元数据管理；彼此独立。</li>
+<li>多个NN共享DN的块存储。DN可向多个NN汇报块状态</li>
+</ol>
+<h3 id="HDFS文件读过程"><a href="#HDFS文件读过程" class="headerlink" title="HDFS文件读过程"></a>HDFS文件读过程</h3><p><img src="/images/hdfs-read.png" alt="Hdfs read"></p>
+<h3 id="HDFS文件写过程"><a href="#HDFS文件写过程" class="headerlink" title="HDFS文件写过程"></a>HDFS文件写过程</h3><p><img src="/images/hdfs-write.png" alt="Hdfs write"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://github.com/apache/hadoop" target="_blank" rel="external">Hadoop源代码</a></p>
+<p><a href="http://zh.hortonworks.com/blog/understanding-namenode-startup-operations-in-hdfs/" target="_blank" rel="external">understanding-namenode-startup-operations-in-hdfs</a></p>
+<p><a href="http://www.infoq.com/cn/articles/hadoop-2-0-namenode-ha-federation-practice-zh" target="_blank" rel="external">namenode ha &amp; federation</a></p>
+</div></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/hadoop-cmds/" class="post-title-link">hadoop 常用命令</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/hadoop-cmds/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/hadoop-ports/" class="post-title-link">hadoop 端口解读</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/hadoop-ports/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/blog-start/" class="post-title-link">5步搭建个人免费博客</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/blog-start/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/git-tips/" class="post-title-link">Git技巧</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/git-tips/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/bash-tricks/" class="post-title-link">Bash技巧</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/bash-tricks/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/03/01/java-manifest/" class="post-title-link">Java的Manifest文件</a></h2><div class="post-time">Mar 1, 2016</div><div class="post-content"></div><a href="/2016/03/01/java-manifest/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/02/29/leap-year/" class="post-title-link">写程序判断闰年</a></h2><div class="post-time">Feb 29, 2016</div><div class="post-content"></div><a href="/2016/02/29/leap-year/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/02/29/oauth/" class="post-title-link">OAuth详细解读</a></h2><div class="post-time">Feb 29, 2016</div><div class="post-content"></div><a href="/2016/02/29/oauth/" class="read-more">...more</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/02/29/mac-tips/" class="post-title-link">Mac小技巧</a></h2><div class="post-time">Feb 29, 2016</div><div class="post-content"></div><a href="/2016/02/29/mac-tips/" class="read-more">...more</a></article></li></ul></section><footer><div class="paginator"><a href="/" class="prev">PRVE</a><a href="/page/3/" class="next">NEXT</a></div><div data-thread-key="page/2/index.html" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

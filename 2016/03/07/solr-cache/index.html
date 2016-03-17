@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Solr Cache · foojolt</title><meta name="description" content="Solr Cache - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Solr Cache</h1><div class="post-time">Mar 7, 2016</div><div class="post-content"><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>三种类型的缓存：</p>
+<pre><code>filter-query-cache, query-cache, document-cache
+</code></pre><p>一个query cache缓存占用内存估计： </p>
+<pre><code>查询字符串本身占 80 byte
+平均每个查询返回 10000 个结果，每个结果就是 8 byte（document id）, ~ 80KB
+</code></pre><p>一个 filter cache缓存占用内存估计： </p>
+<pre><code>查询字符串本身占 80 byte
+假设共有100万偏文档，用一个bit表示一个文档，需要 100万/8 = 125 KB
+保存1000个fq缓存，需要 120MB内存
+</code></pre><h3 id="filter-cache"><a href="#filter-cache" class="headerlink" title="filter cache"></a>filter cache</h3><p>假设有filter query查询：</p>
+<pre><code>/select?q=velvet+pants&amp;fq=category:apparel
+</code></pre><p>与组合查询的区别：</p>
+<pre><code>/select?q=(velvet+pants)+AND+category:apparel
+</code></pre><ol>
+<li>fq 本身不会改变最终排序结果，而AND查询会</li>
+<li>可以使用 velvet+pants 的 query cache</li>
+<li>可以使用 category:apparel 的 filter cache</li>
+<li>有一个或多个fq存在的情况下，先进行fq</li>
+</ol>
+<p>documnet cache 就是 document id 到 document 对象的映射。不如 query cache 和 filter cache 那么有效。</p>
+<h3 id="增加缓存的考虑"><a href="#增加缓存的考虑" class="headerlink" title="增加缓存的考虑"></a>增加缓存的考虑</h3><ol>
+<li>OS本身有文件系统缓存，分配的内存是从OS抢过去的</li>
+<li>缓存过大，增加JVM GC压力</li>
+</ol>
+<h3 id="缓存性能"><a href="#缓存性能" class="headerlink" title="缓存性能"></a>缓存性能</h3><p>主要指标：</p>
+<pre><code>cumulative_inserts
+cumulative_evictions
+cumulative_hitratio
+</code></pre><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li>为什么 query cache 和 fq cache 用的缓存记录方式不一样？</li>
+<li>每一种cache的key 和 value ?</li>
+<li></li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://teaspoon-consulting.com/articles/solr-cache-tuning.html" target="_blank" rel="external">Solr cache tuning</a></p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/07/solr-basics/" class="prev">PRVE</a><a href="/2016/03/07/solr-facet/" class="next">NEXT</a></div><div data-thread-key="2016/03/07/solr-cache/" data-title="Solr Cache" data-url="http://foojolt.github.io/2016/03/07/solr-cache/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

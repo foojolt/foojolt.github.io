@@ -1,0 +1,54 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Jvm 性能分析 · foojolt</title><meta name="description" content="Jvm 性能分析 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Jvm 性能分析</h1><div class="post-time">Mar 14, 2016</div><div class="post-content"><h3 id="性能分析方法"><a href="#性能分析方法" class="headerlink" title="性能分析方法"></a>性能分析方法</h3><p>自顶（APP）向下 自底（CPU／内存）向上</p>
+<h3 id="CPU相关"><a href="#CPU相关" class="headerlink" title="CPU相关"></a>CPU相关</h3><p>vmstat 主要观察调度队列度大小，cpu interrupt/context switch, cpu usage等相关数据</p>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="external">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br>CAS compare and swap<br>同步的原理： monitor 对象<br>锁状态存储在对象头中</p>
+<p>锁的升级：<br>偏向锁，默认开启，因为发现大部分情况下，锁都是由同一个线程获得<br>自旋锁，不会阻塞，需要轮询；在多核CPU的情况下，可以避免让步上下文切换<br>重量级锁，线程阻塞</p>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>compare and swap: 用在 atomic, incrementAndGet， 循环比较</p>
+<p>AtomicReference 可以用来实现无锁的Stack等。</p>
+<p>CAS循环探测的问题：</p>
+<ol>
+<li>在并发较高时，多数线程在探测，影响性能</li>
+<li>有时候compare返回true，可不能swap，可能状态已经变了（比如一个stack只保存head，实际上同一个head插入来两次）</li>
+</ol>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><p>Concurrency: A condition that exists when at least two threads are making progress. A more generalized form of parallelism that can include time-slicing as a form of virtual parallelism. 逻辑上</p>
+<p>Parallelism: A condition that arises when at least two threads are executing simultaneously.  物理上的</p>
+<h3 id="类加载"><a href="#类加载" class="headerlink" title="类加载"></a>类加载</h3><p>bootstrap classloader<br>ext classloader<br>system classloader</p>
+<p>初始化加载器： loadClass() 会掉用findClass,比如URLClassLoader，如果没找到资源，直接跑出classNotFoundException</p>
+<p>定义类加载器: defineClass() 通过读取 byte[]，如果发现没有指定的类定义，则抛出NoClassDefFoundError</p>
+<p>线程上下文加载器：应对SPI的场景。</p>
+<p>Class.forName:简便方法</p>
+<blockquote>
+<p>Class&lt;?&gt; caller = Reflection.getCallerClass();<br>return forName0(className, true, ClassLoader.getClassLoader(caller), caller);<br>附： jdbc4以前，需要 Class.forName来加载指定的Driver，因为这样会初始化这个类：Driver就是这个时候，将自己注册到DriverManager的；jdbc4在DriverManager.getConnection getDrivers方法中，会去找 services/java.sql.Driver文件并加载所有的Driver，需要用到线程上下文类加载器</p>
+</blockquote>
+<p>链接：<br>验证 可能抛出VerifyError<br>准备 准备静态域并设为默认值<br>解析 处理符号表中有其他的类引用，可能导致其他类被加载</p>
+<p>初始化：<br>初始化静态域和执行静态代码</p>
+<h3 id="jvm线程管理"><a href="#jvm线程管理" class="headerlink" title="jvm线程管理"></a>jvm线程管理</h3><p>线程模型： 和OS线程一一对应</p>
+<p>两种方式创建线程：<br>new Thread().start(): JavaThread(C++) -&gt; OSThread<br>attach一个本地线程到jvm: 比如 CreateVM 时，是首先创建一个本地线程，做必要的初始化之后，再attach</p>
+<p>从JVM角度看Thread State:<br>new, in_java, in_vm, blocked( monitor_wait, condition_var_wait, object_wait )</p>
+<p>安全点：<br>比如GC的时候</p>
+<h3 id="JVM-C-heap-manage"><a href="#JVM-C-heap-manage" class="headerlink" title="JVM C++ heap manage"></a>JVM C++ heap manage</h3><p>Arena ChunkPool 自定义的内存分配，而不是 malloc</p>
+<p>###JVM致命错误处理</p>
+<p>-XX:ErrorFile=<br>-XX:+HeapDumpOnOutOfMemoryError<br>-XX:HeapDumpPath=<pathname></pathname></p>
+<h3 id="jvm参数"><a href="#jvm参数" class="headerlink" title="jvm参数"></a>jvm参数</h3><p>标准参数，扩展参数，不稳定的参数</p>
+<p>PERM | OLD | NEW[eden ss1 ss2]</p>
+<p>-Xloggc:filename<br>-Xms:初始堆大小<br>-Xmx:最大堆大小<br>-XX:NewSize=n:设置年轻代大小<br>-XX:NewRatio=n:设置年轻代和年老代的比值。如:为3，表示年轻代与年老代比值为1：3，年轻代占整个年轻代年老代和的1/4<br>-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。注意Survivor区有两个。如：3，表示Eden：Survivor=3：2，一个Survivor区占整个年轻代的1/5<br>-XX:MaxPermSize=n:设置持久代大小</p>
+<h3 id="常见诊断工具"><a href="#常见诊断工具" class="headerlink" title="常见诊断工具"></a>常见诊断工具</h3><p> jinfo pid 获取jvm的启动参数<br> jmap －heap pid<br> jmap -dump:live,format=b,file=heap.bin pid live表示先gc<br> jstack pid</p>
+<p> jstat -gcutil pid time_range sample_count<br> S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   </p>
+<h3 id="vmstat-命令解析"><a href="#vmstat-命令解析" class="headerlink" title="vmstat 命令解析"></a>vmstat 命令解析</h3><h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU:"></a>CPU:</h2><p>r 调度队列的大小，参考cpu核数<br>b 阻塞的任务数</p>
+<h2 id="Memory"><a href="#Memory" class="headerlink" title="Memory: "></a>Memory: </h2><p>swapd 交换内存大小<br>free<br>buff<br>cache</p>
+<h2 id="Swap"><a href="#Swap" class="headerlink" title="Swap:"></a>Swap:</h2><p>si<br>so</p>
+<h2 id="io"><a href="#io" class="headerlink" title="io"></a>io</h2><p>bi<br>bo</p>
+<h2 id="system"><a href="#system" class="headerlink" title="system "></a>system </h2><p>in (interrupt per second)<br>cs (context switch per second)</p>
+<h2 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h2><p>us<br>sy<br>id<br>wa (time wait for io)<br>st (unknown)</p>
+<p>top -H -p pid 查看线程<br>pstree -p pid 查看线程</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>《Java性能调优》</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/17/redis/" class="prev">PRVE</a><a href="/2016/03/14/java-essentials/" class="next">NEXT</a></div><div data-thread-key="2016/03/14/jvm/" data-title="Jvm 性能分析" data-url="http://foojolt.github.io/2016/03/14/jvm/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>
