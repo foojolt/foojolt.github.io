@@ -1,4 +1,7 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Redis 及缓存 · foojolt</title><meta name="description" content="Redis 及缓存 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Redis 及缓存</h1><div class="post-time">Mar 17, 2016</div><div class="post-content"><h3 id="缓存系统"><a href="#缓存系统" class="headerlink" title="缓存系统"></a>缓存系统</h3><p>redis特点：</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Redis 及缓存 · foojolt</title><meta name="description" content="Redis 及缓存 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Redis 及缓存</h1><div class="post-time">Mar 17, 2016</div><div class="post-content"><h3 id="Redis其他"><a href="#Redis其他" class="headerlink" title="Redis其他"></a>Redis其他</h3><p>###LRU</p>
+<p>maxmemory 2G<br>maxmemory-policy allkeys-lru<br>maxmemory-samples 10</p>
+<p>redis的行为是在每次add key之后，检查是否超过 max memory, 超过则启动一个 sample 算法，去除更老的key.</p>
+<h3 id="缓存系统"><a href="#缓存系统" class="headerlink" title="缓存系统"></a>缓存系统</h3><p>redis特点：</p>
 <ol>
 <li>binlog， 故障恢复</li>
 <li>持久化</li>
@@ -19,7 +22,7 @@
 <li>codis group概念（ 包含至少一个master/slave)</li>
 <li>pre-sharding: 1024个分片，分片信息保存在zookeeper中<br>redis-client -&gt; codis proxy…-&gt; [ codis-grp1 (redis-master, redis-slave1, redis-slave2,…) , codis-grp2,… ]</li>
 </ol>
-<h3 id="Redis-cluster"><a href="#Redis-cluster" class="headerlink" title="Redis cluster"></a>Redis cluster</h3><p>分为 16384 个槽，每个shard领取一部分；  16 * 1024 = 16384<br>用bitmap存储 node 和 shard的对应信息 （2K的bitmap）</p>
+<h3 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h3><p>分为 16384 个槽，每个shard领取一部分；  16 * 1024 = 16384<br>用bitmap存储 node 和 shard的对应信息 （2K的bitmap）</p>
 <h3 id="Redis-Sentinel"><a href="#Redis-Sentinel" class="headerlink" title="Redis-Sentinel"></a>Redis-Sentinel</h3><p>redis官方HA机制： 实现了一个类似 zookeeper 的主备选举机制<br>数据要写到master，读可以从slave读； 延时 ＋ 分裂时的数据丢失</p>
 <p>Sentinel 和 redis 节点分开部署，至少3个</p>
 <p>asynchronous replication 异步复制</p>
@@ -33,7 +36,7 @@
 <li>平衡性： 虚拟node，hash(node_ip#1),hash(node_ip#2) …</li>
 </ol>
 <p><a href="http://blog.csdn.net/cywosp/article/details/23397179" target="_blank" rel="external">http://blog.csdn.net/cywosp/article/details/23397179</a></p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/03/14/jvm/" class="next">NEXT</a></div><div data-thread-key="2016/03/17/redis/" data-title="Redis 及缓存" data-url="http://foojolt.github.io/2016/03/17/redis/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/18/hadoop-essentials/" class="prev">PRVE</a><a href="/2016/03/17/scala/" class="next">NEXT</a></div><div data-thread-key="2016/03/17/redis/" data-title="Redis 及缓存" data-url="http://foojolt.github.io/2016/03/17/redis/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;

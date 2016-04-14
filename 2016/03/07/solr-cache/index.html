@@ -26,13 +26,15 @@
 <pre><code>cumulative_inserts
 cumulative_evictions
 cumulative_hitratio
-</code></pre><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+</code></pre><h3 id="Solr-空间搜索"><a href="#Solr-空间搜索" class="headerlink" title="Solr 空间搜索"></a>Solr 空间搜索</h3><p>GeoHash: 将纬度和经度用二进制表示： 类似二分查找，每次根据落在二分的哪边标记为0或1，越分越细； 错位将经度和纬度放在一起；用类似base64编码。<br>问题：边界点可能hash的字符串会差别较大，搜索时，需要同时检索周边8个点。</p>
+<p><a href="http://tech.meituan.com/solr-spatial-search.html" target="_blank" rel="external">http://tech.meituan.com/solr-spatial-search.html</a></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
 <li>为什么 query cache 和 fq cache 用的缓存记录方式不一样？</li>
 <li>每一种cache的key 和 value ?</li>
 <li></li>
 </ol>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://teaspoon-consulting.com/articles/solr-cache-tuning.html" target="_blank" rel="external">Solr cache tuning</a></p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/03/07/solr-basics/" class="prev">PRVE</a><a href="/2016/03/07/solr-facet/" class="next">NEXT</a></div><div data-thread-key="2016/03/07/solr-cache/" data-title="Solr Cache" data-url="http://foojolt.github.io/2016/03/07/solr-cache/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/07/solr-facet/" class="prev">PRVE</a><a href="/2016/03/05/connection-pool/" class="next">NEXT</a></div><div data-thread-key="2016/03/07/solr-cache/" data-title="Solr Cache" data-url="http://foojolt.github.io/2016/03/07/solr-cache/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;

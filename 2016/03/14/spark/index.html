@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Spark essentials · foojolt</title><meta name="description" content="Spark essentials - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Spark essentials</h1><div class="post-time">Mar 14, 2016</div><div class="post-content"><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>RDD组成：</p>
+<ol>
+<li>分区列表</li>
+<li>分区计算函数</li>
+<li>父RDD依赖列表</li>
+<li>可选： key,value RDD的Partition函数</li>
+<li>可选： hdfs rdd的优选位置（preferred location）</li>
+</ol>
+<p>./bin/spark-shell  –master local[3]<br>val r = sc.parallelize( Array( (1,2), (2,3), (3,4), (3,5)  ), 4 )<br>r.toDebugString</p>
+<h3 id="RDD-API"><a href="#RDD-API" class="headerlink" title="RDD API"></a>RDD API</h3><p>计算split：<br>abstract def<br>compute(split: Partition, context: TaskContext): Iterator[T]</p>
+<p>Union组合RDD：<br>++(other: RDD[T]): RDD[T]</p>
+<p>值聚合：<br>def<br>aggregate<a href="zeroValue: U" target="_blank" rel="external">U</a>(seqOp: (U, T) ⇒ U, combOp: (U, U) ⇒ U)(implicit arg0: ClassTag[U]): U<br>r.aggregate( “” )( ( t, a ) =&gt; t + a._1.toString, ( x, y ) =&gt; x + y  )</p>
+<p>groupByKey有内存警告</p>
+<h3 id="Job运行原理"><a href="#Job运行原理" class="headerlink" title="Job运行原理"></a>Job运行原理</h3><p>Transformation 只是构造DAG，不做其他事情。通过sc.runJob 物化<br>执行优化：</p>
+<ol>
+<li>transformation 可以 pipeline</li>
+<li>graph可能由于cache/checkpoint被截断，之前的不用计算了</li>
+</ol>
+<p>Job is list of stages<br>    stage is list of tasks ( stage内的task彼此无依赖 )</p>
+<p>shuffle happens between stages</p>
+<p>Job优化：</p>
+<ol>
+<li>减少 shuffle: 比如用reduceByKey而不是 groupByKey</li>
+<li>早点调用filter</li>
+<li>并发度控制： 太多调度不过来（同时运行的task有限）；太少就类似单机了</li>
+<li>选择序列化器： 比如 kryo, 用在 cache 和 shuffle</li>
+<li>选择cache级别： memory_only，用原生的jvm序列化；memory_only_ser 可以减少内存使用； memory_and_disk 容错性增强，减少重复计算</li>
+<li>采用lzf压缩，提高性能</li>
+<li>启用 speculative 执行预防stragglers: 有的任务运行慢，可以开启探测，重新调度；可以配置探测间隔；乘数（大于乘数＊中位数的任务，将重新跑）；完成的任务数比例，确保在大部分任务跑完时才探测</li>
+</ol>
+<p>rdd.toDebugString 查看DAG</p>
+<h3 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h3><p>压缩：用CPU换IO<br>mapreduce压缩可用在三个阶段：</p>
+<ol>
+<li>输入文件</li>
+<li>map输出</li>
+<li>reduce输出</li>
+</ol>
+<p>算法：<br>lzo  支持分片，压缩速度快；但压缩比低(snapy/lzf 和 lzo 类似)<br>bzip2 支持分片，压缩比高；但压缩慢</p>
+<h3 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle</h3><p>shuffle中间文件的问题：<br>个数是 t * R ： 每个 executor 最多 t个task同时运行(一般等于core_num)</p>
+<p>shuffle默认启用sort，之前的版本有hash版本的，因为spark认为sort带来额外开销。但hash需要放内存中；sort是外部排序</p>
+<p>默认采用netty传输数据。</p>
+<p><a href="http://jerryshao.me/architecture/2014/01/04/spark-shuffle-detail-investigation/" target="_blank" rel="external">http://jerryshao.me/architecture/2014/01/04/spark-shuffle-detail-investigation/</a></p>
+<h3 id="Akka-RPC"><a href="#Akka-RPC" class="headerlink" title="Akka RPC"></a>Akka RPC</h3></div></article></div></section><footer><div class="paginator"><a href="/2016/03/14/everstring/" class="prev">PRVE</a><a href="/2016/03/14/java-essentials/" class="next">NEXT</a></div><div data-thread-key="2016/03/14/spark/" data-title="Spark essentials" data-url="http://foojolt.github.io/2016/03/14/spark/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

@@ -2,51 +2,170 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://foojolt.github.io/2016/03/14/jvm/</loc>
+    <loc>http://foojolt.github.io/2016/03/28/deep-learning/</loc>
     
-    <lastmod>2016-03-17T09:40:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://foojolt.github.io/2016/03/14/java-essentials/</loc>
-    
-    <lastmod>2016-03-17T08:29:18.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://foojolt.github.io/2016/03/17/redis/</loc>
-    
-    <lastmod>2016-03-17T06:20:55.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://foojolt.github.io/2016/03/07/solr-basics/</loc>
-    
-    <lastmod>2016-03-10T03:00:18.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://foojolt.github.io/2016/02/29/mac-tips/</loc>
-    
-    <lastmod>2016-03-09T12:29:18.000Z</lastmod>
+    <lastmod>2016-04-14T02:33:21.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://foojolt.github.io/2016/03/08/python-tips/</loc>
     
-    <lastmod>2016-03-09T01:42:25.000Z</lastmod>
+    <lastmod>2016-04-14T02:30:13.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/calendar/2016-03-28~.html</loc>
+    
+    <lastmod>2016-04-14T02:28:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/calendar/2016-03-23~27.html</loc>
+    
+    <lastmod>2016-04-14T02:28:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/07/solr-basics/</loc>
+    
+    <lastmod>2016-04-14T02:28:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/04/14/java-programming-guide/</loc>
+    
+    <lastmod>2016-04-14T02:28:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/30/scrapy/</loc>
+    
+    <lastmod>2016-04-14T02:28:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/23/ruby/</loc>
+    
+    <lastmod>2016-04-14T02:28:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/04/11/jvm-spec/</loc>
+    
+    <lastmod>2016-04-14T02:24:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/02/29/mac-tips/</loc>
+    
+    <lastmod>2016-04-13T09:19:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/calendar/2016-04-11.html</loc>
+    
+    <lastmod>2016-04-13T07:59:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/18/hadoop-essentials/</loc>
+    
+    <lastmod>2016-04-12T12:22:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/calendar/books.html</loc>
+    
+    <lastmod>2016-04-11T12:59:59.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/28/python-ml/</loc>
+    
+    <lastmod>2016-03-29T13:35:26.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/calendar/2016-03-26.html</loc>
+    
+    <lastmod>2016-03-26T23:07:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/14/everstring/</loc>
+    
+    <lastmod>2016-03-25T23:36:05.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/14/java-essentials/</loc>
+    
+    <lastmod>2016-03-22T05:58:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/17/redis/</loc>
+    
+    <lastmod>2016-03-21T11:55:43.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://foojolt.github.io/2016/03/07/solr-cache/</loc>
     
-    <lastmod>2016-03-08T02:07:28.000Z</lastmod>
+    <lastmod>2016-03-21T09:30:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/21/os-tcpip/</loc>
+    
+    <lastmod>2016-03-21T08:35:06.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/21/mysql/</loc>
+    
+    <lastmod>2016-03-21T07:45:18.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/14/spark/</loc>
+    
+    <lastmod>2016-03-18T09:45:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/17/scala/</loc>
+    
+    <lastmod>2016-03-18T03:59:57.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://foojolt.github.io/2016/03/14/jvm/</loc>
+    
+    <lastmod>2016-03-17T09:40:47.000Z</lastmod>
     
   </url>
   

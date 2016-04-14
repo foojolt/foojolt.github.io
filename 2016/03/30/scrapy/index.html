@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> scrapy · foojolt</title><meta name="description" content="scrapy - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">scrapy</h1><div class="post-time">Mar 30, 2016</div><div class="post-content"><h3 id="scrapy"><a href="#scrapy" class="headerlink" title="scrapy"></a>scrapy</h3><pre><code>big python project management
+</code></pre><p>taobao spider:<br><a href="http://www.slideshare.net/cjhacker/spider-12966847" target="_blank" rel="external">http://www.slideshare.net/cjhacker/spider-12966847</a><br>webkit server  -&gt; scrapy -&gt; scheduler( fifo, priority queue )</p>
+<p><a href="http://www.bjhee.com/scrapy.html" target="_blank" rel="external">http://www.bjhee.com/scrapy.html</a><br>extend scrapy.Item -&gt; this is the result<br>extend CrawlSpider -&gt; parse_item()  generate item from http response, support xpath</p>
+<h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><pre><code>may save as json:
+</code></pre><p>scrapy crawl my_crawler -o my_crawler.json -t json</p>
+<pre><code>output utf8, not unicode escape
+</code></pre><p>item[‘title’] = title.encode(“utf8”)</p>
+<pre><code>scrapy shell
+</code></pre><p>fetch( url )<br>response.body<br>from scrapy import Selector<br>sel = Selector(text=’’)</p>
+<pre><code>&apos;ascii&apos; codec can&apos;t decode byte 0xe5 in position 0
+</code></pre><p>default_encoding = ‘utf-8’<br>if sys.getdefaultencoding() != default_encoding:<br>    reload(sys)<br>    sys.setdefaultencoding(default_encoding)</p>
+<pre><code>class SearchSpider(CrawlSpider):
+</code></pre><p>override def parse(self, response): to parse the start url’s content<br>use rules = [ Rule( LinkExtractor(), follow=False, callback=’parse’ ) ]<br>    to parse link by callback=xxx</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/04/11/jvm-spec/" class="prev">PRVE</a><a href="/2016/03/28/deep-learning/" class="next">NEXT</a></div><div data-thread-key="2016/03/30/scrapy/" data-title="scrapy" data-url="http://foojolt.github.io/2016/03/30/scrapy/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

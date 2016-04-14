@@ -1,4 +1,22 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Java有趣知识 · foojolt</title><meta name="description" content="Java有趣知识 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Java有趣知识</h1><div class="post-time">Mar 14, 2016</div><div class="post-content"><h3 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h3><h3 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h3><p>内存模型确定了一些规则：线程对内存的访问如何排序，以及如何确保内存对线程可见<br>包括： 重排序，内存可见性，happens-before</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Java有趣知识 · foojolt</title><meta name="description" content="Java有趣知识 - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Java有趣知识</h1><div class="post-time">Mar 14, 2016</div><div class="post-content"><h3 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h3><p>MappedByteBuffer:</p>
+<p>从 FileChannel创建， 可以是 RandomAccessFile，支持读写； 模式可以是 只读／读写／私有， 私有的修改不会刷回文件中。</p>
+<h3 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h3><p>linux io 模型</p>
+<pre><code>blocking    non-blocking
+-------------------------
+</code></pre><p>synchronous  | old io       app多次请求，直到条件满足<br>asynchronous | select/epoll       AIO</p>
+<p>select 与 old io 的区别： old io是对IO调用阻塞； select 是对事件通知阻塞</p>
+<p>nodejs使用libeio，默认内部使用4个IO线程。</p>
+<p>select/poll，都是提供一堆fd和关心的事件给内核；然后循环阻塞探测到状态变化时，再逐个检查原来的fd，看看哪个有变化；<br>poll和select的区别：用了一个结构体；没有1024数量限制<br>epoll返回有变化的fd集合。而且不用每次拷贝fd到内核（后续调用使用 epollfd ）</p>
+<p>java: bio, nio, aio(jdk7)</p>
+<p>AIO: app侧提供buffer,回调函数callback； callback在内核栈上执行<br>API：<br>aio_read    请求异步读操作<br>aio_error   检查异步请求的状态<br>aio_return  获得完成的异步请求的返回状态<br>…</p>
+<p><a href="https://www.ibm.com/developerworks/cn/linux/l-async/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/linux/l-async/</a></p>
+<h3 id="netty"><a href="#netty" class="headerlink" title="netty"></a>netty</h3><p>channel -&gt; channel pipeline -&gt; channelHandlers </p>
+<p>network read -&gt; upstream handlers<br>io request -&gt; downstream handlers -&gt; sink</p>
+<p>netty 3的问题： 每次有IO消息，就产生event，增加GC时间<br>netty 4: 不在包装event，而是调用相应的接口处理方法； 开发自己的malloc，不用填充0；自己管理，减少gc</p>
+<p><a href="https://m.oschina.net/blog/178561" target="_blank" rel="external">https://m.oschina.net/blog/178561</a></p>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p>行为：<br>coreSize -&gt; taskQueue -&gt; maxSize<br>只要coreSize没有达到，就创建新的线程；<br>否则任务进队列: 判断offer是否返回true;<br>进队列失败，且 &lt; maxSize，创建新的线程；<br>否则，调用 handler处理。</p>
+<p>newFixedThreadPool: core==max, 无边界的 LinkedBlockingQueue，只要大于core，就无限制排队<br>newCachedThreadPool: SynchronousQueue，执行任务为0，立即入队列；否则失败，创建新的线程执行任务。<br>ArrayBlockingQueue: 考虑用这个，一旦队列满，就停止入队；降低系统负载；</p>
+<h3 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h3><p>内存模型确定了一些规则：线程对内存的访问如何排序，以及如何确保内存对线程可见<br>包括： 重排序，内存可见性，happens-before</p>
 <p>重排序包括： 编译器重排序 CPU重排序 缓存导致的写入主内存重排序</p>
 <p>可见性： 内存屏障实现</p>
 <p>happens-before法则：<br>－ 程序次序法则：线程中的每个动作A都happens-before于该线程中的每一个动作B，其中，在程序中，所有的动作B都能出现在A之后。<br>－ 监视器锁法则：对一个监视器锁的解锁 happens-before于每一个后续对同一监视器锁的加锁。<br>－ volatile变量法则：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作。<br>－ 传递性：如果A happens-before于B，且B happens-before于C，则A happens-before于C<br>－ 对final语义的扩展保证一个对象的构建方法结束前，所有final成员变量都必须完成初始化（的前提是没有this引用溢出）。<br>－ 线程启动法则：在一个线程里，对Thread.start的调用会happens-before于每个启动线程的动作。<br>－ 线程终结法则：线程中的任何动作都happens-before于其他线程检测到这个线程已经终结、或者从Thread.join调用中成功返回，或Thread.isAlive返回false。<br>－ 中断法则：一个线程调用另一个线程的interrupt happens-before于被中断的线程发现中断。<br>－ 终结法则：一个对象的构造函数的结束happens-before于这个对象finalizer的开始。</p>
@@ -16,7 +34,7 @@
     this.value = value; 
 } 
 </code></pre><p> }</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/03/14/jvm/" class="prev">PRVE</a><a href="/2016/03/08/python-tips/" class="next">NEXT</a></div><div data-thread-key="2016/03/14/java-essentials/" data-title="Java有趣知识" data-url="http://foojolt.github.io/2016/03/14/java-essentials/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/14/spark/" class="prev">PRVE</a><a href="/2016/03/14/jvm/" class="next">NEXT</a></div><div data-thread-key="2016/03/14/java-essentials/" data-title="Java有趣知识" data-url="http://foojolt.github.io/2016/03/14/java-essentials/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;

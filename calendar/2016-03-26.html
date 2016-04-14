@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>  · foojolt</title><meta name="description" content=" - foojolt"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/foojolt.jpeg"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/foojolt.jpeg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="http://weibo.com/xxl2012" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/foojolt" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title"></h1><div class="post-time">Mar 27, 2016</div><div class="post-content"><h3 id="一天安排"><a href="#一天安排" class="headerlink" title="一天安排"></a>一天安排</h3><pre><code>下午 5 点学车
+
+写工作总结
+
+上午出去春游
+
+提升自己的水平
+
+读书总结
+</code></pre><p>title:  2016-3-21～3-25 周报<br>to:  @冯永亮Frank @刘凌海  @袁杰Jarod @黄虎平huepy @冯院华hardy  @徐瑶佳Gaven @郑辉harry @鲁文龙Anderson  @肖培林 @林松Eric  @深圳研发中心  @北京研发中心  </p>
+<p>本周主要工作：</p>
+<p>人脉分析demo系统开发， 企业画像技术研究</p>
+<ol>
+<li>根据上周的人脉设计方案，设计和实现算法的demo系统。<br>配置solr 的schema和core；<br>配置15s自动刷新index；<br>实现自动启动solr，并创建core，然后自动导入人脉数据；</li>
+</ol>
+<p>自动化spark离线分析：输入link和userinfo，算出二度人脉的正排和倒排表<br>spark在线计算： 实现在pyspark上运行的／基于python Falsk的rest服务<br>cache service： 使用 python 本地的hashmap结构模拟</p>
+<p>待实现：<br>web展示页面</p>
+<ol>
+<li>everstring 研究<br>研究everstring的运行模式：<br>首先是构建 11M 的企业画像，每个企业有 10K的特征。<br>然后对接客户的CRM或market自动化工具<br>分析并生成客户的“客户的model”<br>从11M的企业库中推荐潜在的客户</li>
+</ol>
+<p>everstring 数据来源： internet 爬取， 商业购买<br>国内互联网爬取： 阿里企业黄页（部分结构化）， 各大财经网站（非结构化的居多）</p>
+<ol>
+<li>初步设想<br>开始先做基于crm数据的内部推荐，即将纷享平台的客户的客户，推荐给纷享的客户经理。</li>
+</ol>
+<p>下周计划：<br>实现demo的web页面<br>设计企业画像的初步方案</p>
+</div></article></div></section><footer><div class="paginator"></div><div data-thread-key="calendar/2016-03-26.html" data-title="" data-url="http://foojolt.github.io/calendar/2016-03-26.html" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"foojolt"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://foojolt.github.io">foojolt</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-74439863-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?903647bb2221f65fb515f136517cc37f";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://foojolt.github.io/"/>
-  <updated>2016-03-17T06:20:55.000Z</updated>
+  <updated>2016-04-14T02:28:33.000Z</updated>
   <id>http://foojolt.github.io/</id>
   
   <author>
@@ -16,13 +16,344 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://foojolt.github.io/2016/04/14/java-programming-guide/"/>
+    <id>http://foojolt.github.io/2016/04/14/java-programming-guide/</id>
+    <published>2016-04-14T02:28:33.000Z</published>
+    <updated>2016-04-14T02:28:33.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;Java-编程军规&quot;&gt;&lt;a href=&quot;#Java-编程军规&quot; class=&quot;headerlink&quot; title=&quot;Java 编程军规&quot;&gt;&lt;/a&gt;Java 编程军规&lt;/h3&gt;&lt;p&gt;1 public方法参数的合法性检查应由方法本身负责，每个public方法必须保证自己的健壮性。 &lt;/p&gt;
+&lt;p&gt;2 调用方法获取返回结果后必须进行有效性校验，以确保后续代码在运行过程中不会抛出异常或产生逻辑错误。 &lt;/p&gt;
+&lt;p&gt;3 在进行数据库操作或IO操作时，必须确保资源在使用完毕后得到释放，并且必须确保释放操作在finally中进行。 &lt;/p&gt;
+&lt;p&gt;4 对于if…else if…(后续可能有多个else if…)这种类型的条件判断，最后必须包含一个else分支，避免出现分支遗漏，造成错误；每个switch-case语句都必须保证有default，避免出现分支遗漏，造成错误。 &lt;/p&gt;
+&lt;p&gt;5 在使用 Timer 或者 ScheduledThreadPoolExecutor 执行周期性任务时，实现Runnable接口必须在方法内捕获异常，避免因为异常抛出导致周期性住务失效，后续不会继续执行。&lt;/p&gt;
+&lt;p&gt;6 确定需要覆盖对象equals()方法时，必须同吋覆盖hashCode()方法。 &lt;/p&gt;
+&lt;p&gt;7 在进行精确计算时(例如：货币计算)避免使用float和double,浮点数计算都是不精确的，必须使用BigDecimal或者将浮点数运算转换为整型运算。&lt;/p&gt;
+&lt;p&gt;8 确保程序不再持有无用对象的引用，避免程序内存泄露。&lt;/p&gt;
+&lt;p&gt;9 对象比较必须使用equals方法，而不是”==”。&lt;/p&gt;
+&lt;p&gt;10 访问数组、List等容器内的元素时，必须首先检查下标是否越界，以杜绝下标越界异常的发生。&lt;/p&gt;
+&lt;p&gt;11 将对象存入HashSet，或作为key存入HashMap（或HashTable）后，必须确保该对象的hashcode值不变，避免因为hashcode值的变化导致不能从容器内删除该对象，进而引起内存泄露的问题。&lt;/p&gt;
+&lt;p&gt;12 在编码过程中，必须在适当的位置，以适当的级别打印日志，便于代码出现问题后进行定位分析。例如：方法入口，出口以Debug打印：异常分支使用ERROR,关键参数打印使用INFO。&lt;/p&gt;
+&lt;p&gt;13 避免在程序中使用魔鬼数字，必须用有意义的常量来标识。&lt;/p&gt;
+&lt;p&gt;14 将字符串转换为数字时必须处理NumberFormatException异常。 &lt;/p&gt;
+&lt;p&gt;15 在进行三个字符串（不包含三个）以上的串联操作时必须使用StringBuilder或StringBuffer，禁止使用“+”。&lt;/p&gt;
+&lt;p&gt;16 根据应用场景选择最适合的容器，避免因为容器选择不当造成程序性能问题。&lt;/p&gt;
+&lt;p&gt;17 必须在进行I/O操作时使用缓存。 &lt;/p&gt;
+&lt;p&gt;18 在程序中必须考虑对象重用，避免创建不必要的垃圾对象。 &lt;/p&gt;
+&lt;p&gt;19 对多线程访问的变量、方法，必须加锁保护，避免出现多线程并发访问引起的问题。&lt;/p&gt;
+&lt;p&gt;20 新起一个线程时，都要使用Thread.setName(“…”)设置线程名。 &lt;/p&gt;
+&lt;p&gt;21 线程使用时，要在代码框架中使用线程池，避免创建不可复用的线程。禁止在循环中创建新线程，否则会引起JVM资源耗尽。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Java-编程军规&quot;&gt;&lt;a href=&quot;#Java-编程军规&quot; class=&quot;headerlink&quot; title=&quot;Java 编程军规&quot;&gt;&lt;/a&gt;Java 编程军规&lt;/h3&gt;&lt;p&gt;1 public方法参数的合法性检查应由方法本身负责，每个public方法必须保证自
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>jvm 规范解读</title>
+    <link href="http://foojolt.github.io/2016/04/11/jvm-spec/"/>
+    <id>http://foojolt.github.io/2016/04/11/jvm-spec/</id>
+    <published>2016-04-11T03:07:14.000Z</published>
+    <updated>2016-04-14T02:24:32.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;1-介绍&quot;&gt;&lt;a href=&quot;#1-介绍&quot; class=&quot;headerlink&quot; title=&quot;1 介绍&quot;&gt;&lt;/a&gt;1 介绍&lt;/h3&gt;&lt;h3 id=&quot;1-1-java简史&quot;&gt;&lt;a href=&quot;#1-1-java简史&quot; class=&quot;headerlink&quot; title=&quot;1.1 java简史&quot;&gt;&lt;/a&gt;1.1 java简史&lt;/h3&gt;&lt;p&gt;讲了java 和 www 动态内容的关系，主要是 java applet技术，理想是安全／跨平台／比c++更简洁。&lt;br&gt;（现在主流浏览器已经放弃了java的支持，包括移动设备的 java 版本，由于android ios设备的普及，开始变成历史；但java平台已经相对成熟，特别是后台应用，到处都能看到java的身影。&lt;/p&gt;
+&lt;h3 id=&quot;1-2-jvm介绍&quot;&gt;&lt;a href=&quot;#1-2-jvm介绍&quot; class=&quot;headerlink&quot; title=&quot;1.2  jvm介绍&quot;&gt;&lt;/a&gt;1.2  jvm介绍&lt;/h3&gt;&lt;p&gt;jvm和java语言几乎没什么关联，除了.class文件，这是联系java语言和jvm的桥梁： java 语言编译成.class文件，jvm负责解析。&lt;br&gt;出于安全考虑，jvm规范了.class的内容，任何语言只要编译成规范的.class文件，就可以在jvm中运行。&lt;br&gt;本文介绍的规范，适用java se 8版本。&lt;/p&gt;
+&lt;h3 id=&quot;1-3-本书主要内容&quot;&gt;&lt;a href=&quot;#1-3-本书主要内容&quot; class=&quot;headerlink&quot; title=&quot;1.3 本书主要内容&quot;&gt;&lt;/a&gt;1.3 本书主要内容&lt;/h3&gt;&lt;p&gt;2 jvm概览&lt;br&gt;3 java语言编译成字节码&lt;br&gt;4 .class文件格式&lt;br&gt;5 jvm启动，以及类的加载链接初始化&lt;br&gt;6 指令详解&lt;br&gt;7 指令编号&lt;/p&gt;
+&lt;h3 id=&quot;2-jvm结构&quot;&gt;&lt;a href=&quot;#2-jvm结构&quot; class=&quot;headerlink&quot; title=&quot;2 jvm结构&quot;&gt;&lt;/a&gt;2 jvm结构&lt;/h3&gt;&lt;p&gt;  实现一个jvm需要做到： 读取.class文件，并正确执行里面的内容。 规范不包含：jvm内存布局，垃圾回收机制，字节码指令编译成机器码等具体实现。&lt;/p&gt;
+&lt;h3 id=&quot;2-1-class文件格式&quot;&gt;&lt;a href=&quot;#2-1-class文件格式&quot; class=&quot;headerlink&quot; title=&quot;2.1 .class文件格式&quot;&gt;&lt;/a&gt;2.1 .class文件格式&lt;/h3&gt;&lt;p&gt;.class文件格式是硬件和os无关的，包含类或者接口的描述，甚至包括字节序等信息。&lt;/p&gt;
+&lt;h3 id=&quot;2-2-数据类型&quot;&gt;&lt;a href=&quot;#2-2-数据类型&quot; class=&quot;headerlink&quot; title=&quot;2.2 数据类型&quot;&gt;&lt;/a&gt;2.2 数据类型&lt;/h3&gt;&lt;p&gt;和java语言一样，jvm区分：基本类型和引用类型。&lt;br&gt;如果是基本类型，jvm不通过tag或探测方式，而是通过指令本身来区分，如iadd,ladd,fadd,dadd分别用来对int,long,float,double类型求和。&lt;br&gt;jvm支持object。object要么是一个类的实例，要么是一个数组。引用指向object，只能通过引用来传递／操作object，没有其他途径。&lt;/p&gt;
+&lt;h3 id=&quot;2-3-基本类型&quot;&gt;&lt;a href=&quot;#2-3-基本类型&quot; class=&quot;headerlink&quot; title=&quot;2.3 基本类型&quot;&gt;&lt;/a&gt;2.3 基本类型&lt;/h3&gt;&lt;p&gt;类别： 数值类型，布尔类型，returnAddress返回地址类型（jvm特有）&lt;/p&gt;
+&lt;p&gt;数值类型包括： 整数型和浮点型&lt;br&gt;整数型： byte,short,char,int,long&lt;br&gt;浮点型： float,long&lt;/p&gt;
+&lt;p&gt;返回地址类型：指向指令的地址（与java语言无关），主要被jsr, ret, jsr_w等指令用到。&lt;br&gt;比如，ret idx表示，当前帧的idx位置， 有一个returnAddress类型的值，指向完之后，这个returnAddress 将被放入pc寄存器，jvm指令接着从那个地址往下走。&lt;/p&gt;
+&lt;p&gt;布尔类型： jvm内部不直接支持bool类型，而是用int类型替代。&lt;br&gt;但是支持bool数组，比如newarray指令，可以指定创建的类型是bool，其实内部也是用byte数组替代（至少oracle是这样的，数组中每个bool占8 bit）&lt;br&gt;jvm编码 true为1， false为0&lt;/p&gt;
+&lt;h3 id=&quot;2-4-引用类型&quot;&gt;&lt;a href=&quot;#2-4-引用类型&quot; class=&quot;headerlink&quot; title=&quot;2.4 引用类型&quot;&gt;&lt;/a&gt;2.4 引用类型&lt;/h3&gt;&lt;p&gt;三种引用类型： 对象引用，接口引用，数组引用，分别指向对象实例，实现了某个接口的实例，以及数组实例。&lt;/p&gt;
+&lt;p&gt;数组类型，其实是元素类型的一维数组类型。元素类型本身可以是数组类型，以此构成多维数组。&lt;br&gt;多维数组最后那一维，必须是基本类型，类类型，或接口类型。&lt;/p&gt;
+&lt;p&gt;null引用，没有类型，因此可以被cast成任何引用类型。jvm对null的内部表示不做规范。&lt;/p&gt;
+&lt;h3 id=&quot;2-5-内存区域&quot;&gt;&lt;a href=&quot;#2-5-内存区域&quot; class=&quot;headerlink&quot; title=&quot;2.5 内存区域&quot;&gt;&lt;/a&gt;2.5 内存区域&lt;/h3&gt;&lt;p&gt;两个级别的内存区域：&lt;br&gt;jvm级别的，在jvm启动时创建，jvm销毁时回收；&lt;br&gt;线程级别的，线程创建时分配，线程销毁时回收&lt;/p&gt;
+&lt;h3 id=&quot;2-5-1-pc-寄存器&quot;&gt;&lt;a href=&quot;#2-5-1-pc-寄存器&quot; class=&quot;headerlink&quot; title=&quot;2.5.1 pc 寄存器&quot;&gt;&lt;/a&gt;2.5.1 pc 寄存器&lt;/h3&gt;&lt;p&gt;每个线程都有自己的program count寄存器，在任何一个时间点， 线程总是在执行某个方法的代码，叫做当前方法。 如果不是本地方法，pc存的是jvm指令的地址； 线程执行本地方法是，pc的值未知。&lt;/p&gt;
+&lt;h3 id=&quot;2-5-2-jvm栈&quot;&gt;&lt;a href=&quot;#2-5-2-jvm栈&quot; class=&quot;headerlink&quot; title=&quot;2.5.2 jvm栈&quot;&gt;&lt;/a&gt;2.5.2 jvm栈&lt;/h3&gt;&lt;p&gt;线程创建时，会同步创建属于自己的栈空间（stack），栈用来存放帧（frame）。&lt;br&gt;由于java的栈只支持压栈和退栈两种操作，因此可以是不连续的，可以在堆上分配。&lt;/p&gt;
+&lt;p&gt;具体的jvm实现时，栈的大小可以固定(但每个线程可以配置不同值)，也可以自由增长和收缩。&lt;/p&gt;
+&lt;p&gt;异常相关：&lt;br&gt;StackOverflowError: 栈的大小固定，但计算时超出该大小&lt;br&gt;OutOfMemoryError: 栈空间可以自由增长，但超出了总内存限制&lt;/p&gt;
+&lt;h3 id=&quot;2-5-3-堆&quot;&gt;&lt;a href=&quot;#2-5-3-堆&quot; class=&quot;headerlink&quot; title=&quot;2.5.3 堆&quot;&gt;&lt;/a&gt;2.5.3 堆&lt;/h3&gt;&lt;p&gt;堆（heap) 用来存放对象和数组实例，被所有线程共享。&lt;br&gt;堆在jvm启动时创建，实现时可以固定大小或者自由伸缩。&lt;br&gt;异常：&lt;br&gt;OutOfMemoryError: 计算要求过多的内存&lt;/p&gt;
+&lt;h3 id=&quot;2-5-4-方法区&quot;&gt;&lt;a href=&quot;#2-5-4-方法区&quot; class=&quot;headerlink&quot; title=&quot;2.5.4 方法区&quot;&gt;&lt;/a&gt;2.5.4 方法区&lt;/h3&gt;&lt;p&gt;方法区，按类存放常量池，属性和方法信息，包括方法的指令列表。&lt;br&gt;方法区在逻辑上属于堆内存。&lt;br&gt;方法区不够用，抛出 OutOfMemoryError。&lt;/p&gt;
+&lt;h3 id=&quot;2-5-5-常量池&quot;&gt;&lt;a href=&quot;#2-5-5-常量池&quot; class=&quot;headerlink&quot; title=&quot;2.5.5 常量池&quot;&gt;&lt;/a&gt;2.5.5 常量池&lt;/h3&gt;&lt;p&gt;类似其他语言的符号表，包含类或接口的常量定义，或需要解析的方法或属性表。&lt;br&gt;常量池是方法区的一部分。&lt;/p&gt;
+&lt;h3 id=&quot;2-5-6-本地方法栈&quot;&gt;&lt;a href=&quot;#2-5-6-本地方法栈&quot; class=&quot;headerlink&quot; title=&quot;2.5.6 本地方法栈&quot;&gt;&lt;/a&gt;2.5.6 本地方法栈&lt;/h3&gt;&lt;p&gt;在创建线程时，可以分配固定的本地栈，或者支持动态伸缩。&lt;br&gt;同样可能抛出 StackOverflowError 和 OutOfMemoryError&lt;/p&gt;
+&lt;h3 id=&quot;2-6-Frame-方法帧&quot;&gt;&lt;a href=&quot;#2-6-Frame-方法帧&quot; class=&quot;headerlink&quot; title=&quot;2.6 Frame 方法帧&quot;&gt;&lt;/a&gt;2.6 Frame 方法帧&lt;/h3&gt;&lt;p&gt;当线程掉用一个方法的时候，就会在栈上开辟一个方法帧，这个帧的大小是编译时确定的。&lt;br&gt;每个线程都有一个当前方法和当前帧。方法开始时压栈，方法结束时退栈。&lt;br&gt;帧的作用： 保存本地变量（引用或者基本类型，不是对象本身），保存计算的中间结果，动态链接（比如方法使用到了新的类），返回值处理，异常处理。&lt;/p&gt;
+&lt;h3 id=&quot;2-6-1-本地变量&quot;&gt;&lt;a href=&quot;#2-6-1-本地变量&quot; class=&quot;headerlink&quot; title=&quot;2.6.1 本地变量&quot;&gt;&lt;/a&gt;2.6.1 本地变量&lt;/h3&gt;&lt;p&gt;每个帧包含一个本地变量的数组，数组大小编译时确定。&lt;br&gt;单个变量可以保存： boolean, byte, char, short, int, float, reference等类型&lt;br&gt;两个变量用于保存： long, double 类型&lt;/p&gt;
+&lt;p&gt;变量通过索引取值。从0到size -1。&lt;br&gt;long和double占用n和n+1两个连续的数组位置，通过较小的那个索引n读取，写入可以n和n+1都行，&lt;/p&gt;
+&lt;p&gt;jvm使用本地变量来传递方法参数，从数组第0个位置开始存放。特别的，成员方法（而不是类方法）的第0个参数，永远都是this（当前对象的引用），其他参数从位置1开始存放。&lt;/p&gt;
+&lt;h3 id=&quot;2-6-2-操作数栈&quot;&gt;&lt;a href=&quot;#2-6-2-操作数栈&quot; class=&quot;headerlink&quot; title=&quot;2.6.2 操作数栈&quot;&gt;&lt;/a&gt;2.6.2 操作数栈&lt;/h3&gt;&lt;p&gt;每个帧，都包含一个LIFO的操作数栈，栈的最大深度编译时决定。&lt;br&gt;帧创建的时候，操作数栈是空的，有些jvm指令负责将本地变量／常量或成员装载到栈上，如iload等。&lt;br&gt;其他jvm指令，将操作数取出执行计算，并将结果压栈。&lt;br&gt;特别大，方法的参数传递和返回值也是通过操作数栈进行的。&lt;/p&gt;
+&lt;p&gt;long,double，或其他的类型，都是一次压栈和退栈操作。long和double在计算栈深度时，算2；其他算1深度。&lt;/p&gt;
+&lt;p&gt;.class文件内容校验规则之一就是，操作数栈上的类型和接下来的操作指令要匹配上。&lt;/p&gt;
+&lt;h3 id=&quot;2-6-3-动态链接&quot;&gt;&lt;a href=&quot;#2-6-3-动态链接&quot; class=&quot;headerlink&quot; title=&quot;2.6.3 动态链接&quot;&gt;&lt;/a&gt;2.6.3 动态链接&lt;/h3&gt;&lt;p&gt;jvm多态实现细节：&lt;br&gt;每个方法帧，都包含一个指向当前对象类型的常量池引用。&lt;br&gt;动态链接将.class内的符号表，转化为实际的方法地址。&lt;/p&gt;
+&lt;p&gt;? 观察一下，java的多态是如何实现的。&lt;/p&gt;
+&lt;h3 id=&quot;2-6-4-方法正常结束&quot;&gt;&lt;a href=&quot;#2-6-4-方法正常结束&quot; class=&quot;headerlink&quot; title=&quot;2.6.4 方法正常结束&quot;&gt;&lt;/a&gt;2.6.4 方法正常结束&lt;/h3&gt;&lt;p&gt;方法正常结束，指的是没有任何jvm内部异常，或者显示的throw异常。&lt;br&gt;方法帧可用于恢复调用者的状态，包括其本地变量和操作数表，而且pc要+1用于跳到下一个指令。&lt;/p&gt;
+&lt;h3 id=&quot;2-6-5-方法异常结束&quot;&gt;&lt;a href=&quot;#2-6-5-方法异常结束&quot; class=&quot;headerlink&quot; title=&quot;2.6.5 方法异常结束&quot;&gt;&lt;/a&gt;2.6.5 方法异常结束&lt;/h3&gt;&lt;p&gt;异常结束指的是，方法抛出异常，且方法内没有捕获。&lt;br&gt;异常结束时，不再返回结果给调用者。&lt;/p&gt;
+&lt;h3 id=&quot;2-7-对象的表示&quot;&gt;&lt;a href=&quot;#2-7-对象的表示&quot; class=&quot;headerlink&quot; title=&quot;2.7 对象的表示&quot;&gt;&lt;/a&gt;2.7 对象的表示&lt;/h3&gt;&lt;p&gt;jvm规范不规定对象在堆上怎么表示。&lt;/p&gt;
+&lt;h3 id=&quot;2-8-浮点计算&quot;&gt;&lt;a href=&quot;#2-8-浮点计算&quot; class=&quot;headerlink&quot; title=&quot;2.8 浮点计算&quot;&gt;&lt;/a&gt;2.8 浮点计算&lt;/h3&gt;&lt;p&gt;jvm收录了相关ieee 754 标准的子集。&lt;/p&gt;
+&lt;h3 id=&quot;2-9-特殊方法&quot;&gt;&lt;a href=&quot;#2-9-特殊方法&quot; class=&quot;headerlink&quot; title=&quot;2.9 特殊方法&quot;&gt;&lt;/a&gt;2.9 特殊方法&lt;/h3&gt;&lt;p&gt;&lt;init&gt; 实例构造函数，由指令 invokespecial调用&lt;/init&gt;&lt;/p&gt;
+&lt;p&gt;&lt;cinit&gt; 类构造函数，由jvm在类或接口初始化时隐式调用。&lt;/cinit&gt;&lt;/p&gt;
+&lt;p&gt;java.lang.invoke.MethodHandle中的invoke和invokeExact方法， 被称为是 动态签名的。&lt;br&gt;每个MethodHandle直接引用底层方法／构造函数等，支持参数等自动转换（所以叫动态签名）。&lt;/p&gt;
+&lt;h3 id=&quot;2-10-异常&quot;&gt;&lt;a href=&quot;#2-10-异常&quot; class=&quot;headerlink&quot; title=&quot;2.10 异常&quot;&gt;&lt;/a&gt;2.10 异常&lt;/h3&gt;&lt;p&gt;异常分为：&lt;br&gt;同步异常： 如athrow指令，或者jvm发现了异常执行代码（如数组越界，OOM等）&lt;br&gt;异步异常： 调用Thread或ThreadGroup的stop方法， jvm内部异常&lt;/p&gt;
+&lt;p&gt;异常抛出后，所有后续代码都不应该执行， 所有之前执行的代码都有效。 （类似一种 happens-before的关系，但这是单个线程，需要满足的是 as-if-serial ）&lt;/p&gt;
+&lt;p&gt;.class文件中包含每个方法的异常处理表。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-介绍&quot;&gt;&lt;a href=&quot;#1-介绍&quot; class=&quot;headerlink&quot; title=&quot;1 介绍&quot;&gt;&lt;/a&gt;1 介绍&lt;/h3&gt;&lt;h3 id=&quot;1-1-java简史&quot;&gt;&lt;a href=&quot;#1-1-java简史&quot; class=&quot;headerlink&quot; titl
+    
+    </summary>
+    
+    
+      <category term="jvm" scheme="http://foojolt.github.io/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scrapy</title>
+    <link href="http://foojolt.github.io/2016/03/30/scrapy/"/>
+    <id>http://foojolt.github.io/2016/03/30/scrapy/</id>
+    <published>2016-03-30T03:07:14.000Z</published>
+    <updated>2016-04-14T02:28:33.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;scrapy&quot;&gt;&lt;a href=&quot;#scrapy&quot; class=&quot;headerlink&quot; title=&quot;scrapy&quot;&gt;&lt;/a&gt;scrapy&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;big python project management
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;taobao spider:&lt;br&gt;&lt;a href=&quot;http://www.slideshare.net/cjhacker/spider-12966847&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.slideshare.net/cjhacker/spider-12966847&lt;/a&gt;&lt;br&gt;webkit server  -&amp;gt; scrapy -&amp;gt; scheduler( fifo, priority queue )&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.bjhee.com/scrapy.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.bjhee.com/scrapy.html&lt;/a&gt;&lt;br&gt;extend scrapy.Item -&amp;gt; this is the result&lt;br&gt;extend CrawlSpider -&amp;gt; parse_item()  generate item from http response, support xpath&lt;/p&gt;
+&lt;h3 id=&quot;usage&quot;&gt;&lt;a href=&quot;#usage&quot; class=&quot;headerlink&quot; title=&quot;usage&quot;&gt;&lt;/a&gt;usage&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;may save as json:
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;scrapy crawl my_crawler -o my_crawler.json -t json&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;output utf8, not unicode escape
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;item[‘title’] = title.encode(“utf8”)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;scrapy shell
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;fetch( url )&lt;br&gt;response.body&lt;br&gt;from scrapy import Selector&lt;br&gt;sel = Selector(text=’’)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;apos;ascii&amp;apos; codec can&amp;apos;t decode byte 0xe5 in position 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;default_encoding = ‘utf-8’&lt;br&gt;if sys.getdefaultencoding() != default_encoding:&lt;br&gt;    reload(sys)&lt;br&gt;    sys.setdefaultencoding(default_encoding)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class SearchSpider(CrawlSpider):
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;override def parse(self, response): to parse the start url’s content&lt;br&gt;use rules = [ Rule( LinkExtractor(), follow=False, callback=’parse’ ) ]&lt;br&gt;    to parse link by callback=xxx&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;scrapy&quot;&gt;&lt;a href=&quot;#scrapy&quot; class=&quot;headerlink&quot; title=&quot;scrapy&quot;&gt;&lt;/a&gt;scrapy&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;big python project management
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;
+    
+    </summary>
+    
+    
+      <category term="scrapy" scheme="http://foojolt.github.io/tags/scrapy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>deep learning essentials</title>
+    <link href="http://foojolt.github.io/2016/03/28/deep-learning/"/>
+    <id>http://foojolt.github.io/2016/03/28/deep-learning/</id>
+    <published>2016-03-28T03:07:14.000Z</published>
+    <updated>2016-04-14T02:33:21.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;deep-learning&quot;&gt;&lt;a href=&quot;#deep-learning&quot; class=&quot;headerlink&quot; title=&quot;deep-learning&quot;&gt;&lt;/a&gt;deep-learning&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://deeplearning.net/tutorial/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;deeplearning-tutorial&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Very Brief Introduction to Machine Learning for AI
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&quot;http://greenteapress.com/wp/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;free books&lt;/a&gt;&lt;br&gt;think stat, think python&lt;/p&gt;
+&lt;h3 id=&quot;milestone&quot;&gt;&lt;a href=&quot;#milestone&quot; class=&quot;headerlink&quot; title=&quot;milestone&quot;&gt;&lt;/a&gt;milestone&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;Unsupervised Feature Learning and Deep Learning.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&quot;http://ufldl.stanford.edu/wiki/index.php/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://ufldl.stanford.edu/wiki/index.php/&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/ty4z2008/Qix/blob/master/dl.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/ty4z2008/Qix/blob/master/dl.md&lt;/a&gt;&lt;br&gt;neuron&lt;br&gt;autoencoder: using theano to implement it&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Theano
+
+五子棋
+
+五子棋 powered by deeplearning
+
+deeplearning for NLP
+
+optinal
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/ty4z2008/Qix/blob/master/dl.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/ty4z2008/Qix/blob/master/dl.md&lt;/a&gt;   &lt;/p&gt;
+&lt;h3 id=&quot;numpy&quot;&gt;&lt;a href=&quot;#numpy&quot; class=&quot;headerlink&quot; title=&quot;numpy&quot;&gt;&lt;/a&gt;numpy&lt;/h3&gt;&lt;p&gt;narray, multidimensional array object&lt;br&gt;sudo apt-get build-dep python-scipy&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import numpy
+import theano.tensor as T
+x = T.dscalar(&amp;apos;x&amp;apos;)
+y = T.dscalar(&amp;apos;y&amp;apos;)
+z = x + y
+numpy.allclose(z.eval({x : 16.3, y : 12.1}), 28.4)
+
+import theano
+a = theano.tensor.vector() # declare variable
+out = a + a ** 10               # build symbolic expression
+f = theano.function([a], out)   # compile function
+print(f([0, 1, 2]))
+
+from theano import shared
+state = shared(0)
+inc = T.iscalar(&amp;apos;inc&amp;apos;)
+accumulator = function([inc], state, updates=[(state, state+inc)])
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;from theano.tensor.shared_randomstreams import RandomStreams&lt;br&gt;from theano import function&lt;br&gt;srng = RandomStreams(seed=234)&lt;br&gt;rv_u = srng.uniform((2,2))&lt;br&gt;rv_n = srng.normal((2,2))&lt;br&gt;f = function([], rv_u)&lt;br&gt;g = function([], rv_n, no_default_updates=True)    #Not updating rv_n.rng&lt;br&gt;nearly_zeros = function([], rv_u + rv_u - 2 * rv_u)&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;deep-learning&quot;&gt;&lt;a href=&quot;#deep-learning&quot; class=&quot;headerlink&quot; title=&quot;deep-learning&quot;&gt;&lt;/a&gt;deep-learning&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://deeplearni
+    
+    </summary>
+    
+    
+      <category term="deep-learning" scheme="http://foojolt.github.io/tags/deep-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python machine learning</title>
+    <link href="http://foojolt.github.io/2016/03/28/python-ml/"/>
+    <id>http://foojolt.github.io/2016/03/28/python-ml/</id>
+    <published>2016-03-28T03:07:14.000Z</published>
+    <updated>2016-03-29T13:35:26.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://foojolt.github.io/tags/python/"/>
+    
+      <category term="machine-learning" scheme="http://foojolt.github.io/tags/machine-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ruby技巧</title>
+    <link href="http://foojolt.github.io/2016/03/23/ruby/"/>
+    <id>http://foojolt.github.io/2016/03/23/ruby/</id>
+    <published>2016-03-23T03:07:14.000Z</published>
+    <updated>2016-04-14T02:28:33.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;install&quot;&gt;&lt;a href=&quot;#install&quot; class=&quot;headerlink&quot; title=&quot;install&quot;&gt;&lt;/a&gt;install&lt;/h3&gt;&lt;p&gt;sudo gem sources -c&lt;br&gt;sudo gem sources -a &lt;a href=&quot;http://rubygems.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://rubygems.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;see Gemfile:&lt;br&gt;source xxx&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;install&quot;&gt;&lt;a href=&quot;#install&quot; class=&quot;headerlink&quot; title=&quot;install&quot;&gt;&lt;/a&gt;install&lt;/h3&gt;&lt;p&gt;sudo gem sources -c&lt;br&gt;sudo gem sources -a &lt;a href
+    
+    </summary>
+    
+    
+      <category term="ruby" scheme="http://foojolt.github.io/tags/ruby/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://foojolt.github.io/2016/03/21/os-tcpip/"/>
+    <id>http://foojolt.github.io/2016/03/21/os-tcpip/</id>
+    <published>2016-03-21T08:30:48.000Z</published>
+    <updated>2016-03-21T08:35:06.000Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;title:  OS TCP/IP&lt;br&gt;date: 2016-03-17 10:07:14&lt;br&gt;tags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OS&lt;/li&gt;
+&lt;li&gt;TCPIP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;### &lt;/p&gt;
+&lt;p&gt;数据的名称：&lt;br&gt;TCP: segment 段&lt;br&gt;IP: datagram 数据包&lt;br&gt;数据链路层: Frame 数据帧&lt;br&gt;物理层： 帧&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;title:  OS TCP/IP&lt;br&gt;date: 2016-03-17 10:07:14&lt;br&gt;tags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OS&lt;/li&gt;
+&lt;li&gt;TCPIP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;### &lt;/p&gt;
+&lt;p&gt;数据的名称：&lt;br&gt;TCP: segm
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://foojolt.github.io/2016/03/21/mysql/"/>
+    <id>http://foojolt.github.io/2016/03/21/mysql/</id>
+    <published>2016-03-21T06:33:53.000Z</published>
+    <updated>2016-03-21T07:45:18.000Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;title: Mysql Essentials&lt;br&gt;date: 2016-03-17 10:07:14&lt;br&gt;tags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;事务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Mysql-事务&quot;&gt;&lt;a href=&quot;#Mysql-事务&quot; class=&quot;headerlink&quot; title=&quot;Mysql 事务&quot;&gt;&lt;/a&gt;Mysql 事务&lt;/h3&gt;&lt;p&gt;两阶段锁：&lt;br&gt;加锁阶段： 读取共享锁（S锁）， 写入排他锁（X锁）&lt;br&gt;释放阶段：&lt;/p&gt;
+&lt;p&gt;隔离级别：&lt;br&gt;未提交读(Read Uncommitted)：允许脏读，也就是可能读取到其他会话中未提交事务修改的数据&lt;br&gt;提交读(Read Committed)：只能读取到已经提交的数据。Oracle等多数数据库默认都是该级别 (不重复读)&lt;br&gt;可重复读(Repeated Read)：可重复读。在同一个事务内的查询都是事务开始时刻一致的，InnoDB默认级别。在SQL标准中，该隔离级别消除了不可重复读，但是还存在幻象读&lt;br&gt;串行读(Serializable)：完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞&lt;/p&gt;
+&lt;p&gt;不可重复读： 针对update和delete&lt;br&gt;幻读：针对insert操作，可以读到之前不存在的记录&lt;/p&gt;
+&lt;p&gt;mysql锁的类型： 行锁， 表锁&lt;/p&gt;
+&lt;p&gt;SET session transaction isolation level read committed;&lt;br&gt;SET SESSION binlog_format = ‘ROW’;（或者是MIXED）&lt;/p&gt;
+&lt;p&gt;行锁：&lt;br&gt;update where id=xxx 行加锁&lt;br&gt;update where non_id = xxx 表锁 （mysql可能违反两阶段原则，在发现满足条件时，释放有关行；但由于没有索引，效率也不高）&lt;/p&gt;
+&lt;p&gt;mysql在 read committed 级别， 读操作不会加锁；&lt;/p&gt;
+&lt;p&gt;解决不可重复读／脏读读问题： 乐观锁， 多版本并发控制 mvcc， multi-version concurrent control&lt;/p&gt;
+&lt;p&gt;mysql mvcc: 在每一行的后面， 增加两个隐藏的值： 创建事务id （insert/update） 和过期事务id(update/delete)&lt;/p&gt;
+&lt;p&gt;SELECT时，读取创建版本号&amp;lt;=当前事务版本号，删除版本号为空或&amp;gt;当前事务版本号。&lt;br&gt;INSERT时，保存当前事务版本号为行的创建版本号&lt;br&gt;DELETE时，保存当前事务版本号为行的删除版本号&lt;br&gt;UPDATE时，插入一条新纪录，保存当前事务版本号为行创建版本号，同时保存当前事务版本号到原来删除的行&lt;/p&gt;
+&lt;p&gt;update会新建一条记录&lt;/p&gt;
+&lt;p&gt;快照读和加锁读&lt;br&gt;mysql引入快照读，提升性能&lt;/p&gt;
+&lt;p&gt;next-key 锁： 行锁和gap锁的结合体&lt;br&gt;gap锁防止区间插入，从而防止了幻读的问题。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;title: Mysql Essentials&lt;br&gt;date: 2016-03-17 10:07:14&lt;br&gt;tags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;事务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Mysql-事务&quot;&gt;&lt;a href=&quot;#
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>hadoop 常用命令</title>
+    <link href="http://foojolt.github.io/2016/03/18/hadoop-essentials/"/>
+    <id>http://foojolt.github.io/2016/03/18/hadoop-essentials/</id>
+    <published>2016-03-18T09:12:14.000Z</published>
+    <updated>2016-04-12T12:22:07.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;Metrics-Counters&quot;&gt;&lt;a href=&quot;#Metrics-Counters&quot; class=&quot;headerlink&quot; title=&quot;Metrics Counters&quot;&gt;&lt;/a&gt;Metrics Counters&lt;/h3&gt;&lt;p&gt;metrics 是关于系统和服务的，一般管理员关注；和 ganglia 等监控系统结合&lt;br&gt;counters，比如 mapreduce counters，是用户关注的，跟某次任务运行有关&lt;/p&gt;
+&lt;h3 id=&quot;Counters&quot;&gt;&lt;a href=&quot;#Counters&quot; class=&quot;headerlink&quot; title=&quot;Counters&quot;&gt;&lt;/a&gt;Counters&lt;/h3&gt;&lt;p&gt;4 类： filesystem, job, framework, custom&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Metrics-Counters&quot;&gt;&lt;a href=&quot;#Metrics-Counters&quot; class=&quot;headerlink&quot; title=&quot;Metrics Counters&quot;&gt;&lt;/a&gt;Metrics Counters&lt;/h3&gt;&lt;p&gt;metrics 是关于系统和
+    
+    </summary>
+    
+    
+      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Redis 及缓存</title>
     <link href="http://foojolt.github.io/2016/03/17/redis/"/>
     <id>http://foojolt.github.io/2016/03/17/redis/</id>
     <published>2016-03-17T02:07:14.000Z</published>
-    <updated>2016-03-17T06:20:55.000Z</updated>
+    <updated>2016-03-21T11:55:43.000Z</updated>
     
-    <content type="html">&lt;h3 id=&quot;缓存系统&quot;&gt;&lt;a href=&quot;#缓存系统&quot; class=&quot;headerlink&quot; title=&quot;缓存系统&quot;&gt;&lt;/a&gt;缓存系统&lt;/h3&gt;&lt;p&gt;redis特点：&lt;/p&gt;
+    <content type="html">&lt;h3 id=&quot;Redis其他&quot;&gt;&lt;a href=&quot;#Redis其他&quot; class=&quot;headerlink&quot; title=&quot;Redis其他&quot;&gt;&lt;/a&gt;Redis其他&lt;/h3&gt;&lt;p&gt;###LRU&lt;/p&gt;
+&lt;p&gt;maxmemory 2G&lt;br&gt;maxmemory-policy allkeys-lru&lt;br&gt;maxmemory-samples 10&lt;/p&gt;
+&lt;p&gt;redis的行为是在每次add key之后，检查是否超过 max memory, 超过则启动一个 sample 算法，去除更老的key.&lt;/p&gt;
+&lt;h3 id=&quot;缓存系统&quot;&gt;&lt;a href=&quot;#缓存系统&quot; class=&quot;headerlink&quot; title=&quot;缓存系统&quot;&gt;&lt;/a&gt;缓存系统&lt;/h3&gt;&lt;p&gt;redis特点：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;binlog， 故障恢复&lt;/li&gt;
 &lt;li&gt;持久化&lt;/li&gt;
@@ -43,7 +374,7 @@
 &lt;li&gt;codis group概念（ 包含至少一个master/slave)&lt;/li&gt;
 &lt;li&gt;pre-sharding: 1024个分片，分片信息保存在zookeeper中&lt;br&gt;redis-client -&amp;gt; codis proxy…-&amp;gt; [ codis-grp1 (redis-master, redis-slave1, redis-slave2,…) , codis-grp2,… ]&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;Redis-cluster&quot;&gt;&lt;a href=&quot;#Redis-cluster&quot; class=&quot;headerlink&quot; title=&quot;Redis cluster&quot;&gt;&lt;/a&gt;Redis cluster&lt;/h3&gt;&lt;p&gt;分为 16384 个槽，每个shard领取一部分；  16 * 1024 = 16384&lt;br&gt;用bitmap存储 node 和 shard的对应信息 （2K的bitmap）&lt;/p&gt;
+&lt;h3 id=&quot;Redis-Cluster&quot;&gt;&lt;a href=&quot;#Redis-Cluster&quot; class=&quot;headerlink&quot; title=&quot;Redis Cluster&quot;&gt;&lt;/a&gt;Redis Cluster&lt;/h3&gt;&lt;p&gt;分为 16384 个槽，每个shard领取一部分；  16 * 1024 = 16384&lt;br&gt;用bitmap存储 node 和 shard的对应信息 （2K的bitmap）&lt;/p&gt;
 &lt;h3 id=&quot;Redis-Sentinel&quot;&gt;&lt;a href=&quot;#Redis-Sentinel&quot; class=&quot;headerlink&quot; title=&quot;Redis-Sentinel&quot;&gt;&lt;/a&gt;Redis-Sentinel&lt;/h3&gt;&lt;p&gt;redis官方HA机制： 实现了一个类似 zookeeper 的主备选举机制&lt;br&gt;数据要写到master，读可以从slave读； 延时 ＋ 分裂时的数据丢失&lt;/p&gt;
 &lt;p&gt;Sentinel 和 redis 节点分开部署，至少3个&lt;/p&gt;
 &lt;p&gt;asynchronous replication 异步复制&lt;/p&gt;
@@ -61,11 +392,8 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;缓存系统&quot;&gt;&lt;a href=&quot;#缓存系统&quot; class=&quot;headerlink&quot; title=&quot;缓存系统&quot;&gt;&lt;/a&gt;缓存系统&lt;/h3&gt;&lt;p&gt;redis特点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;binlog， 故障恢复&lt;/li&gt;
-&lt;li&gt;持久化&lt;/li&gt;
-&lt;li&gt;内存放不下
+      &lt;h3 id=&quot;Redis其他&quot;&gt;&lt;a href=&quot;#Redis其他&quot; class=&quot;headerlink&quot; title=&quot;Redis其他&quot;&gt;&lt;/a&gt;Redis其他&lt;/h3&gt;&lt;p&gt;###LRU&lt;/p&gt;
+&lt;p&gt;maxmemory 2G&lt;br&gt;maxmemory-policy all
     
     </summary>
     
@@ -73,6 +401,170 @@
       <category term="性能" scheme="http://foojolt.github.io/tags/%E6%80%A7%E8%83%BD/"/>
     
       <category term="redis" scheme="http://foojolt.github.io/tags/redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Scala</title>
+    <link href="http://foojolt.github.io/2016/03/17/scala/"/>
+    <id>http://foojolt.github.io/2016/03/17/scala/</id>
+    <published>2016-03-17T02:07:14.000Z</published>
+    <updated>2016-03-18T03:59:57.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="scala" scheme="http://foojolt.github.io/tags/scala/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>everstring</title>
+    <link href="http://foojolt.github.io/2016/03/14/everstring/"/>
+    <id>http://foojolt.github.io/2016/03/14/everstring/</id>
+    <published>2016-03-14T03:07:14.000Z</published>
+    <updated>2016-03-25T23:36:05.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;工作原理&quot;&gt;&lt;a href=&quot;#工作原理&quot; class=&quot;headerlink&quot; title=&quot;工作原理&quot;&gt;&lt;/a&gt;工作原理&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://www.weixinyidu.com/n_3209047&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt; everstring 产品技术解读 &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;数据来源：&lt;br&gt;internet, pixel(网站行为), traffic&lt;br&gt;commercial&lt;br&gt;==&amp;gt; 11M, 10K&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;工作原理&quot;&gt;&lt;a href=&quot;#工作原理&quot; class=&quot;headerlink&quot; title=&quot;工作原理&quot;&gt;&lt;/a&gt;工作原理&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://www.weixinyidu.com/n_3209047&quot; target=&quot;_blank&quot; 
+    
+    </summary>
+    
+    
+      <category term="everstring" scheme="http://foojolt.github.io/tags/everstring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spark essentials</title>
+    <link href="http://foojolt.github.io/2016/03/14/spark/"/>
+    <id>http://foojolt.github.io/2016/03/14/spark/</id>
+    <published>2016-03-14T03:07:14.000Z</published>
+    <updated>2016-03-18T09:45:44.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;基础&quot;&gt;&lt;a href=&quot;#基础&quot; class=&quot;headerlink&quot; title=&quot;基础&quot;&gt;&lt;/a&gt;基础&lt;/h3&gt;&lt;p&gt;RDD组成：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;分区列表&lt;/li&gt;
+&lt;li&gt;分区计算函数&lt;/li&gt;
+&lt;li&gt;父RDD依赖列表&lt;/li&gt;
+&lt;li&gt;可选： key,value RDD的Partition函数&lt;/li&gt;
+&lt;li&gt;可选： hdfs rdd的优选位置（preferred location）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;./bin/spark-shell  –master local[3]&lt;br&gt;val r = sc.parallelize( Array( (1,2), (2,3), (3,4), (3,5)  ), 4 )&lt;br&gt;r.toDebugString&lt;/p&gt;
+&lt;h3 id=&quot;RDD-API&quot;&gt;&lt;a href=&quot;#RDD-API&quot; class=&quot;headerlink&quot; title=&quot;RDD API&quot;&gt;&lt;/a&gt;RDD API&lt;/h3&gt;&lt;p&gt;计算split：&lt;br&gt;abstract def&lt;br&gt;compute(split: Partition, context: TaskContext): Iterator[T]&lt;/p&gt;
+&lt;p&gt;Union组合RDD：&lt;br&gt;++(other: RDD[T]): RDD[T]&lt;/p&gt;
+&lt;p&gt;值聚合：&lt;br&gt;def&lt;br&gt;aggregate&lt;a href=&quot;zeroValue: U&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;U&lt;/a&gt;(seqOp: (U, T) ⇒ U, combOp: (U, U) ⇒ U)(implicit arg0: ClassTag[U]): U&lt;br&gt;r.aggregate( “” )( ( t, a ) =&amp;gt; t + a._1.toString, ( x, y ) =&amp;gt; x + y  )&lt;/p&gt;
+&lt;p&gt;groupByKey有内存警告&lt;/p&gt;
+&lt;h3 id=&quot;Job运行原理&quot;&gt;&lt;a href=&quot;#Job运行原理&quot; class=&quot;headerlink&quot; title=&quot;Job运行原理&quot;&gt;&lt;/a&gt;Job运行原理&lt;/h3&gt;&lt;p&gt;Transformation 只是构造DAG，不做其他事情。通过sc.runJob 物化&lt;br&gt;执行优化：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;transformation 可以 pipeline&lt;/li&gt;
+&lt;li&gt;graph可能由于cache/checkpoint被截断，之前的不用计算了&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Job is list of stages&lt;br&gt;    stage is list of tasks ( stage内的task彼此无依赖 )&lt;/p&gt;
+&lt;p&gt;shuffle happens between stages&lt;/p&gt;
+&lt;p&gt;Job优化：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;减少 shuffle: 比如用reduceByKey而不是 groupByKey&lt;/li&gt;
+&lt;li&gt;早点调用filter&lt;/li&gt;
+&lt;li&gt;并发度控制： 太多调度不过来（同时运行的task有限）；太少就类似单机了&lt;/li&gt;
+&lt;li&gt;选择序列化器： 比如 kryo, 用在 cache 和 shuffle&lt;/li&gt;
+&lt;li&gt;选择cache级别： memory_only，用原生的jvm序列化；memory_only_ser 可以减少内存使用； memory_and_disk 容错性增强，减少重复计算&lt;/li&gt;
+&lt;li&gt;采用lzf压缩，提高性能&lt;/li&gt;
+&lt;li&gt;启用 speculative 执行预防stragglers: 有的任务运行慢，可以开启探测，重新调度；可以配置探测间隔；乘数（大于乘数＊中位数的任务，将重新跑）；完成的任务数比例，确保在大部分任务跑完时才探测&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;rdd.toDebugString 查看DAG&lt;/p&gt;
+&lt;h3 id=&quot;压缩&quot;&gt;&lt;a href=&quot;#压缩&quot; class=&quot;headerlink&quot; title=&quot;压缩&quot;&gt;&lt;/a&gt;压缩&lt;/h3&gt;&lt;p&gt;压缩：用CPU换IO&lt;br&gt;mapreduce压缩可用在三个阶段：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;输入文件&lt;/li&gt;
+&lt;li&gt;map输出&lt;/li&gt;
+&lt;li&gt;reduce输出&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;算法：&lt;br&gt;lzo  支持分片，压缩速度快；但压缩比低(snapy/lzf 和 lzo 类似)&lt;br&gt;bzip2 支持分片，压缩比高；但压缩慢&lt;/p&gt;
+&lt;h3 id=&quot;Shuffle&quot;&gt;&lt;a href=&quot;#Shuffle&quot; class=&quot;headerlink&quot; title=&quot;Shuffle&quot;&gt;&lt;/a&gt;Shuffle&lt;/h3&gt;&lt;p&gt;shuffle中间文件的问题：&lt;br&gt;个数是 t * R ： 每个 executor 最多 t个task同时运行(一般等于core_num)&lt;/p&gt;
+&lt;p&gt;shuffle默认启用sort，之前的版本有hash版本的，因为spark认为sort带来额外开销。但hash需要放内存中；sort是外部排序&lt;/p&gt;
+&lt;p&gt;默认采用netty传输数据。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://jerryshao.me/architecture/2014/01/04/spark-shuffle-detail-investigation/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://jerryshao.me/architecture/2014/01/04/spark-shuffle-detail-investigation/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Akka-RPC&quot;&gt;&lt;a href=&quot;#Akka-RPC&quot; class=&quot;headerlink&quot; title=&quot;Akka RPC&quot;&gt;&lt;/a&gt;Akka RPC&lt;/h3&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;基础&quot;&gt;&lt;a href=&quot;#基础&quot; class=&quot;headerlink&quot; title=&quot;基础&quot;&gt;&lt;/a&gt;基础&lt;/h3&gt;&lt;p&gt;RDD组成：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;分区列表&lt;/li&gt;
+&lt;li&gt;分区计算函数&lt;/li&gt;
+&lt;li&gt;父RDD依赖列表&lt;/li&gt;
+&lt;li&gt;可选
+    
+    </summary>
+    
+    
+      <category term="spark" scheme="http://foojolt.github.io/tags/spark/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java有趣知识</title>
+    <link href="http://foojolt.github.io/2016/03/14/java-essentials/"/>
+    <id>http://foojolt.github.io/2016/03/14/java-essentials/</id>
+    <published>2016-03-14T03:07:14.000Z</published>
+    <updated>2016-03-22T05:58:36.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;内存映射&quot;&gt;&lt;a href=&quot;#内存映射&quot; class=&quot;headerlink&quot; title=&quot;内存映射&quot;&gt;&lt;/a&gt;内存映射&lt;/h3&gt;&lt;p&gt;MappedByteBuffer:&lt;/p&gt;
+&lt;p&gt;从 FileChannel创建， 可以是 RandomAccessFile，支持读写； 模式可以是 只读／读写／私有， 私有的修改不会刷回文件中。&lt;/p&gt;
+&lt;h3 id=&quot;IO&quot;&gt;&lt;a href=&quot;#IO&quot; class=&quot;headerlink&quot; title=&quot;IO&quot;&gt;&lt;/a&gt;IO&lt;/h3&gt;&lt;p&gt;linux io 模型&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;blocking    non-blocking
+-------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;synchronous  | old io       app多次请求，直到条件满足&lt;br&gt;asynchronous | select/epoll       AIO&lt;/p&gt;
+&lt;p&gt;select 与 old io 的区别： old io是对IO调用阻塞； select 是对事件通知阻塞&lt;/p&gt;
+&lt;p&gt;nodejs使用libeio，默认内部使用4个IO线程。&lt;/p&gt;
+&lt;p&gt;select/poll，都是提供一堆fd和关心的事件给内核；然后循环阻塞探测到状态变化时，再逐个检查原来的fd，看看哪个有变化；&lt;br&gt;poll和select的区别：用了一个结构体；没有1024数量限制&lt;br&gt;epoll返回有变化的fd集合。而且不用每次拷贝fd到内核（后续调用使用 epollfd ）&lt;/p&gt;
+&lt;p&gt;java: bio, nio, aio(jdk7)&lt;/p&gt;
+&lt;p&gt;AIO: app侧提供buffer,回调函数callback； callback在内核栈上执行&lt;br&gt;API：&lt;br&gt;aio_read    请求异步读操作&lt;br&gt;aio_error   检查异步请求的状态&lt;br&gt;aio_return  获得完成的异步请求的返回状态&lt;br&gt;…&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.ibm.com/developerworks/cn/linux/l-async/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.ibm.com/developerworks/cn/linux/l-async/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;netty&quot;&gt;&lt;a href=&quot;#netty&quot; class=&quot;headerlink&quot; title=&quot;netty&quot;&gt;&lt;/a&gt;netty&lt;/h3&gt;&lt;p&gt;channel -&amp;gt; channel pipeline -&amp;gt; channelHandlers &lt;/p&gt;
+&lt;p&gt;network read -&amp;gt; upstream handlers&lt;br&gt;io request -&amp;gt; downstream handlers -&amp;gt; sink&lt;/p&gt;
+&lt;p&gt;netty 3的问题： 每次有IO消息，就产生event，增加GC时间&lt;br&gt;netty 4: 不在包装event，而是调用相应的接口处理方法； 开发自己的malloc，不用填充0；自己管理，减少gc&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://m.oschina.net/blog/178561&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://m.oschina.net/blog/178561&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;线程池&quot;&gt;&lt;a href=&quot;#线程池&quot; class=&quot;headerlink&quot; title=&quot;线程池&quot;&gt;&lt;/a&gt;线程池&lt;/h3&gt;&lt;p&gt;行为：&lt;br&gt;coreSize -&amp;gt; taskQueue -&amp;gt; maxSize&lt;br&gt;只要coreSize没有达到，就创建新的线程；&lt;br&gt;否则任务进队列: 判断offer是否返回true;&lt;br&gt;进队列失败，且 &amp;lt; maxSize，创建新的线程；&lt;br&gt;否则，调用 handler处理。&lt;/p&gt;
+&lt;p&gt;newFixedThreadPool: core==max, 无边界的 LinkedBlockingQueue，只要大于core，就无限制排队&lt;br&gt;newCachedThreadPool: SynchronousQueue，执行任务为0，立即入队列；否则失败，创建新的线程执行任务。&lt;br&gt;ArrayBlockingQueue: 考虑用这个，一旦队列满，就停止入队；降低系统负载；&lt;/p&gt;
+&lt;h3 id=&quot;内存模型&quot;&gt;&lt;a href=&quot;#内存模型&quot; class=&quot;headerlink&quot; title=&quot;内存模型&quot;&gt;&lt;/a&gt;内存模型&lt;/h3&gt;&lt;p&gt;内存模型确定了一些规则：线程对内存的访问如何排序，以及如何确保内存对线程可见&lt;br&gt;包括： 重排序，内存可见性，happens-before&lt;/p&gt;
+&lt;p&gt;重排序包括： 编译器重排序 CPU重排序 缓存导致的写入主内存重排序&lt;/p&gt;
+&lt;p&gt;可见性： 内存屏障实现&lt;/p&gt;
+&lt;p&gt;happens-before法则：&lt;br&gt;－ 程序次序法则：线程中的每个动作A都happens-before于该线程中的每一个动作B，其中，在程序中，所有的动作B都能出现在A之后。&lt;br&gt;－ 监视器锁法则：对一个监视器锁的解锁 happens-before于每一个后续对同一监视器锁的加锁。&lt;br&gt;－ volatile变量法则：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作。&lt;br&gt;－ 传递性：如果A happens-before于B，且B happens-before于C，则A happens-before于C&lt;br&gt;－ 对final语义的扩展保证一个对象的构建方法结束前，所有final成员变量都必须完成初始化（的前提是没有this引用溢出）。&lt;br&gt;－ 线程启动法则：在一个线程里，对Thread.start的调用会happens-before于每个启动线程的动作。&lt;br&gt;－ 线程终结法则：线程中的任何动作都happens-before于其他线程检测到这个线程已经终结、或者从Thread.join调用中成功返回，或Thread.isAlive返回false。&lt;br&gt;－ 中断法则：一个线程调用另一个线程的interrupt happens-before于被中断的线程发现中断。&lt;br&gt;－ 终结法则：一个对象的构造函数的结束happens-before于这个对象finalizer的开始。&lt;/p&gt;
+&lt;p&gt;一个volatile happens-before原则的应用：&lt;br&gt;class VolatileExample {&lt;br&gt;    int x = 0;&lt;br&gt;    volatile boolean v = false;&lt;br&gt;    public void writer() {&lt;br&gt;        x = 42;&lt;br&gt;        v = true;&lt;br&gt;    }&lt;br&gt;    public void reader() {&lt;br&gt;        if (v == true) {&lt;br&gt;            //uses x - guaranteed to see 42.&lt;br&gt;        }&lt;br&gt;    }&lt;br&gt;}&lt;/p&gt;
+&lt;h3 id=&quot;BlockingQueue&quot;&gt;&lt;a href=&quot;#BlockingQueue&quot; class=&quot;headerlink&quot; title=&quot;BlockingQueue&quot;&gt;&lt;/a&gt;BlockingQueue&lt;/h3&gt;&lt;p&gt;offer和poll提供超时参数&lt;/p&gt;
+&lt;h3 id=&quot;CopyOnWriteArrayList&quot;&gt;&lt;a href=&quot;#CopyOnWriteArrayList&quot; class=&quot;headerlink&quot; title=&quot;CopyOnWriteArrayList&quot;&gt;&lt;/a&gt;CopyOnWriteArrayList&lt;/h3&gt;&lt;p&gt;每次修改，都创建一个新的底层Array: 读的线程，拿到的可能是失效的快照&lt;/p&gt;
+&lt;h3 id=&quot;ConcurrentHashMap&quot;&gt;&lt;a href=&quot;#ConcurrentHashMap&quot; class=&quot;headerlink&quot; title=&quot;ConcurrentHashMap&quot;&gt;&lt;/a&gt;ConcurrentHashMap&lt;/h3&gt;&lt;p&gt;Map is list of Segment&lt;br&gt;    Segment is list of HashEntry&lt;/p&gt;
+&lt;p&gt;用分离锁实现多个线程间的并发写操作&lt;br&gt;用 HashEntery 对象的不变性来降低读操作对加锁的需求&lt;br&gt;用 Volatile 变量协调读写线程间的内存可见性（value是volatile的，保证写入之后可以被其他线程看见；修改之后，改变volatile的modCount）&lt;/p&gt;
+&lt;p&gt;HashEntry 是一个为无锁读优化的链表：&lt;br&gt;value 是volatile，表示如果读的时候正在改写能立即体现&lt;br&gt;next 是final，表示只能往前插入节点： 拿到一个hashEntry，它的链表元素是固定的（value除外）&lt;/p&gt;
+&lt;p&gt; static final class HashEntry&lt;k,v&gt; {&lt;br&gt;        final K key;                       // 声明 key 为 final 型&lt;br&gt;        final int hash;                   // 声明 hash 值为 final 型&lt;br&gt;        volatile V value;                 // 声明 value 为 volatile 型&lt;br&gt;        final HashEntry&lt;k,v&gt; next;      // 声明 next 为 final 型 &lt;/k,v&gt;&lt;/k,v&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;HashEntry(K key, int hash, HashEntry&amp;lt;K,V&amp;gt; next, V value) { 
+    this.key = key; 
+    this.hash = hash; 
+    this.next = next; 
+    this.value = value; 
+} 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; }&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;内存映射&quot;&gt;&lt;a href=&quot;#内存映射&quot; class=&quot;headerlink&quot; title=&quot;内存映射&quot;&gt;&lt;/a&gt;内存映射&lt;/h3&gt;&lt;p&gt;MappedByteBuffer:&lt;/p&gt;
+&lt;p&gt;从 FileChannel创建， 可以是 RandomAccessFile
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://foojolt.github.io/tags/java/"/>
     
   </entry>
   
@@ -143,51 +635,42 @@
   </entry>
   
   <entry>
-    <title>Java有趣知识</title>
-    <link href="http://foojolt.github.io/2016/03/14/java-essentials/"/>
-    <id>http://foojolt.github.io/2016/03/14/java-essentials/</id>
-    <published>2016-03-14T03:07:14.000Z</published>
-    <updated>2016-03-17T08:29:18.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;NIO&quot;&gt;&lt;a href=&quot;#NIO&quot; class=&quot;headerlink&quot; title=&quot;NIO&quot;&gt;&lt;/a&gt;NIO&lt;/h3&gt;&lt;h3 id=&quot;内存模型&quot;&gt;&lt;a href=&quot;#内存模型&quot; class=&quot;headerlink&quot; title=&quot;内存模型&quot;&gt;&lt;/a&gt;内存模型&lt;/h3&gt;&lt;p&gt;内存模型确定了一些规则：线程对内存的访问如何排序，以及如何确保内存对线程可见&lt;br&gt;包括： 重排序，内存可见性，happens-before&lt;/p&gt;
-&lt;p&gt;重排序包括： 编译器重排序 CPU重排序 缓存导致的写入主内存重排序&lt;/p&gt;
-&lt;p&gt;可见性： 内存屏障实现&lt;/p&gt;
-&lt;p&gt;happens-before法则：&lt;br&gt;－ 程序次序法则：线程中的每个动作A都happens-before于该线程中的每一个动作B，其中，在程序中，所有的动作B都能出现在A之后。&lt;br&gt;－ 监视器锁法则：对一个监视器锁的解锁 happens-before于每一个后续对同一监视器锁的加锁。&lt;br&gt;－ volatile变量法则：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作。&lt;br&gt;－ 传递性：如果A happens-before于B，且B happens-before于C，则A happens-before于C&lt;br&gt;－ 对final语义的扩展保证一个对象的构建方法结束前，所有final成员变量都必须完成初始化（的前提是没有this引用溢出）。&lt;br&gt;－ 线程启动法则：在一个线程里，对Thread.start的调用会happens-before于每个启动线程的动作。&lt;br&gt;－ 线程终结法则：线程中的任何动作都happens-before于其他线程检测到这个线程已经终结、或者从Thread.join调用中成功返回，或Thread.isAlive返回false。&lt;br&gt;－ 中断法则：一个线程调用另一个线程的interrupt happens-before于被中断的线程发现中断。&lt;br&gt;－ 终结法则：一个对象的构造函数的结束happens-before于这个对象finalizer的开始。&lt;/p&gt;
-&lt;p&gt;一个volatile happens-before原则的应用：&lt;br&gt;class VolatileExample {&lt;br&gt;    int x = 0;&lt;br&gt;    volatile boolean v = false;&lt;br&gt;    public void writer() {&lt;br&gt;        x = 42;&lt;br&gt;        v = true;&lt;br&gt;    }&lt;br&gt;    public void reader() {&lt;br&gt;        if (v == true) {&lt;br&gt;            //uses x - guaranteed to see 42.&lt;br&gt;        }&lt;br&gt;    }&lt;br&gt;}&lt;/p&gt;
-&lt;h3 id=&quot;BlockingQueue&quot;&gt;&lt;a href=&quot;#BlockingQueue&quot; class=&quot;headerlink&quot; title=&quot;BlockingQueue&quot;&gt;&lt;/a&gt;BlockingQueue&lt;/h3&gt;&lt;p&gt;offer和poll提供超时参数&lt;/p&gt;
-&lt;h3 id=&quot;CopyOnWriteArrayList&quot;&gt;&lt;a href=&quot;#CopyOnWriteArrayList&quot; class=&quot;headerlink&quot; title=&quot;CopyOnWriteArrayList&quot;&gt;&lt;/a&gt;CopyOnWriteArrayList&lt;/h3&gt;&lt;p&gt;每次修改，都创建一个新的底层Array: 读的线程，拿到的可能是失效的快照&lt;/p&gt;
-&lt;h3 id=&quot;ConcurrentHashMap&quot;&gt;&lt;a href=&quot;#ConcurrentHashMap&quot; class=&quot;headerlink&quot; title=&quot;ConcurrentHashMap&quot;&gt;&lt;/a&gt;ConcurrentHashMap&lt;/h3&gt;&lt;p&gt;Map is list of Segment&lt;br&gt;    Segment is list of HashEntry&lt;/p&gt;
-&lt;p&gt;用分离锁实现多个线程间的并发写操作&lt;br&gt;用 HashEntery 对象的不变性来降低读操作对加锁的需求&lt;br&gt;用 Volatile 变量协调读写线程间的内存可见性（value是volatile的，保证写入之后可以被其他线程看见；修改之后，改变volatile的modCount）&lt;/p&gt;
-&lt;p&gt;HashEntry 是一个为无锁读优化的链表：&lt;br&gt;value 是volatile，表示如果读的时候正在改写能立即体现&lt;br&gt;next 是final，表示只能往前插入节点： 拿到一个hashEntry，它的链表元素是固定的（value除外）&lt;/p&gt;
-&lt;p&gt; static final class HashEntry&lt;k,v&gt; {&lt;br&gt;        final K key;                       // 声明 key 为 final 型&lt;br&gt;        final int hash;                   // 声明 hash 值为 final 型&lt;br&gt;        volatile V value;                 // 声明 value 为 volatile 型&lt;br&gt;        final HashEntry&lt;k,v&gt; next;      // 声明 next 为 final 型 &lt;/k,v&gt;&lt;/k,v&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;HashEntry(K key, int hash, HashEntry&amp;lt;K,V&amp;gt; next, V value) { 
-    this.key = key; 
-    this.hash = hash; 
-    this.next = next; 
-    this.value = value; 
-} 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; }&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;NIO&quot;&gt;&lt;a href=&quot;#NIO&quot; class=&quot;headerlink&quot; title=&quot;NIO&quot;&gt;&lt;/a&gt;NIO&lt;/h3&gt;&lt;h3 id=&quot;内存模型&quot;&gt;&lt;a href=&quot;#内存模型&quot; class=&quot;headerlink&quot; title=&quot;内存模型&quot;&gt;&lt;/a&gt;内存模
-    
-    </summary>
-    
-    
-      <category term="java" scheme="http://foojolt.github.io/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
     <title>python相关</title>
     <link href="http://foojolt.github.io/2016/03/08/python-tips/"/>
     <id>http://foojolt.github.io/2016/03/08/python-tips/</id>
     <published>2016-03-08T03:13:14.000Z</published>
-    <updated>2016-03-09T01:42:25.000Z</updated>
+    <updated>2016-04-14T02:30:13.000Z</updated>
     
-    <content type="html">&lt;h3 id=&quot;pyspark&quot;&gt;&lt;a href=&quot;#pyspark&quot; class=&quot;headerlink&quot; title=&quot;pyspark&quot;&gt;&lt;/a&gt;pyspark&lt;/h3&gt;&lt;p&gt;代码模板：&lt;/p&gt;
+    <content type="html">&lt;h3 id=&quot;Python&quot;&gt;&lt;a href=&quot;#Python&quot; class=&quot;headerlink&quot; title=&quot;Python&quot;&gt;&lt;/a&gt;Python&lt;/h3&gt;&lt;p&gt;PYTHONPATH是Python搜索路径，默认我们import的模块都会从PYTHONPATH里面寻找。&lt;/p&gt;
+&lt;h3 id=&quot;system&quot;&gt;&lt;a href=&quot;#system&quot; class=&quot;headerlink&quot; title=&quot;system&quot;&gt;&lt;/a&gt;system&lt;/h3&gt;&lt;p&gt;sys.version&lt;br&gt;sys.platform&lt;br&gt;sys.argv&lt;br&gt;sys.maxint&lt;/p&gt;
+&lt;p&gt;import re&lt;br&gt;dir(re) inspect module, object&lt;/p&gt;
+&lt;h3 id=&quot;python-type-system&quot;&gt;&lt;a href=&quot;#python-type-system&quot; class=&quot;headerlink&quot; title=&quot;python type system&quot;&gt;&lt;/a&gt;python type system&lt;/h3&gt;&lt;p&gt;base type: object&lt;br&gt;primitive types: int, float, bool, long, complex&lt;br&gt;container type: tuple, string, unicode, list, set, fronzenset, dictionary&lt;br&gt;code type:&lt;br&gt;internal type:&lt;/p&gt;
+&lt;p&gt;immutable: tuple, string, unicode, fronzenset&lt;/p&gt;
+&lt;p&gt;isinstance(12, object)&lt;/p&gt;
+&lt;h3 id=&quot;duck-type&quot;&gt;&lt;a href=&quot;#duck-type&quot; class=&quot;headerlink&quot; title=&quot;duck type&quot;&gt;&lt;/a&gt;duck type&lt;/h3&gt;&lt;p&gt;1 + 1 is syntax of 1.&lt;strong&gt;add&lt;/strong&gt;(1)&lt;br&gt;[1,2,3][0] =&amp;gt; [1,2,3].&lt;strong&gt;getitem&lt;/strong&gt;(0)&lt;/p&gt;
+&lt;p&gt;isinstance(obj, type) vs duck type&lt;/p&gt;
+&lt;h3 id=&quot;int-float&quot;&gt;&lt;a href=&quot;#int-float&quot; class=&quot;headerlink&quot; title=&quot;int float&quot;&gt;&lt;/a&gt;int float&lt;/h3&gt;&lt;p&gt;max value: sys.maxint, sys.float_info&lt;br&gt;32bit cpu: 2&lt;strong&gt;31 - 1, x64: 2&lt;/strong&gt;63 -1 &lt;/p&gt;
+&lt;p&gt;long: not bounded&lt;/p&gt;
+&lt;p&gt;literals 8 16 10 base: 0x123, 0123, 123&lt;/p&gt;
+&lt;p&gt;right:&lt;br&gt;2&lt;strong&gt;2&lt;/strong&gt;3 = 2 &lt;strong&gt; ( 2 &lt;/strong&gt; 3 )&lt;/p&gt;
+&lt;p&gt;10.1 // 2 == 5.0&lt;/p&gt;
+&lt;h3 id=&quot;string-unicode&quot;&gt;&lt;a href=&quot;#string-unicode&quot; class=&quot;headerlink&quot; title=&quot;string unicode&quot;&gt;&lt;/a&gt;string unicode&lt;/h3&gt;&lt;p&gt;string is ascii characters&lt;/p&gt;
+&lt;p&gt;unicode -&amp;gt; string:&lt;br&gt;u’或者’.encode(‘utf-8’)&lt;br&gt;=&amp;gt; ‘\xe6\x88\x96\xe8\x80\x85’&lt;br&gt;string -&amp;gt; unicode&lt;br&gt;unicode(‘\xe6\x88\x96\xe8\x80\x85’, ‘utf8’) =&amp;gt; u’或者’&lt;/p&gt;
+&lt;p&gt;len(u’或者’) == 2&lt;/p&gt;
+&lt;h3 id=&quot;list-map&quot;&gt;&lt;a href=&quot;#list-map&quot; class=&quot;headerlink&quot; title=&quot;list map&quot;&gt;&lt;/a&gt;list map&lt;/h3&gt;&lt;p&gt;letters = [‘a’, ‘b’, ‘c’, ‘d’, ‘e’, ‘f’, ‘g’]&lt;br&gt;letters[1]&lt;br&gt;if ‘a’ in letters:&lt;br&gt;    pass&lt;/p&gt;
+&lt;p&gt;map = { “name”: “bob”, “age”:123 }&lt;br&gt;map[“name”]&lt;br&gt;if “name” in map:&lt;br&gt;    pass&lt;/p&gt;
+&lt;p&gt;for k,v in map.iteritems():&lt;br&gt;    print k,v&lt;/p&gt;
+&lt;h3 id=&quot;python-bytecode&quot;&gt;&lt;a href=&quot;#python-bytecode&quot; class=&quot;headerlink&quot; title=&quot;python bytecode&quot;&gt;&lt;/a&gt;python bytecode&lt;/h3&gt;&lt;p&gt;import dis&lt;/p&gt;
+&lt;p&gt;def f():&lt;br&gt;    pass&lt;br&gt;dis.dis(f)&lt;/p&gt;
+&lt;h3 id=&quot;python-debug&quot;&gt;&lt;a href=&quot;#python-debug&quot; class=&quot;headerlink&quot; title=&quot;python debug&quot;&gt;&lt;/a&gt;python debug&lt;/h3&gt;&lt;p&gt;break 或 b 设置断点  设置断点&lt;br&gt;continue 或 c    继续执行程序&lt;br&gt;list 或 l    查看当前行的代码段&lt;br&gt;step 或 s    进入函数&lt;br&gt;return 或 r  执行代码直到从当前函数返回&lt;br&gt;exit 或 q    中止并退出&lt;br&gt;next 或 n    执行下一行&lt;br&gt;pp  打印变量的值&lt;br&gt;help    帮助&lt;/p&gt;
+&lt;h2 id=&quot;yield&quot;&gt;&lt;a href=&quot;#yield&quot; class=&quot;headerlink&quot; title=&quot;yield&quot;&gt;&lt;/a&gt;yield&lt;/h2&gt;&lt;p&gt;python bytecode:&lt;br&gt;YIELD_VALUE&lt;/p&gt;
+&lt;p&gt;return generator, can send back information&lt;br&gt;can’t send non-None value to a just-started generator&lt;br&gt;send will trigger next value&lt;/p&gt;
+&lt;h3 id=&quot;python-pip&quot;&gt;&lt;a href=&quot;#python-pip&quot; class=&quot;headerlink&quot; title=&quot;python pip&quot;&gt;&lt;/a&gt;python pip&lt;/h3&gt;&lt;p&gt;see package version:&lt;br&gt;pip show Flask&lt;br&gt;pip list&lt;/p&gt;
+&lt;h3 id=&quot;Python-numpy&quot;&gt;&lt;a href=&quot;#Python-numpy&quot; class=&quot;headerlink&quot; title=&quot;Python numpy&quot;&gt;&lt;/a&gt;Python numpy&lt;/h3&gt;&lt;h3 id=&quot;Python-socket编程&quot;&gt;&lt;a href=&quot;#Python-socket编程&quot; class=&quot;headerlink&quot; title=&quot;Python socket编程&quot;&gt;&lt;/a&gt;Python socket编程&lt;/h3&gt;&lt;p&gt;int listen(int sockfd, int backlog)&lt;br&gt;默认时主动的，这个调用变成被动&lt;br&gt;backlog: OS 维护一个两个队列： 未连接的tcp队列（半连接），完成3次握手的tcp（准备好的）。准备好的tcp将交给进程（accept调用返回）； 为空则睡眠。&lt;/p&gt;
+&lt;p&gt;backlog = 0， 可能引发 tcp flooding&lt;/p&gt;
+&lt;p&gt;防止 tcp flooding:&lt;br&gt;使用F5，原理是完成3次握手的，才转发到服务器，有效阻挡半连接攻击&lt;br&gt;修改/etc/sysctl.conf, tcp_synack_retries = 0 即没收到客户端到ack，不重试；net.ipv4.tcp_max_syn_backlog = 200000 设置总到连接数&lt;/p&gt;
+&lt;p&gt;socket状态：&lt;br&gt;开始连接：&lt;br&gt;listen&lt;br&gt;syn_sent&lt;br&gt;syn_rcvd&lt;br&gt;established&lt;br&gt;主动close:&lt;br&gt;fin_wait_1&lt;br&gt;fin_wait_2&lt;br&gt;closing&lt;br&gt;time_wait&lt;br&gt;被动：&lt;br&gt;close_wait&lt;br&gt;last_ack&lt;br&gt;关闭：&lt;br&gt;closed&lt;/p&gt;
+&lt;h3 id=&quot;pyspark&quot;&gt;&lt;a href=&quot;#pyspark&quot; class=&quot;headerlink&quot; title=&quot;pyspark&quot;&gt;&lt;/a&gt;pyspark&lt;/h3&gt;&lt;p&gt;代码模板：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import sys 
 from pyspark import SparkContext 
 if __name__ == &amp;apos;__main__&amp;apos;:
@@ -277,9 +760,7 @@ print A.joke()
     
     <summary type="html">
     
-      &lt;h3 id=&quot;pyspark&quot;&gt;&lt;a href=&quot;#pyspark&quot; class=&quot;headerlink&quot; title=&quot;pyspark&quot;&gt;&lt;/a&gt;pyspark&lt;/h3&gt;&lt;p&gt;代码模板：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import sys 
-from pyspark impo
+      &lt;h3 id=&quot;Python&quot;&gt;&lt;a href=&quot;#Python&quot; class=&quot;headerlink&quot; title=&quot;Python&quot;&gt;&lt;/a&gt;Python&lt;/h3&gt;&lt;p&gt;PYTHONPATH是Python搜索路径，默认我们import的模块都会从PYTHONPATH里面寻找。&lt;
     
     </summary>
     
@@ -316,9 +797,11 @@ from pyspark impo
     <link href="http://foojolt.github.io/2016/03/07/solr-basics/"/>
     <id>http://foojolt.github.io/2016/03/07/solr-basics/</id>
     <published>2016-03-07T03:07:14.000Z</published>
-    <updated>2016-03-10T03:00:18.000Z</updated>
+    <updated>2016-04-14T02:28:33.000Z</updated>
     
-    <content type="html">&lt;h3 id=&quot;基础概念&quot;&gt;&lt;a href=&quot;#基础概念&quot; class=&quot;headerlink&quot; title=&quot;基础概念&quot;&gt;&lt;/a&gt;基础概念&lt;/h3&gt;&lt;p&gt;基本概念：&lt;/p&gt;
+    <content type="html">&lt;h3 id=&quot;classpath&quot;&gt;&lt;a href=&quot;#classpath&quot; class=&quot;headerlink&quot; title=&quot;classpath&quot;&gt;&lt;/a&gt;classpath&lt;/h3&gt;&lt;p&gt;chinese analysis:&lt;br&gt;add solr/contrib/analysis-extras/lucene-libs/* to solr/server/solr-webapp/webapp/WEB-INF/lib&lt;/p&gt;
+&lt;h3 id=&quot;命令行&quot;&gt;&lt;a href=&quot;#命令行&quot; class=&quot;headerlink&quot; title=&quot;命令行&quot;&gt;&lt;/a&gt;命令行&lt;/h3&gt;&lt;p&gt;./solr-5.5.0/bin/solr delete -c fslink&lt;br&gt;./solr-5.5.0/bin/solr create_core -c fslink -d fslink-solr-core/&lt;/p&gt;
+&lt;h3 id=&quot;基础概念&quot;&gt;&lt;a href=&quot;#基础概念&quot; class=&quot;headerlink&quot; title=&quot;基础概念&quot;&gt;&lt;/a&gt;基础概念&lt;/h3&gt;&lt;p&gt;基本概念：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Document：代表一篇文档，相当于数据表的一行记录
 Field：文档的属性，相当于数据表的列。一个Document包含一个或多个列。
 Index：索引，这里指倒排索引，一个 Index包含一个或多个 Document
@@ -396,9 +879,7 @@ managed-schema 定义schema，支持动态字段，支持copy-field
     
     <summary type="html">
     
-      &lt;h3 id=&quot;基础概念&quot;&gt;&lt;a href=&quot;#基础概念&quot; class=&quot;headerlink&quot; title=&quot;基础概念&quot;&gt;&lt;/a&gt;基础概念&lt;/h3&gt;&lt;p&gt;基本概念：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Document：代表一篇文档，相当于数据表的一行记录
-Field：文档的属性，相
+      &lt;h3 id=&quot;classpath&quot;&gt;&lt;a href=&quot;#classpath&quot; class=&quot;headerlink&quot; title=&quot;classpath&quot;&gt;&lt;/a&gt;classpath&lt;/h3&gt;&lt;p&gt;chinese analysis:&lt;br&gt;add solr/contrib/anal
     
     </summary>
     
@@ -408,11 +889,34 @@ Field：文档的属性，相
   </entry>
   
   <entry>
+    <title>Solr Facet</title>
+    <link href="http://foojolt.github.io/2016/03/07/solr-facet/"/>
+    <id>http://foojolt.github.io/2016/03/07/solr-facet/</id>
+    <published>2016-03-07T03:07:14.000Z</published>
+    <updated>2016-03-08T02:02:26.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h3&gt;&lt;p&gt;Facet是Solr的高级搜索功能之一，Solr作者给出的定义是导航(Guided Navigation)、参数化查询(Paramatic Search)。 Facet的主要好处是在搜索的同时， 可以按照Facet条件进行分组统计， 给出导航信息，改善搜索体验.&lt;/p&gt;
+&lt;h3 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原理&lt;/h3&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h3&gt;&lt;p&gt;Facet是Solr的高级搜索功能之一，Solr作者给出的定义是导航(Guided Navigation)、参数化查询(Paramatic 
+    
+    </summary>
+    
+    
+      <category term="solr" scheme="http://foojolt.github.io/tags/solr/"/>
+    
+      <category term="facet" scheme="http://foojolt.github.io/tags/facet/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Solr Cache</title>
     <link href="http://foojolt.github.io/2016/03/07/solr-cache/"/>
     <id>http://foojolt.github.io/2016/03/07/solr-cache/</id>
     <published>2016-03-07T03:07:14.000Z</published>
-    <updated>2016-03-08T02:07:28.000Z</updated>
+    <updated>2016-03-21T09:30:19.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h3&gt;&lt;p&gt;三种类型的缓存：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;filter-query-cache, query-cache, document-cache
@@ -442,7 +946,9 @@ Field：文档的属性，相
 &lt;pre&gt;&lt;code&gt;cumulative_inserts
 cumulative_evictions
 cumulative_hitratio
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h3&gt;&lt;ol&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;Solr-空间搜索&quot;&gt;&lt;a href=&quot;#Solr-空间搜索&quot; class=&quot;headerlink&quot; title=&quot;Solr 空间搜索&quot;&gt;&lt;/a&gt;Solr 空间搜索&lt;/h3&gt;&lt;p&gt;GeoHash: 将纬度和经度用二进制表示： 类似二分查找，每次根据落在二分的哪边标记为0或1，越分越细； 错位将经度和纬度放在一起；用类似base64编码。&lt;br&gt;问题：边界点可能hash的字符串会差别较大，搜索时，需要同时检索周边8个点。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://tech.meituan.com/solr-spatial-search.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://tech.meituan.com/solr-spatial-search.html&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;为什么 query cache 和 fq cache 用的缓存记录方式不一样？&lt;/li&gt;
 &lt;li&gt;每一种cache的key 和 value ?&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
@@ -461,556 +967,6 @@ cumulative_hitratio
       <category term="solr" scheme="http://foojolt.github.io/tags/solr/"/>
     
       <category term="cache" scheme="http://foojolt.github.io/tags/cache/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Solr Facet</title>
-    <link href="http://foojolt.github.io/2016/03/07/solr-facet/"/>
-    <id>http://foojolt.github.io/2016/03/07/solr-facet/</id>
-    <published>2016-03-07T03:07:14.000Z</published>
-    <updated>2016-03-08T02:02:26.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h3&gt;&lt;p&gt;Facet是Solr的高级搜索功能之一，Solr作者给出的定义是导航(Guided Navigation)、参数化查询(Paramatic Search)。 Facet的主要好处是在搜索的同时， 可以按照Facet条件进行分组统计， 给出导航信息，改善搜索体验.&lt;/p&gt;
-&lt;h3 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原理&lt;/h3&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h3&gt;&lt;p&gt;Facet是Solr的高级搜索功能之一，Solr作者给出的定义是导航(Guided Navigation)、参数化查询(Paramatic 
-    
-    </summary>
-    
-    
-      <category term="solr" scheme="http://foojolt.github.io/tags/solr/"/>
-    
-      <category term="facet" scheme="http://foojolt.github.io/tags/facet/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Druid、BasicDataSource连接池配置参考</title>
-    <link href="http://foojolt.github.io/2016/03/05/connection-pool/"/>
-    <id>http://foojolt.github.io/2016/03/05/connection-pool/</id>
-    <published>2016-03-04T23:07:14.000Z</published>
-    <updated>2016-03-07T02:45:06.000Z</updated>
-    
-    <content type="html">&lt;p&gt;连接池的出现，是由于建立数据库连接花费较大，包括TCP三次握手、连接初始化、DB端资源准备等；&lt;br&gt;而且系统要控制连接的数量，防止资源耗尽。&lt;/p&gt;
-&lt;p&gt;考虑一些异常场景：&lt;br&gt;E1. 高并发，即达到 maxTotal；签出连接是否阻塞，是否支持超时&lt;br&gt;E2. 数据库重启；原连接失效，在idle状态、或签出时，能否检测并处理&lt;br&gt;E3. client和DB之间，有防火墙，且防火墙设置了tcp的最长空闲时间；&lt;br&gt;原连接失效，且client和DB都不知道。&lt;br&gt;E4. 网络延迟，建立tcp和数据传输耗时严重；超时配置，是否支持底层连接池超时配置&lt;/p&gt;
-&lt;h3 id=&quot;Druid-配置解读&quot;&gt;&lt;a href=&quot;#Druid-配置解读&quot; class=&quot;headerlink&quot; title=&quot;Druid 配置解读&quot;&gt;&lt;/a&gt;Druid 配置解读&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Druid官方配置参考&lt;/a&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;bean&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;dataSource&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;com.alibaba.druid.pool.DruidDataSource&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;init-method&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;init&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;destroy-method&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;close&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;url&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;com.mysql.jdbc.Driver&quot;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;$&amp;#123;jdbc_user&amp;#125;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;$&amp;#123;jdbc_password&amp;#125;&quot;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;initialSize&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;1&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;maxActive&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;20&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;maxIdle&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;20&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;minIdle&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;1&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;maxWait&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;10000&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;useUnfairLock&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;true&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;validationQuery&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;SELECT &#39;x&#39;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;validationQueryTimeout&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;10&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;timeBetweenEvictionRunsMillis&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;60000&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;minEvictableIdleTimeMillis&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;300000&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;testWhileIdle&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;true&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;testOnBorrow&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;false&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;testOnReturn&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;false&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;value&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;property&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;bean&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面的配置，针对mysql做了调整。说明：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;去掉了 filters:stat 的配置。druid在sql监控上做了很多工作，比如提供自己实现的 sqlparser 解析，&lt;br&gt;来提供更精细化的数据，还可以配置 servlet 展示页面，具体参考官网。这里假设项目已有其他方式监控sql运行状态。&lt;/li&gt;
-&lt;li&gt;maxWait: 60000 -&amp;gt; 10000，正常情况下，主要是创建连接的时间；&lt;br&gt;在高并发的场景下，连接数达到maxActive，主要是资源竞争线程被锁住的时间。这个配置，处理了E1异常。&lt;br&gt;比如Dubbo服务超时为3s（服务的实现调用了jdbc），这里配置过大没有意义。这里改成10秒。&lt;/li&gt;
-&lt;li&gt;增加 useUnfairLock: true，默认是false，公平锁带来很大的性能问题；&lt;br&gt;0.2.8版本之后，建议使用非公平锁，兼顾公平和性能。&lt;/li&gt;
-&lt;li&gt;timeBetweenEvictionRunsMillis:60s， Druid检查连接是否要删除的间隔，&lt;br&gt;minEvictableIdleTimeMillis：5min 一个连接至少必须存活多长时间才被驱逐。这两个参数配合使用，&lt;br&gt;理论上，连接最大的存活时间是  minEvictableIdleTimeMillis + timeBetweenEvictionRunsMillis&lt;/li&gt;
-&lt;li&gt;增加 validationQueryTimeout:10s，注意单位是秒。这里的实现是直接调用 jdbc Statement.setQueryTimeout(int seconds)&lt;br&gt;方法。&lt;/li&gt;
-&lt;li&gt;testWhileIdle 这个很重要，如果 minIdle &amp;gt; 0，那这些idle的连接，就需要和DB保持一个心跳，防止上文提到的E2 E3异常。&lt;/li&gt;
-&lt;li&gt;去掉了poolPreparedStatements这个配置，mysql建议关闭 PreparedStatements 缓存。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;其他：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Druid 默认开启了 exceptionSorter，根据不同的db做了异常处理优化，&lt;br&gt;假如发现是致命不可恢复的error code，则直接删除连接，避免祸害后续使用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;DBCP&quot;&gt;&lt;a href=&quot;#DBCP&quot; class=&quot;headerlink&quot; title=&quot;DBCP&quot;&gt;&lt;/a&gt;DBCP&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://commons.apache.org/proper/commons-dbcp/configuration.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;commons-dbcp2 配置参考&lt;/a&gt;&lt;/p&gt;
-&lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot; destroy-method=&quot;close&quot;&gt;&lt;br&gt;    &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot;&gt;&lt;br&gt;    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/test&quot;&gt;&lt;br&gt;    &lt;property name=&quot;username&quot; value=&quot;username&quot;&gt;&lt;br&gt;    &lt;property name=&quot;password&quot; value=&quot;password&quot;&gt;&lt;br&gt;&lt;br&gt;    &lt;property name=&quot;initialSize&quot; value=&quot;1&quot;&gt;&lt;br&gt;    &lt;property name=&quot;maxTotal&quot; value=&quot;20&quot;&gt;&lt;br&gt;    &lt;property name=&quot;maxIdle&quot; value=&quot;20&quot;&gt;&lt;br&gt;    &lt;property name=&quot;minIdle&quot; value=&quot;1&quot;&gt;&lt;br&gt;&lt;br&gt;    &lt;property name=&quot;maxWaitMillis&quot; value=&quot;10000&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;    &lt;property name=&quot;validationQuery&quot; value=&quot;SELECT 1;&quot;&gt;&lt;br&gt;    &lt;property name=&quot;validationQueryTimeout&quot; value=&quot;10&quot;&gt;&lt;br&gt;&lt;br&gt;    &lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;60000&quot;&gt;&lt;br&gt;    &lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot;&gt;&lt;br&gt;&lt;br&gt;    &lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot;&gt;&lt;br&gt;    &lt;property name=&quot;testOnBorrow&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;&lt;br&gt;    &lt;property name=&quot;testOnReturn&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;&lt;br&gt;&lt;br&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/property&gt;&lt;/bean&gt;
-
-&lt;p&gt;以上配置，由官网说明整理而来：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;maxTotal 原来的属性叫 maxActive(就像Druid抄袭的那样)，dbcp2改成maxTotal了。&lt;/li&gt;
-&lt;li&gt;maxWaitMillis 原来叫 maxWait(Druid复制过来了)，含义却有所不同。DBCP2底层使用&lt;br&gt;commons-pool2 对象池实现，这个属性直接设置到了 GenericObjectPool 的maxWaitMillis属性上，&lt;br&gt;只在确认maxTotal达到、且所有资源都签出时，才会起作用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;end。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;连接池的出现，是由于建立数据库连接花费较大，包括TCP三次握手、连接初始化、DB端资源准备等；&lt;br&gt;而且系统要控制连接的数量，防止资源耗尽。&lt;/p&gt;
-&lt;p&gt;考虑一些异常场景：&lt;br&gt;E1. 高并发，即达到 maxTotal；签出连接是否阻塞，是否支持超时&lt;br&gt;E2. 数
-    
-    </summary>
-    
-    
-      <category term="连接池" scheme="http://foojolt.github.io/tags/%E8%BF%9E%E6%8E%A5%E6%B1%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Yarn 理解</title>
-    <link href="http://foojolt.github.io/2016/03/02/yarn-essentials/"/>
-    <id>http://foojolt.github.io/2016/03/02/yarn-essentials/</id>
-    <published>2016-03-02T09:20:14.000Z</published>
-    <updated>2016-03-02T12:12:17.000Z</updated>
-    
-    <content type="html">&lt;p&gt;Yarn (Yet another resource negotiator )称为 MRv2，主要改进是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;将原 jobTracker 的功能拆分成：资源管理（ResourceManager进程），具体的任务执行、失败重连等（Application Master进程）。&lt;/li&gt;
-&lt;li&gt;做成通用的集群计算资源管理器，可以支持MR之外的计算框架，如Spark&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;主要数据流&quot;&gt;&lt;a href=&quot;#主要数据流&quot; class=&quot;headerlink&quot; title=&quot;主要数据流&quot;&gt;&lt;/a&gt;主要数据流&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/yarn_architecture.gif&quot; alt=&quot;yarn_architecture&quot;&gt;&lt;/p&gt;
-&lt;p&gt;ResourceManager 由两个组件：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Scheduler 调度器，结合集群资源的状态、以及任务的需求，分配container。比如常见的 CapacityScheduler 支持树形结构的队列，每个队列可以配置ACL。&lt;/li&gt;
-&lt;li&gt;ApplicationsManager 任务管理器，它负责处理Job提交，启动、监控和重启任务的ApplicationMaster&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;NodeManager 在任务节点上部署，负责启动本节点的容器、向RM/ResourceTracker汇报状态。&lt;/p&gt;
-&lt;h3 id=&quot;任务执行过程&quot;&gt;&lt;a href=&quot;#任务执行过程&quot; class=&quot;headerlink&quot; title=&quot;任务执行过程&quot;&gt;&lt;/a&gt;任务执行过程&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/yarn-flow.png&quot; alt=&quot;Yarn Job&quot;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;客户端启动一个job： 配置属性，比如MR的mapper/reducer类，输入文件输出文件等，&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Yarn (Yet another resource negotiator )称为 MRv2，主要改进是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;将原 jobTracker 的功能拆分成：资源管理（ResourceManager进程），具体的任务执行、失败重连等（Application
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
-    
-      <category term="yarn" scheme="http://foojolt.github.io/tags/yarn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HDFS 理解</title>
-    <link href="http://foojolt.github.io/2016/03/02/hdfs-flow/"/>
-    <id>http://foojolt.github.io/2016/03/02/hdfs-flow/</id>
-    <published>2016-03-02T02:30:14.000Z</published>
-    <updated>2016-03-02T09:45:55.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;主要特点&quot;&gt;&lt;a href=&quot;#主要特点&quot; class=&quot;headerlink&quot; title=&quot;主要特点&quot;&gt;&lt;/a&gt;主要特点&lt;/h3&gt;&lt;p&gt;廉价机器组成集群，系统具备容错能力&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;HDFS 集群中数据节点可能随时宕机，主节点能通过心跳及时发现故障，并启动文件块恢复。主节点对内存要求高，因为元数据信息要保存在内存中。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;适合批量分块、一次写多次读&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;不像POSIX文件系统，常常流式从头读到尾，随机修改内容等，HDFS文件只支持追加到末尾。单次读取延时高，但批量任务可以通过多个block分块并发读取提高吞吐量。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;将运算移到数据的附近，而不是相反&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;HDFS数据节点往往承担计算任务，调度器会就近分配计算任务。比如MapReduce任务，每个Map任务最好在分片本地进行。但Reduce还是免不了要移动中间数据到计算节点。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;HDFS-架构图&quot;&gt;&lt;a href=&quot;#HDFS-架构图&quot; class=&quot;headerlink&quot; title=&quot;HDFS 架构图&quot;&gt;&lt;/a&gt;HDFS 架构图&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfsarchitecture.png&quot; alt=&quot;Hdfs architecture&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Namenode&quot;&gt;&lt;a href=&quot;#Namenode&quot; class=&quot;headerlink&quot; title=&quot;Namenode&quot;&gt;&lt;/a&gt;Namenode&lt;/h3&gt;&lt;p&gt;Namenode保存元数据信息，具体回答两个问题：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;filename-&amp;gt;block sequence (namespace) 文件由哪些block组成&lt;/li&gt;
-&lt;li&gt;block-&amp;gt;machinelist (“inodes”) 这些block保存在哪些机器上&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;namespace信息就是一颗文件树，所有数据放到内存中，接受各种增删改查的请求； inodes 信息可能由于故障恢复、Balance等操作发生变化&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&quot;Namenode的启动过程&quot;&gt;&lt;a href=&quot;#Namenode的启动过程&quot; class=&quot;headerlink&quot; title=&quot;Namenode的启动过程&quot;&gt;&lt;/a&gt;Namenode的启动过程&lt;/h4&gt;&lt;ol&gt;
-&lt;li&gt;读取fsimage并构造内存版本的元数据信息&lt;/li&gt;
-&lt;li&gt;读取editlog，并应用可能的元数据修改&lt;/li&gt;
-&lt;li&gt;写新的 checkpoint (fsimage’ + editlog)&lt;/li&gt;
-&lt;li&gt;维持在安全模式下（可读，拒绝增删改），直到收到足够多的、来自Datanode的block报告&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;启动过程可能存在的问题：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;editlog太多，导致合并花费时间很长；于是社区开发了 secondary-namenode 来定期合并editlog，生成新的fsimage。社区有另外一种叫法： checkpoint-namenode。这不是一个高可用（HA）方案。&lt;br&gt;&lt;img src=&quot;../images/secondary-namenode.png&quot; alt=&quot;secondary-namenode&quot;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;fsimage太大，内存装不下。hdfs federation分卷可以解决这个问题。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&quot;Namenode-高可用方案&quot;&gt;&lt;a href=&quot;#Namenode-高可用方案&quot; class=&quot;headerlink&quot; title=&quot;Namenode 高可用方案&quot;&gt;&lt;/a&gt;Namenode 高可用方案&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-ha.png&quot; alt=&quot;hdfs-ha&quot;&gt;&lt;br&gt;这个方案的核心：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;依赖共享存储来同步写操作。一般认为高端存储的可靠性要高于服务器。但这个也是单点。&lt;/li&gt;
-&lt;li&gt;DN同时向Active和Standby NN汇报块状态&lt;/li&gt;
-&lt;li&gt;依赖Zeekeeper来实现主备切换。FailoverController是单独的进程，监控NN状态&lt;/li&gt;
-&lt;li&gt;防&lt;a href=&quot;http://en.wikipedia.org/wiki/Split-brain_`(computing`&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;脑裂&lt;/a&gt;)措施：共享存储只支持来自一个NN的更新操作；DN只执行来自一个NN的更新命令；Client只同时跟一个NN通信&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&quot;Hdfs-federation&quot;&gt;&lt;a href=&quot;#Hdfs-federation&quot; class=&quot;headerlink&quot; title=&quot;Hdfs federation&quot;&gt;&lt;/a&gt;Hdfs federation&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-federation.jpg&quot; alt=&quot;Hdfs federation&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这个方案的核心：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;就像Linux文件系统一样，多个NN可以挂在不同的子目录下，各自负责该子目录下的元数据管理；彼此独立。&lt;/li&gt;
-&lt;li&gt;多个NN共享DN的块存储。DN可向多个NN汇报块状态&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;HDFS文件读过程&quot;&gt;&lt;a href=&quot;#HDFS文件读过程&quot; class=&quot;headerlink&quot; title=&quot;HDFS文件读过程&quot;&gt;&lt;/a&gt;HDFS文件读过程&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-read.png&quot; alt=&quot;Hdfs read&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;HDFS文件写过程&quot;&gt;&lt;a href=&quot;#HDFS文件写过程&quot; class=&quot;headerlink&quot; title=&quot;HDFS文件写过程&quot;&gt;&lt;/a&gt;HDFS文件写过程&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;../images/hdfs-write.png&quot; alt=&quot;Hdfs write&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://github.com/apache/hadoop&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hadoop源代码&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://zh.hortonworks.com/blog/understanding-namenode-startup-operations-in-hdfs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;understanding-namenode-startup-operations-in-hdfs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.infoq.com/cn/articles/hadoop-2-0-namenode-ha-federation-practice-zh&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;namenode ha &amp;amp; federation&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;主要特点&quot;&gt;&lt;a href=&quot;#主要特点&quot; class=&quot;headerlink&quot; title=&quot;主要特点&quot;&gt;&lt;/a&gt;主要特点&lt;/h3&gt;&lt;p&gt;廉价机器组成集群，系统具备容错能力&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;HDFS 集群中数据节点可能随时宕机，主节点能通
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
-    
-      <category term="HDFS" scheme="http://foojolt.github.io/tags/HDFS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hadoop 常用命令</title>
-    <link href="http://foojolt.github.io/2016/03/01/hadoop-cmds/"/>
-    <id>http://foojolt.github.io/2016/03/01/hadoop-cmds/</id>
-    <published>2016-03-01T09:12:14.000Z</published>
-    <updated>2016-03-01T09:38:31.000Z</updated>
-    
-    <content type="html">&lt;p&gt;参考：&lt;br&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/r2.6.1/hadoop-project-dist/hadoop-common/CommandsManual.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hadoop 2.6.1 命令&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;参考：&lt;br&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/r2.6.1/hadoop-project-dist/hadoop-common/CommandsManual.html&quot; target=&quot;_blank&quot; rel=&quot;externa
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hadoop 端口解读</title>
-    <link href="http://foojolt.github.io/2016/03/01/hadoop-ports/"/>
-    <id>http://foojolt.github.io/2016/03/01/hadoop-ports/</id>
-    <published>2016-03-01T09:12:14.000Z</published>
-    <updated>2016-03-02T03:27:00.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;NameNode&quot;&gt;&lt;a href=&quot;#NameNode&quot; class=&quot;headerlink&quot; title=&quot;NameNode&quot;&gt;&lt;/a&gt;NameNode&lt;/h3&gt;&lt;p&gt;8020或9000&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;NameNode RPC端口，为client提供元数据服务等。&lt;br&gt;涉及：NamenodeProtocols将很多接口合在一起，包括 ClientProtocol,DatanodeProtocol（和datanode交互）等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;50070&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;NameNode对外暴露的http端口&lt;/li&gt;
-&lt;li&gt;通过浏览器查看NameNode状态，datanode列表，浏览hdfs文件系统等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;Datanode&quot;&gt;&lt;a href=&quot;#Datanode&quot; class=&quot;headerlink&quot; title=&quot;Datanode&quot;&gt;&lt;/a&gt;Datanode&lt;/h3&gt;&lt;p&gt;50010&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Datanode RPC数据库传输接口，dn的数据块通过这个端口进出。涉及：hdfs.protocol.ClientProtocol&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;50020&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Datanode元数据操作端口，比如namenode可以强制datanode立即汇报block信息，以及升级时发shutdown消息给datanode。涉及：ClientDatanodeProtocol&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;ResourceManager&quot;&gt;&lt;a href=&quot;#ResourceManager&quot; class=&quot;headerlink&quot; title=&quot;ResourceManager&quot;&gt;&lt;/a&gt;ResourceManager&lt;/h3&gt;&lt;p&gt;8030&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;调度器端口，ApplicationMaster通过该地址向RM申请资源、释放资源等。涉及：ApplicationMasterProtocol&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;8031&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;ResourceManager 对NodeManager暴露的地址。NodeManager通过该地址向RM汇报心跳，领取任务等。&lt;br&gt;涉及：ResourceTracker&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;8032&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;ResourceManager 对yarn客户端暴露的地址。客户端通过该地址向RM提交应用程序，获取应用状态以及杀死应用程序等。涉及：ApplicationClientProtocol&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;8033&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;RM管理端口 ResourceManager 对管理员暴露的访问地址。管理员通过该地址向RM发送管理命令等。涉及：ResourceManagerAdministrationProtocol&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;8088&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;webui ResourceManager对外http端口。用户可在浏览器中查看yarn任务的状态、队列、任务节点信息等。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;NodeManager&quot;&gt;&lt;a href=&quot;#NodeManager&quot; class=&quot;headerlink&quot; title=&quot;NodeManager&quot;&gt;&lt;/a&gt;NodeManager&lt;/h3&gt;&lt;p&gt;8040  &lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;RPC端口，用于实现资源本地化。比如mapreduce任务节点必须下载jar包到本地执行。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;0(随机可用端口）&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;NodeManager的容器管理端口，主要用于 ApplicationMaster和NodeManager交互，启动、停止分配到的容器。涉及： ContainerManagementProtocol&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;8042&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;NodeManager 对外暴露的http端口。&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;NameNode&quot;&gt;&lt;a href=&quot;#NameNode&quot; class=&quot;headerlink&quot; title=&quot;NameNode&quot;&gt;&lt;/a&gt;NameNode&lt;/h3&gt;&lt;p&gt;8020或9000&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;NameNode R
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="http://foojolt.github.io/tags/hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>5步搭建个人免费博客</title>
-    <link href="http://foojolt.github.io/2016/03/01/blog-start/"/>
-    <id>http://foojolt.github.io/2016/03/01/blog-start/</id>
-    <published>2016-03-01T08:20:14.000Z</published>
-    <updated>2016-03-01T08:20:28.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;5步搭建个人免费博客&quot;&gt;&lt;a href=&quot;#5步搭建个人免费博客&quot; class=&quot;headerlink&quot; title=&quot;5步搭建个人免费博客&quot;&gt;&lt;/a&gt;5步搭建个人免费博客&lt;/h3&gt;&lt;p&gt;首先，找到托管博客的地方：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Websites for you and your projects.&lt;/a&gt;&lt;br&gt;涉及内容： github, git。你的博客网站是开源的。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;找到一个静态网站生成器：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://hexo.io/zh-cn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;快速、简洁且高效的博客框架&lt;/a&gt;&lt;br&gt;学会常见的命令： hexo new/generate/server等。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;然后，学会markdown，一种互联网的博客格式：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;用 markdown 写第一篇博客, 参考 &lt;a href=&quot;http://wowubuntu.com/markdown/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Markdown 语法说明 (简体中文版)&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;增加评论系统和流量统计&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注册一个&lt;a href=&quot;http://duoshuo.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;多说&lt;/a&gt;帐号，为自己的博客增加免费的评论系统。注册一个&lt;a href=&quot;http://tongji.baidu.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;百度统计&lt;/a&gt;帐号，掌握网站流量信息。找一个&lt;a href=&quot;https://hexo.io/themes/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hexo的主题&lt;/a&gt;，如 Apollo，可以把多说和百度统计帐号配置进去。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;最后，开始博客之旅吧。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;每次将自己用markdown写的博客，通过 hexo 转化成静态html，并通过 git push命令发布到 github上。&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;5步搭建个人免费博客&quot;&gt;&lt;a href=&quot;#5步搭建个人免费博客&quot; class=&quot;headerlink&quot; title=&quot;5步搭建个人免费博客&quot;&gt;&lt;/a&gt;5步搭建个人免费博客&lt;/h3&gt;&lt;p&gt;首先，找到托管博客的地方：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a h
-    
-    </summary>
-    
-    
-      <category term="linux" scheme="http://foojolt.github.io/tags/linux/"/>
-    
-      <category term="bash" scheme="http://foojolt.github.io/tags/bash/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git技巧</title>
-    <link href="http://foojolt.github.io/2016/03/01/git-tips/"/>
-    <id>http://foojolt.github.io/2016/03/01/git-tips/</id>
-    <published>2016-03-01T03:07:14.000Z</published>
-    <updated>2016-03-07T04:01:32.000Z</updated>
-    
-    <content type="html">&lt;h4 id=&quot;查看某个文件的历史版本内容：&quot;&gt;&lt;a href=&quot;#查看某个文件的历史版本内容：&quot; class=&quot;headerlink&quot; title=&quot;查看某个文件的历史版本内容：&quot;&gt;&lt;/a&gt;查看某个文件的历史版本内容：&lt;/h4&gt;&lt;p&gt;最常用的，往回查看一个版本：&lt;br&gt;    git show HEAD~1:_posts/connection-pool.md&lt;/p&gt;
-&lt;p&gt;或者用git log，查看历史记录之后，附上版本号查看：&lt;/p&gt;
-&lt;p&gt;git show e9468eca43385f7d3b9ade9cb585bec05f1a6846:_posts/connection-pool.md&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;查看某个文件的历史版本内容：&quot;&gt;&lt;a href=&quot;#查看某个文件的历史版本内容：&quot; class=&quot;headerlink&quot; title=&quot;查看某个文件的历史版本内容：&quot;&gt;&lt;/a&gt;查看某个文件的历史版本内容：&lt;/h4&gt;&lt;p&gt;最常用的，往回查看一个版本：&lt;br&gt;    
-    
-    </summary>
-    
-    
-      <category term="git" scheme="http://foojolt.github.io/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Bash技巧</title>
-    <link href="http://foojolt.github.io/2016/03/01/bash-tricks/"/>
-    <id>http://foojolt.github.io/2016/03/01/bash-tricks/</id>
-    <published>2016-03-01T03:07:14.000Z</published>
-    <updated>2016-03-03T06:05:45.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;多个git帐号，多个ssh私钥&quot;&gt;&lt;a href=&quot;#多个git帐号，多个ssh私钥&quot; class=&quot;headerlink&quot; title=&quot;多个git帐号，多个ssh私钥&quot;&gt;&lt;/a&gt;多个git帐号，多个ssh私钥&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;用 ssh-keygen -f [用户名] 在某个目录下生成公钥和私钥文件&lt;/li&gt;
-&lt;li&gt;在 ~/.ssh/config 文件中，增加如下内容：&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;host github.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; HostName github.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; IdentityFile ~/.ssh/id_rsa_github&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; User git&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;设置成-VIM-编辑格式&quot;&gt;&lt;a href=&quot;#设置成-VIM-编辑格式&quot; class=&quot;headerlink&quot; title=&quot;设置成 VIM 编辑格式&quot;&gt;&lt;/a&gt;设置成 VIM 编辑格式&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set -o vi&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;指定帐号免登录&quot;&gt;&lt;a href=&quot;#指定帐号免登录&quot; class=&quot;headerlink&quot; title=&quot;指定帐号免登录&quot;&gt;&lt;/a&gt;指定帐号免登录&lt;/h3&gt;&lt;p&gt;场景是，我有多台目标Linux机器，每个登录账户不同。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ssh-keygen -t rsa -f bob&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;将在当前目录下，生成 bob, bob.pub两个文件。将 bob.pub的内容，贴到目标机器的 .ssh/authorized_keys 中。&lt;br&gt;登录时，指定 bob 私钥文件的路径即可：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ssh -i ./bob bob@host&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;可选，用 ssh -v .. 调试可能出现的问题。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;多个git帐号，多个ssh私钥&quot;&gt;&lt;a href=&quot;#多个git帐号，多个ssh私钥&quot; class=&quot;headerlink&quot; title=&quot;多个git帐号，多个ssh私钥&quot;&gt;&lt;/a&gt;多个git帐号，多个ssh私钥&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;用 ssh-keygen
-    
-    </summary>
-    
-    
-      <category term="linux" scheme="http://foojolt.github.io/tags/linux/"/>
-    
-      <category term="bash" scheme="http://foojolt.github.io/tags/bash/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java的Manifest文件</title>
-    <link href="http://foojolt.github.io/2016/03/01/java-manifest/"/>
-    <id>http://foojolt.github.io/2016/03/01/java-manifest/</id>
-    <published>2016-03-01T02:07:14.000Z</published>
-    <updated>2016-03-01T08:20:08.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;Manifest文件的作用&quot;&gt;&lt;a href=&quot;#Manifest文件的作用&quot; class=&quot;headerlink&quot; title=&quot;Manifest文件的作用&quot;&gt;&lt;/a&gt;Manifest文件的作用&lt;/h3&gt;&lt;p&gt;Manifest，英文是货物清单。在Java中，每个jar包可以包含这么一个清单文件：META-INF/MANIFEST.MF&lt;/p&gt;
-&lt;p&gt;参考 &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Working with Manifest Files: The Basics&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;上面的链接中，提到了几种用法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;设置程序入口&lt;/li&gt;
-&lt;li&gt;设置classpath&lt;/li&gt;
-&lt;li&gt;密封某一个包 （seal package）&lt;/li&gt;
-&lt;li&gt;Java Applet&amp;amp;Web Start 安全配置&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;设置classpath&quot;&gt;&lt;a href=&quot;#设置classpath&quot; class=&quot;headerlink&quot; title=&quot;设置classpath&quot;&gt;&lt;/a&gt;设置classpath&lt;/h3&gt;&lt;p&gt;这个一般是用不着的。只有在classpath太长，比如大于Linux命令行的最大长度，这样java命令就无法执行了。这时可以在 META-INF/MANIFEST.MF 中添加&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Class-Path: jar1-name jar2-name directory-name/jar3-name&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;密封一个包&quot;&gt;&lt;a href=&quot;#密封一个包&quot; class=&quot;headerlink&quot; title=&quot;密封一个包&quot;&gt;&lt;/a&gt;密封一个包&lt;/h3&gt;&lt;p&gt;密封一个包的意思是，假如你提供了一个tool.jar包，包含一个类com.foo.tool.BigTool，你不希望别人的代码中，使用同样的包名 com.foo.tool，可以这样做：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Name: com/foo/tool&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Sealed: &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;效果是： 让JVM只能从tool.jar加载com.foo.tool包&lt;/p&gt;
-&lt;h3 id=&quot;更新Manifest文件&quot;&gt;&lt;a href=&quot;#更新Manifest文件&quot; class=&quot;headerlink&quot; title=&quot;更新Manifest文件&quot;&gt;&lt;/a&gt;更新Manifest文件&lt;/h3&gt;&lt;p&gt;可以用一下命令获取一个jar包的manifest文件：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;jar xvf foo.jar META-INF/MANIFEST.MF&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;用文本编辑器修改后，update到jar包中：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;jar uvf foo.jar META-INF/MANIFEST.MF&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Manifest文件的作用&quot;&gt;&lt;a href=&quot;#Manifest文件的作用&quot; class=&quot;headerlink&quot; title=&quot;Manifest文件的作用&quot;&gt;&lt;/a&gt;Manifest文件的作用&lt;/h3&gt;&lt;p&gt;Manifest，英文是货物清单。在Java中，每个
-    
-    </summary>
-    
-    
-      <category term="java" scheme="http://foojolt.github.io/tags/java/"/>
-    
-      <category term="manifest" scheme="http://foojolt.github.io/tags/manifest/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>写程序判断闰年</title>
-    <link href="http://foojolt.github.io/2016/02/29/leap-year/"/>
-    <id>http://foojolt.github.io/2016/02/29/leap-year/</id>
-    <published>2016-02-29T09:07:14.000Z</published>
-    <updated>2016-03-01T02:02:40.000Z</updated>
-    
-    <content type="html">&lt;p&gt;今天很特殊，2月29日。写一篇相关的内容：写程序判断闰年&lt;/p&gt;
-&lt;h3 id=&quot;简单的问题不简单&quot;&gt;&lt;a href=&quot;#简单的问题不简单&quot; class=&quot;headerlink&quot; title=&quot;简单的问题不简单&quot;&gt;&lt;/a&gt;简单的问题不简单&lt;/h3&gt;&lt;p&gt;闰年:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;四年一闰，百年不闰，四百年再闰&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;第一个版本&quot;&gt;&lt;a href=&quot;#第一个版本&quot; class=&quot;headerlink&quot; title=&quot;第一个版本&quot;&gt;&lt;/a&gt;第一个版本&lt;/h3&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;is_leap_year&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(year)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; year % &lt;span class=&quot;number&quot;&gt;400&lt;/span&gt; == &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; year % &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; == &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; year % &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; == &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面的写法有什么问题？&lt;br&gt;（1） 太长了，不够优雅&lt;br&gt; (2) 应该从4开始判断，再到100，再到400；这样判断的次数就少多了。&lt;/p&gt;
-&lt;h3 id=&quot;第二个版本&quot;&gt;&lt;a href=&quot;#第二个版本&quot; class=&quot;headerlink&quot; title=&quot;第二个版本&quot;&gt;&lt;/a&gt;第二个版本&lt;/h3&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;is_leap_year&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(year)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; (year % &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; == &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; (year % &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; != &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; (year % &lt;span class=&quot;number&quot;&gt;400&lt;/span&gt; == &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;python中的-and-or&quot;&gt;&lt;a href=&quot;#python中的-and-or&quot; class=&quot;headerlink&quot; title=&quot;python中的 and or&quot;&gt;&lt;/a&gt;python中的 and or&lt;/h3&gt;&lt;p&gt;a = x1 and x2 and x3 and …&lt;br&gt;a的值，等于第一个为false的x的值；或者最后一个x的值。&lt;br&gt;b = y1 or y2 or y3 or …&lt;br&gt;a的值，等于第一个为true的y的值；或者最后一个y的值。&lt;/p&gt;
-&lt;p&gt;因此：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;and 或 or 表达式的值，不是布尔类型的，和操作数有关&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天很特殊，2月29日。写一篇相关的内容：写程序判断闰年&lt;/p&gt;
-&lt;h3 id=&quot;简单的问题不简单&quot;&gt;&lt;a href=&quot;#简单的问题不简单&quot; class=&quot;headerlink&quot; title=&quot;简单的问题不简单&quot;&gt;&lt;/a&gt;简单的问题不简单&lt;/h3&gt;&lt;p&gt;闰年:&lt;/p&gt;
-&lt;b
-    
-    </summary>
-    
-    
-      <category term="python" scheme="http://foojolt.github.io/tags/python/"/>
-    
-      <category term="闰年" scheme="http://foojolt.github.io/tags/%E9%97%B0%E5%B9%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OAuth详细解读</title>
-    <link href="http://foojolt.github.io/2016/02/29/oauth/"/>
-    <id>http://foojolt.github.io/2016/02/29/oauth/</id>
-    <published>2016-02-29T08:07:14.000Z</published>
-    <updated>2016-03-02T08:50:12.000Z</updated>
-    
-    <content type="html">&lt;p&gt;本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, nonce, timestamp等）&lt;/p&gt;
-&lt;p&gt;来自维基百科:&lt;a href=&quot;https://zh.wikipedia.org/wiki/OAuth&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OAuth&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;OAuth（开放授权）是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;/images/oauth-flow.png&quot; alt=&quot;oauth-flow&quot;&gt;&lt;/p&gt;
-&lt;p&gt;OAuth协议的参与方：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Google Resource Server是RS(Resource Server)，保存了client希望获得的资源（这里是用户在Google的消息流）&lt;/p&gt;
-&lt;p&gt;Google Authorization Server是AS（Authorization Server），即授权服务器。Client访问RS，需要得到AS的授权凭证（即access token）&lt;/p&gt;
-&lt;p&gt;Facebook是Client，希望得到Alice的同意，来访问其在Google的资源（即Alice的消息流）&lt;/p&gt;
-&lt;p&gt;Alice 是Resource Owner(资源所有者)。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;步骤解读：&lt;br&gt;(1)Facebook在自己的网页上放置一个链接，地址是 accounts.google.com/o/oauth2/oauth….用户单击后，跳转到Google AS页面（也可能是弹窗），注意带上了以下参数：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;redirect_uri:用户授权后，返回的Facebook页面&lt;/p&gt;
-&lt;p&gt;client_id: Facebook在Google侧注册的client_id，Facebook还保存有对应的client_secret。后面会用到。&lt;/p&gt;
-&lt;p&gt;state: Client的会话Id，不同的用户在Facebook点击上文的链接，产生不同的state字符串。防止恶意用户伪造一个URL，诱导其他用户去点击。即CSRF（cross site request forgery跨站请求伪造）攻击。详见:&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;跨站请求伪造&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;response_type: 一般是code，表示 Authorization_code，即授权码&lt;/p&gt;
-&lt;p&gt;scope: 资源类型，这里指用户的消息流&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;（2）（3）用户在Google的页面，同意了Facebook获取消息流的请求。当然如果用户没有在Google登录，则需要先登录。之后，Google通过302返回码，引导Alice的浏览器，访问 www.facebook.com/?code=xx&amp;amp;state=xx，参数说明：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;code: 即 Authorization_code用户的授权码，表示facebook已经得到用户的授权。&lt;/p&gt;
-&lt;p&gt;state: 即步骤1中，facebook生成的state， google AS原样返回&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;（4）(5)步骤2的请求到了Facebook后台，Facebook后台向google AS发起了一个获取 access_token的请求，包含过期时间等信息。注意这次不是通过Alice的浏览器了。参数说明：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;code: 即步骤2得到的用户授权码。&lt;/p&gt;
-&lt;p&gt;redirect_uri: 即步骤1的跳转url。这个仅作校验之用。&lt;/p&gt;
-&lt;p&gt;client_id &amp;amp; client_secret: Facebook在Google AS注册得到的凭证&lt;/p&gt;
-&lt;p&gt;grant_type：授权类型。往往由AS设置的固定值。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;(6) 经过了以上步骤，终于，Facebook可以问google的RS请求用户Alice的消息流了。回顾一下，首先，通过 Authorization_code的方式，Facebook首先得到了Alice的许可。然后通过 access_token的方式，Facebook又得到了Google AS的许可（提供了 Authorization_code以及 client_id, client_secret）。&lt;/p&gt;
-&lt;p&gt;在更复杂的实现中，为了防止请求重放攻击，在有些请求的参数中，又加入了nonce和timestamp：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;nonce: 即 number [used only] once，就是只能用一次的随机数。可以有效防止重复攻击。但服务器端要记住所有已经用过的nonce，这对服务器来说，是个不小的负担。&lt;/p&gt;
-&lt;p&gt;timestamp: 时间戳，一般只从1970年开始的毫秒数。和 nonce一起用，用于减轻服务器保存nonce的负担。服务器端会保留一个较旧的 timestamp_start，如果请求中的 timestamp 比 timestamp_start 还小，服务器直接拒绝请求，因为更早的nonce列表被服务器删除了，无法校验是否重复。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/seccloud/article/details/8192707&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;帮你深入理解OAuth2.0协议&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://oauth.net/core/1.0/#nonce&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;oauth core 1.0 - nonce&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文包含OAuth协议的形象化描述，包括各个阶段请求的细节，包括参数解释（state, nonce, timestamp等）&lt;/p&gt;
-&lt;p&gt;来自维基百科:&lt;a href=&quot;https://zh.wikipedia.org/wiki/OAuth&quot; target=&quot;_blank
-    
-    </summary>
-    
-    
-      <category term="oauth" scheme="http://foojolt.github.io/tags/oauth/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mac小技巧</title>
-    <link href="http://foojolt.github.io/2016/02/29/mac-tips/"/>
-    <id>http://foojolt.github.io/2016/02/29/mac-tips/</id>
-    <published>2016-02-29T08:07:14.000Z</published>
-    <updated>2016-03-09T12:29:18.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;MacBook-电池&quot;&gt;&lt;a href=&quot;#MacBook-电池&quot; class=&quot;headerlink&quot; title=&quot;MacBook 电池&quot;&gt;&lt;/a&gt;MacBook 电池&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;如果当台式机用，每天插着电，一个月至少放电一次到20%&lt;/li&gt;
-&lt;li&gt;如果长期闲置，维持50%的电量&lt;/li&gt;
-&lt;li&gt;避免电量过低&lt;/li&gt;
-&lt;li&gt;温度： 10 ~ 35 摄氏度&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;Mac域名中含有-Bogon&quot;&gt;&lt;a href=&quot;#Mac域名中含有-Bogon&quot; class=&quot;headerlink&quot; title=&quot;Mac域名中含有 Bogon&quot;&gt;&lt;/a&gt;Mac域名中含有 Bogon&lt;/h3&gt;&lt;p&gt;bogon表示不要路由到公网。但mac怎么会去反问DNS呢？&lt;/p&gt;
-&lt;p&gt;解决办法：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo hostname [你的hostname]
-sudo scutil --set LocalHostName $(hostname)
-sudo scutil --set HostName $(hostname)
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;Terminal-上个命令最后那个参数&quot;&gt;&lt;a href=&quot;#Terminal-上个命令最后那个参数&quot; class=&quot;headerlink&quot; title=&quot;Terminal 上个命令最后那个参数&quot;&gt;&lt;/a&gt;Terminal 上个命令最后那个参数&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;esc + .
-&lt;/code&gt;&lt;/pre&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;MacBook-电池&quot;&gt;&lt;a href=&quot;#MacBook-电池&quot; class=&quot;headerlink&quot; title=&quot;MacBook 电池&quot;&gt;&lt;/a&gt;MacBook 电池&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;如果当台式机用，每天插着电，一个月至少放电一次到20%&lt;/li&gt;
-    
-    </summary>
-    
-    
-      <category term="oauth" scheme="http://foojolt.github.io/tags/oauth/"/>
     
   </entry>
   
